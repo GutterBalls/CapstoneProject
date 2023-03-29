@@ -1,0 +1,9 @@
+export { default as Accessories } from './accessories';
+export { default as Bags } from './bags';
+export { default as Balls } from './balls';
+export { default as Cart } from './cart';
+export { default as Confirm } from './confirm';
+export { default as Homepage } from './homepage';
+export { default as Profile } from './profile';
+export { default as Shoes } from './shoes';
+export { default as Single } from './single';

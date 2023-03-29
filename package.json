@@ -1,34 +1,49 @@
 {
-  "name": "gutterballs",
+  "name": "capstone-front",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "start:react": "react-scripts start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GutterBalls/CapstoneProject-FrontEnd.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/GutterBalls/CapstoneProject-FrontEnd/issues"
   },
-  "homepage": "https://github.com/GutterBalls/CapstoneProject-FrontEnd#readme",
-  "description": "",
-  "devDependencies": {
+  "homepage": "/",
+  "dependencies": {
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.22",
-    "pg": "^8.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

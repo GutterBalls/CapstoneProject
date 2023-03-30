@@ -1,8 +1,8 @@
-const Shoes = () => {
+const Sidebar = () => {
 
     return (
-        <div className="homepage">
-            <p>Shoes</p>
+        <div className="">
+            <p>Sidebar.jsx</p>
             <p>1</p>
             <p>2</p>
             <p>3</p>
@@ -14,8 +14,10 @@ const Shoes = () => {
             <p>9</p>
             <p>10</p>
             <p>11</p>
+            <p>12</p>
+            <p>13</p>
         </div>
     )
 }
 
-export default Shoes;
+export default Sidebar;

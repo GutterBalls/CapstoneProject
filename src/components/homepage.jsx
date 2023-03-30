@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Nav } from "../components";
 
 // const BASE_URL = `http://localhost:1337/api`
 
@@ -31,17 +32,39 @@ const Homepage = () => {
     //     }
     // }, [])
 
+    // return (
+    //     <div className="homepage">
+    //         <div>
+    //             <p>React is running in HOMEPAGE</p>
+    //             {/* {
+    //                 props.isLoggedIn ? <p className="welcome">Welcome {myData.username}! Please use navigation buttons above.</p>
+    //                 : <h3>Login / register above or <Link to="/routines">continue as a guest</Link> to view some routines.</h3>
+    //             } */}
+    //         </div>
+    //         <br />
+    //         <br />
+    //     </div>
+    // )
+
     return (
-        <div className="homepage">
-            <div>
-                <p>React is running</p>
-                {/* {
-                    props.isLoggedIn ? <p className="welcome">Welcome {myData.username}! Please use navigation buttons above.</p>
-                    : <h3>Login / register above or <Link to="/routines">continue as a guest</Link> to view some routines.</h3>
-                } */}
-            </div>
-            <br />
-            <br />
+        <div>
+            <p>Homepage</p>
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+            <p>4</p>
+            <p>5</p>
+            <p>6</p>
+            <p>7</p>
+            <p>8</p>
+            <p>9</p>
+            <p>10</p>
+            <p>11</p>
+            <p>12</p>
+            <p>13</p>
+            <p>14</p>
+            <p>15</p>
+            <p>16</p>
         </div>
     )
 }

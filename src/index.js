@@ -2,23 +2,23 @@
 
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Accessories, Bags, Balls, Shoes, Single, Homepage, Profile, Cart, Confirm } from "./components/index";
+import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Nav, Sidebar, Footer } from "./components/index";
 import { useState, useEffect } from "react";
 // const DATABASE_URL = `http://localhost:1337/api`
 
 const App = () => {
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [userData, setUserData] = useState([]);
-    // useEffect(() => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userData, setUserData] = useState([]);
+    useEffect(() => {
         
-    //     if (localStorage.getItem("token")) {
-    //         setIsLoggedIn(true)
-    //         getUserData()
-    //     } else {
-    //         setIsLoggedIn(false)
-    //         console.log("No Token!")
-    //     }
-    // }, [])
+        if (localStorage.getItem("token")) {
+            setIsLoggedIn(true)
+            getUserData()
+        } else {
+            setIsLoggedIn(false)
+            console.log("No Token!")
+        }
+    }, [])
     
     // const getUserData = async () => {
     //     try {
@@ -44,29 +44,26 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className="br">
+                <section className="showcase">
+			        <header className="header"><Header /></header>
+			        <aside className="sidebar"><Sidebar /></aside>
+			        <div className="main">
+                        <Routes>
+                            <Route path="/" element={<Homepage />}/>
+                            <Route path="/balls" element={<Balls isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/bags" element={<Bags isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/shoes" element={<Shoes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/accessories" element={<Accessories isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/single" element={<Single isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/cart" element={<Cart isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                            <Route path="/confirm" element={<Confirm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
+                        </Routes>
+                    </div>
+			        <footer className="footer"><Footer /></footer>
+		        </section>
 
-                <nav className="br-nav">
-                </nav>
-
-                <header className="br-header">
-                </header>
-
-                <Routes>
-                    <Route path="/" element={<Homepage />}/>
-                    {/* <Route path="/balls" element={<Balls isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/bags" element={<Bags isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/shoes" element={<Shoes isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/accessories" element={<Accessories isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/single" element={<Single isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/profile" element={<Profile isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/cart" element={<Cart isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
-                    <Route path="/confirm" element={<Confirm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/> */}
-                </Routes>
-
-                <footer>
-
-                </footer>
-
+                
             </div>
         </BrowserRouter>
 )};

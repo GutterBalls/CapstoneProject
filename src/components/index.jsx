@@ -18,6 +18,3 @@ export { default as Confirm } from './confirm';
 
 
 
-export { default as Nav } from './nav';
-
-

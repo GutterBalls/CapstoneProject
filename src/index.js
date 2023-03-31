@@ -1,10 +1,10 @@
-// BOILERPLATE, CHANGE AS NEEDED
 
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Nav, Sidebar, Footer } from "./components/index";
+import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Sidebar, Footer } from "./components/index";
 import { useState, useEffect } from "react";
-// const DATABASE_URL = `http://localhost:1337/api`
+
+
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,10 +44,10 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className="br">
-                <section className="showcase">
-			        <header className="header"><Header /></header>
-			        <aside className="sidebar"><Sidebar /></aside>
-			        <div className="main">
+                <section className="br-showcase">
+			        <header className="br-header"><Header /></header>
+			        <aside className="br-sidebar"><Sidebar /></aside>
+			        <div className="br-main">
                         <Routes>
                             <Route path="/" element={<Homepage />}/>
                             <Route path="/balls" element={<Balls isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
@@ -60,7 +60,7 @@ const App = () => {
                             <Route path="/confirm" element={<Confirm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userData={userData} setUserData={setUserData}/>}/>
                         </Routes>
                     </div>
-			        <footer className="footer"><Footer /></footer>
+			        <footer className="br-footer"><Footer /></footer>
 		        </section>
 
                 

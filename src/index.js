@@ -3,14 +3,16 @@ import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Sidebar, Footer, Login } from "./components/index";
 import { useState, useEffect } from "react";
-
+const DATABASE_URL = 'http://localhost:1337/api';
 
 
 const App = () => {
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userData, setUserData] = useState([]);
+    const [productData, setProductData] = useState([]);
     useEffect(() => {
-        
+        getProductData();
         if (localStorage.getItem("token")) {
             setIsLoggedIn(true)
             // getUserData()
@@ -20,6 +22,18 @@ const App = () => {
         }
     }, [])
     
+    async function getProductData() {
+        try {
+            const response = await fetch(`${DATABASE_URL}/products`)
+            const translatedData = await response.json();
+            console.log(translatedData);
+            setProductData(translatedData);
+            console.log("Product data", productData)
+            return translatedData
+        } catch (error) {
+            console.log(error)
+        };
+    };
     // const getUserData = async () => {
     //     try {
     //       const response = await fetch(`${DATABASE_URL}/users/me`, {
@@ -55,6 +69,9 @@ const App = () => {
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData}
+                                setProductData={setProductData}
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/bags" element={<Bags 
                                 isLoggedIn={isLoggedIn} 

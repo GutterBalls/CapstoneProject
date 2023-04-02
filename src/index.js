@@ -1,7 +1,7 @@
 
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Sidebar, Footer, Login } from "./components/index";
+import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Sidebar, Footer, Login, Logout, Register } from "./components/index";
 import { useState, useEffect } from "react";
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -11,16 +11,6 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userData, setUserData] = useState([]);
     const [productData, setProductData] = useState([]);
-    useEffect(() => {
-        getProductData();
-        if (localStorage.getItem("token")) {
-            setIsLoggedIn(true)
-            // getUserData()
-        } else {
-            setIsLoggedIn(false)
-            console.log("No Token!")
-        }
-    }, [])
     
     async function getProductData() {
         try {
@@ -59,11 +49,26 @@ const App = () => {
         <BrowserRouter>
             <div className="br">
                 <section className="br-showcase">
-			        <header className="br-header"><Header productData={productData} setProductData={setProductData} getProductData={getProductData} /></header>
-			        <aside className="br-sidebar"><Sidebar productData={productData} setProductData={setProductData} getProductData={getProductData}/></aside>
+			        <header className="br-header"><Header 
+                        productData={productData} 
+                        setProductData={setProductData} 
+                        getProductData={getProductData}
+                        isLoggedIn={isLoggedIn} 
+                    /></header>
+			        <aside className="br-sidebar"><Sidebar 
+                        productData={productData} 
+                        setProductData={setProductData} 
+                        getProductData={getProductData}
+                    /></aside>
 			        <div className="br-main">
                         <Routes>
-                            <Route path="/" element={<Homepage />}/>
+                            <Route path="/" element={<Homepage 
+                                productData={productData} 
+                                setProductData={setProductData} 
+                                getProductData={getProductData}
+                                isLoggedIn={isLoggedIn} 
+                                setIsLoggedIn={setIsLoggedIn}
+                            />}/>
                             <Route path="/balls" element={<Balls 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
@@ -136,7 +141,11 @@ const App = () => {
                                 setProductData={setProductData} 
                                 getProductData={getProductData}
                             />}/>
+                            <Route path="/register" element={<Register />}/>
                             <Route path="/login" element={<Login />}/>
+                            <Route path="/logout" element={<Logout
+                                setIsLoggedIn={setIsLoggedIn}
+                            />}/>
                         </Routes>
                     </div>
 			        <footer className="br-footer"><Footer /></footer>

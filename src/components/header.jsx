@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 
 const Header = (props) => {
+    const { isLoggedIn, getProductData } = props;
+
     const [search, setSearch] = useState([]);
 
     useEffect(() => {
@@ -18,7 +20,8 @@ const Header = (props) => {
         <div className="header-jsx">
             <div className="header-top">
                 <Link to="/" ><img src="/images/logo-short.jpg" width={200} alt="Gutter Ball Logo"/></Link>
-                <Link to="/profile" className="nav-btn">Login/Profile</Link>
+                { isLoggedIn ? <Link to="/profile" className="nav-btn">Profile</Link> :<Link to="/register" className="nav-btn">Sign Up</Link> }
+                { isLoggedIn ? <Link to="/logout" className="nav-btn">Logout</Link> : <Link to="/login" className="nav-btn">Login</Link> }
                 <Link to="/cart" className="nav-btn">Cart</Link>
                 <div onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
                     <input id="searchbox"

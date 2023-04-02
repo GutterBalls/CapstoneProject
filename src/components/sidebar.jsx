@@ -1,21 +1,22 @@
-const Sidebar = () => {
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+const Sidebar = (props) => {
 
     return (
         <div className="">
-            <p>Sidebar.jsx</p>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p>
-            <p>7</p>
-            <p>8</p>
-            <p>9</p>
-            <p>10</p>
-            <p>11</p>
-            <p>12</p>
-            <p>13</p>
+            <section>Filter:
+                <div> Brand </div> {/* grab products by brand, should be passed down as props  */}
+                <div> Price {/* grab products by price */}
+                    <p> High Performance greater than $200 </p>
+                    <p> Mid Performance greater than 100 </p>
+                    <p> Entry Level less than 100 </p>
+                </div> 
+                <div> Sale </div> {/* grab products where sale = true */}
+                <div> Clearance </div> {/* grab products where clearance = true */}
+
+            </section>
+            
         </div>
     )
 }

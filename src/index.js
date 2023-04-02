@@ -59,8 +59,8 @@ const App = () => {
         <BrowserRouter>
             <div className="br">
                 <section className="br-showcase">
-			        <header className="br-header"><Header /></header>
-			        <aside className="br-sidebar"><Sidebar /></aside>
+			        <header className="br-header"><Header productData={productData} setProductData={setProductData} getProductData={getProductData} /></header>
+			        <aside className="br-sidebar"><Sidebar productData={productData} setProductData={setProductData} getProductData={getProductData}/></aside>
 			        <div className="br-main">
                         <Routes>
                             <Route path="/" element={<Homepage />}/>
@@ -78,42 +78,63 @@ const App = () => {
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData}
+                                setProductData={setProductData}
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/shoes" element={<Shoes 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData}
+                                setProductData={setProductData}
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/accessories" element={<Accessories   
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData}
+                                setProductData={setProductData}
+                                getProductData={getProductData}
                             />}/>
-                            <Route path="/single" element={<Single 
+                            <Route path="/single/:id" element={<Single 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData}
+                                setProductData={setProductData}
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/profile" element={<Profile 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData} 
+                                setProductData={setProductData} 
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/cart" element={<Cart 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData} 
+                                setProductData={setProductData} 
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/confirm" element={<Confirm 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                productData={productData} 
+                                setProductData={setProductData} 
+                                getProductData={getProductData}
                             />}/>
                             <Route path="/login" element={<Login />}/>
                         </Routes>

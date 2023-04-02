@@ -26,7 +26,10 @@ const Header = (props) => {
                     placeholder=" Search..."
                     onMouseEnter={() => document.getElementById('search').style.visibility = 'visible'}
                     onChange={(event) => {
-                    setSearch(props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase())));
+                    setSearch(
+                        props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase())) &&
+                        props.productData.filter((product) => product.brand.toLowerCase().includes(event.target.value.toLowerCase()))
+                        );
                     document.getElementById('search').style.visibility = 'visible'
                     }} />
                     <ul id="search">
@@ -35,7 +38,7 @@ const Header = (props) => {
                         <ul key={product.id}>
                             <div id="indSearchItem" /* onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'} */>
                                 <img src={product.image} id="indSearchPic" /> 
-                                <Link to={`/single/${product.id}`}> {product.name}</Link>
+                                <Link to={`/single/${product.id}`}> {product.brand} {product.name}</Link>
 
                             </div>
                         </ul>

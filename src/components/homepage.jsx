@@ -1,6 +1,18 @@
+import { useState, useEffect } from "react";
 
+const Homepage = (props) => {
+    const { setIsLoggedIn, getProductData } = props;
 
-const Homepage = () => {
+    useEffect(() => {
+        getProductData();
+        if (localStorage.getItem("token")) {
+            setIsLoggedIn(true)
+            // getUserData()
+        } else {
+            setIsLoggedIn(false)
+            console.log("No Token!")
+        }
+    }, [])
 
     return (
         <div>

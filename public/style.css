@@ -421,3 +421,70 @@ button {
     width: 20vw;
     height: auto;
 }
+
+/*  PAGINATION */
+.item {
+    align-items: center;
+    color: #FFF;
+    cursor: pointer;
+    display: flex;
+    font-size: 2em;
+    height: 1em;
+    justify-content: center;
+    width: 1em;
+    background-color: lightgray;
+  }
+  
+  .disabled-page {
+    color: black;
+    cursor: pointer;
+    
+  }
+  
+  .active {
+    border: 1px outset black;
+    /* border-radius: 40px; */
+    color: black;
+    
+  }
+  
+  .next {
+    border: 1px outset black;
+    color: black;
+    font-size: 1rem;
+    height: 3vh;
+    position: absolute;
+    right: 0;
+    width: 5vw;
+  }
+  
+  .pagination {
+    align-items: s;
+    background-color: none;
+    display: flex;
+    flex-direction: row;
+    height: 5vh;
+    justify-content: center;
+    list-style-type: none;
+    position: relative;
+    width: 30vw;
+    cursor: pointer;
+    margin-left: 63%;
+  }
+  
+  .pagination-page {
+    font-weight: 700;
+    cursor: pointer;
+    
+  }
+  
+  .previous {
+    border: 1px outset black;
+    cursor: pointer;
+    color: black;
+    font-size: 1rem;
+    height: 3vh;
+    left: 0;
+    position: absolute;
+    width: 5vw;
+  }

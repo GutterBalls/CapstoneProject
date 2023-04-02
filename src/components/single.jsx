@@ -5,11 +5,11 @@ const DATABASE_URL = 'http://localhost:1337/api';
 const Single = (props) => {
     const [singleProduct, setSingleProduct] = useState([]);
     const { id } = useParams();
-
+    console.log("UseParams", useParams())
     useEffect(() => {
         getProductById();
         
-    }, []);
+    }, [useParams()]);
     
     async function getProductById () {
         try {
@@ -23,12 +23,13 @@ const Single = (props) => {
         };
     };
 
+    
 
     return (
         <div className="homepage">
             <p>1 - Single Item View</p>
             {
-                singleProduct ?
+                singleProduct  ?
                 <div id="singlePageFlex">
                     <img src={singleProduct.image} id="singlePageImage"/>
                     <h1> {singleProduct.brand} </h1>

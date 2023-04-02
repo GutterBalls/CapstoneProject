@@ -24,7 +24,7 @@ const Header = (props) => {
                     <input id="searchbox"
                     type="text"
                     placeholder=" Search..."
-                    // onMouseEnter={() => document.getElementById('search').style.visibility = 'visible'}
+                    onMouseEnter={() => document.getElementById('search').style.visibility = 'visible'}
                     onChange={(event) => {
                     setSearch(props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase())));
                     document.getElementById('search').style.visibility = 'visible'

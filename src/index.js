@@ -25,33 +25,32 @@ const App = () => {
         };
     };
 
-    // async function getUserData() {
-    //     try {
-    //         const response = await fetch(`${DATABASE_URL}/users`)
-            // , {
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': `Bearer ${localStorage.getItem("token")}`
-            //     },
-            // });
-            // const translatedData = await response.json();
-            // console.log(translatedData);
-            // setUserData(translatedData);
+    async function getUserData() {
+        
+        try {
+            const response = await fetch(`${DATABASE_URL}/users/me`
+            , {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            });
+            const translatedData = await response.json();
+            console.log("Translated Data", translatedData);
+            setUserData(translatedData);
 
-            // if (translatedData.id > 0) {
-            //     setUserData(translatedData);
-            // } else {
-            //     console.log("Error w/ translatedData.id within getUserData func in src/index.js");
-            // }
-        //     } catch (error) {
-        //         console.error("Error with getUserData function", error);
-        //     }
-        // }
+            } catch (error) {
+                console.error("Error with getUserData function", error);
+            };
+        };
+    
 
         useEffect(()=>{
             getProductData();
-            // getUserData();
-    }, [])
+            if (localStorage.getItem("token")){
+            getUserData();
+            };
+    }, [isLoggedIn])
 
 
     return (

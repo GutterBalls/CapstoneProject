@@ -7,10 +7,8 @@ const perPage = 6;
 const Balls = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
     const offset = currentPage * perPage;
-    
-        
-    
-    const pageCount = Math.ceil(props.productData.length / perPage);
+    const ballProducts = props.productData.filter((singleBall) => singleBall.category_id === 1);
+    const pageCount = Math.ceil(ballProducts.length / perPage);
    
     useEffect(() => {
         props.getProductData();
@@ -30,7 +28,7 @@ const Balls = (props) => {
             <div className="mainProductFlex">
             
             {
-                props.productData.length ? props.productData.filter((singleBall) => singleBall.category_id === 1).slice(offset, offset + perPage).map((singleProduct, index) => {
+                props.productData.length ? props.productData.filter((singleBall) => singleBall.category_id === 1).slice(offset, offset + perPage).map((singleProduct) => {
                     
                     return (
                         <div key={singleProduct.id} className="singleProduct">

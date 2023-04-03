@@ -1,17 +1,28 @@
 import { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+const perPage = 6;
 
 const Bags = (props) => {
+    const [currentPage, setCurrentPage] = useState(0);
+    const offset = currentPage * perPage;
+    const bagProducts = props.productData.filter((singleBag) => singleBag.category_id === 2);
+    const pageCount = Math.ceil(bagProducts.length / perPage);
 
     useEffect(() => {
         props.getProductData();
     }, []);
 
+    function pageClick({ selected: selectedPage}) {
+        setCurrentPage(selectedPage)
+    };
+
     return (
         <div className="homepage">
             <p>Bags</p>
+            <div className="mainProductFlex">
             {
-                props.productData.length ? props.productData.filter((singleBag) => singleBag.category_id === 2).map((singleProduct) => {
+                props.productData.length ? props.productData.filter((singleBag) => singleBag.category_id === 2).slice(offset, offset + perPage).map((singleProduct) => {
                     
                     return (
                         <div key={singleProduct.id} className="singleProduct">
@@ -28,6 +39,19 @@ const Bags = (props) => {
                     
                 }) : <h1> No data loaded. </h1>
             }
+            </div>
+            <ReactPaginate
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            pageCount={pageCount}
+            onPageChange={pageClick}
+            containerClassName={"pagination"}
+            previousLinkClassName={"item previous"}
+            nextLinkClassName={"item next"}
+            disabledClassName={"disabled-page"}
+            activeClassName={"item active"}
+            disabledLinkClassName={"item disabled"}
+            />
         </div>
     )
 }

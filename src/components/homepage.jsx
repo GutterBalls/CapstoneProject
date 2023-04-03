@@ -16,57 +16,10 @@ const Homepage = (props) => {
 
     return (
         <div>
-            <p>Homepage</p>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p>
-            <p>7</p>
-            <p>8</p>
-            <p>9</p>
-            <p>10</p>
-            <p>11</p>
-            <p>12</p>
-            <p>13</p>
-            <p>14</p>
-            <p>15</p>
-            <p>16</p>
-
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p>
-            <p>7</p>
-            <p>8</p>
-            <p>9</p>
-            <p>10</p>
-            <p>11</p>
-            <p>12</p>
-            <p>13</p>
-            <p>14</p>
-            <p>15</p>
-            <p>16</p>
-
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p>
-            <p>7</p>
-            <p>8</p>
-            <p>9</p>
-            <p>10</p>
-            <p>11</p>
-            <p>12</p>
-            <p>13</p>
-            <p>14</p>
-            <p>15</p>
-            <p>16</p>
+            <h1> Welcome to the Gutterball Bowling Superstore! </h1>
+            <h3> Please login or create an account above to place an order or feel free to browse our selection of products.</h3>
+            <h3> Thank you for your business. </h3>
+            
         </div>
     )
 }

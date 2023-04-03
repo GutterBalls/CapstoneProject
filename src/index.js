@@ -24,25 +24,34 @@ const App = () => {
             console.log(error)
         };
     };
-    // const getUserData = async () => {
+
+    // async function getUserData() {
     //     try {
-    //       const response = await fetch(`${DATABASE_URL}/users/me`, {
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           'Authorization': `Bearer ${localStorage.getItem("token")}`
-    //         },
-    //       });
-    //       const translatedData = await response.json();
-    //       console.log(translatedData);
-    //       if (translatedData.id > 0) {
-    //         setUserData(translatedData);
-    //       } else {
-    //         console.log("Error w/ translatedData.id within getUserData func in src/index.js");
-    //       }
-    //     } catch (error) {
-    //       console.error("Error with getUserData function", error);
-    //     }
-    //   }
+    //         const response = await fetch(`${DATABASE_URL}/users`)
+            // , {
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': `Bearer ${localStorage.getItem("token")}`
+            //     },
+            // });
+            // const translatedData = await response.json();
+            // console.log(translatedData);
+            // setUserData(translatedData);
+
+            // if (translatedData.id > 0) {
+            //     setUserData(translatedData);
+            // } else {
+            //     console.log("Error w/ translatedData.id within getUserData func in src/index.js");
+            // }
+        //     } catch (error) {
+        //         console.error("Error with getUserData function", error);
+        //     }
+        // }
+
+        useEffect(()=>{
+            getProductData();
+            // getUserData();
+    }, [])
 
 
     return (

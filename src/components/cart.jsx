@@ -1,13 +1,53 @@
-const Cart = () => {
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+const DATABASE_URL = 'http://localhost:1337/api';
+
+const Cart = (props) => {
+    const { getProductData } = props; 
+
+    useEffect(() => {
+        getProductData();
+        getCartData();
+    }, []);
+
+    const [cartData, setCartData] = useState([]);
+
+    async function getCartData() {
+        try {
+            const response = await fetch(`${DATABASE_URL}/cartItems`)
+            const translatedData = await response.json();
+            console.log(translatedData);
+
+            setCartData(translatedData);
+            console.log("Cart data", cartData)
+
+            return translatedData
+        } catch (error) {
+            console.log(error)
+        };
+    };
 
     return (
         <div className="homepage">
-            <p>1 - Cart</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p>
+            <p>Cart</p>
+            {
+                cartData.length ? cartData.filter((item)=> item.user_id === ____________ ).map((singleItem) => {
+                    return (
+                        <div key={singleItem.id} className="singleProduct">
+                            <div className="itemInfoFlex">
+                                <h3> User ID: {singleItem.user_id}</h3>
+                                <h3> Order ID: {singleItem.order_id}</h3> 
+                                <h4> Product ID: {singleItem.product_id}</h4>
+                                <h4> Quantity: {singleItem.qty}</h4>
+                                <h4> Price: ${singleItem.price}</h4>
+                            </div>
+                        </div>
+                        
+                    )
+                    
+                }) : <h1> No data loaded. </h1>
+            }
             <div>
                 <form class="form">
                     <div class="checkout-method">

@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
-const Profile = () => {
+const Profile = (props) => {
 
     
     return (

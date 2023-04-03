@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ReactPaginate from "react-paginate";
 const DATABASE_URL = 'http://localhost:1337/api';
-const perPage = 1;
+const perPage = 6;
 
 const Balls = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
     const offset = currentPage * perPage;
+    
+        
+    
     const pageCount = Math.ceil(props.productData.length / perPage);
    
     useEffect(() => {
@@ -24,6 +27,7 @@ const Balls = (props) => {
     return (
         <div className="homepage">
             <p>Balls</p> 
+            <div className="mainProductFlex">
             
             {
                 props.productData.length ? props.productData.filter((singleBall) => singleBall.category_id === 1).slice(offset, offset + perPage).map((singleProduct, index) => {
@@ -43,6 +47,7 @@ const Balls = (props) => {
                     
                 }) : <h1> No data loaded. </h1>
             }
+            </div>
             <ReactPaginate
             previousLabel={"Previous"}
             nextLabel={"Next"}
@@ -53,6 +58,7 @@ const Balls = (props) => {
             nextLinkClassName={"item next"}
             disabledClassName={"disabled-page"}
             activeClassName={"item active"}
+            disabledLinkClassName={"item disabled"}
             />
         </div>
     )

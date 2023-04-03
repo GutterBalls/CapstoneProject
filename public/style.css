@@ -7,14 +7,14 @@
 body {
 	background-color: gray;
 	font-weight: 700;
-	padding: 10px;
+	/* padding: 10px; */
 	height: 100vh;
 	display: grid;
     place-items: start;
 }
 .br-showcase {
     display: flex; contain: content;
-	width: 95vw;
+	width: 100vw;
 	display: grid;
 	gap: 2px;
     border-radius: 5px;
@@ -359,6 +359,9 @@ button {
 #search {
     position: absolute;
     width: inherit;
+    overflow-y: auto;
+    max-height: 36%;
+    border-bottom: 1px solid black;
 }
 
 
@@ -369,7 +372,7 @@ button {
 
 #indSearchItem {
     display: flex;
-    border: 2px solid black;
+    border: 1px solid black;
     width: inherit;
     background-color: white;
     
@@ -380,34 +383,51 @@ button {
 }
 
 /* ALL PRODUCTs */
-.singleProduct {
-    display:flex;
+.mainProductFlex {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 30% 30% 30%;
+    height: 75vh;
+    margin-top: 5%;
+    margin-left: 20%;
+    /* border: 10px solid black; */
+    
+}
+/* .singleProduct {
+    display: block;
     align-items: center;
-    justify-content: space-around;
-    /* border: 2px outset black; */
+    align-content: center;
+    justify-content: center;
+    border: 2px outset rgb(193, 9, 9);
+    background-color: green;
+    width: 30vw;
     margin-bottom: 2%;
     margin-left: 5%;
     
-}
+} */
 
 .singleProductImage {
-    width: 40%;
+    width: 20%;
     height: auto;
+    /* border: 2px solid black; */
+    /* margin-left: 40%; */
 }
 
 .singleProductImage:hover {
     transform: scale(1.2);
 }
 
-.itemInfoFlex {
+/* .itemInfoFlex {
     display: flex;
     flex-direction: column;
-    /* border: 2px solid black; */
-    width: 40vw;
+    border: 2px solid black;
+    width: 30vw;
     height: 10vh;
-    align-items: flex-start;
-    justify-content: space-between;
-}
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+    background-color: yellow;
+} */
 
 /* SINGLE PAGE PRODUCT */
 #singlePageFlex {
@@ -425,58 +445,54 @@ button {
 /*  PAGINATION */
 .item {
     align-items: center;
-    color: #FFF;
     cursor: pointer;
     display: flex;
-    font-size: 2em;
+    font-size: 1.7em;
     height: 1em;
     justify-content: center;
     width: 1em;
     background-color: lightgray;
   }
   
-  .disabled-page {
-    color: black;
-    cursor: pointer;
-    
-  }
   
   .active {
     border: 1px outset black;
-    /* border-radius: 40px; */
-    color: black;
-    
+    border-radius: 50%;
+    color: black;   
   }
+
+  
+  
   
   .next {
     border: 1px outset black;
     color: black;
     font-size: 1rem;
     height: 3vh;
-    position: absolute;
+    position: inherit;
     right: 0;
     width: 5vw;
   }
   
   .pagination {
-    align-items: s;
-    background-color: none;
+    align-items: center;
+    /* background-color: blue; */
     display: flex;
     flex-direction: row;
     height: 5vh;
-    justify-content: center;
+    justify-content: space-evenly;
     list-style-type: none;
     position: relative;
-    width: 30vw;
-    cursor: pointer;
-    margin-left: 63%;
+    width: 20vw;
+    margin-left: 33%;
+    /* border: 2px solid black; */
   }
+  
   
   .pagination-page {
     font-weight: 700;
     cursor: pointer;
-    
-  }
+}
   
   .previous {
     border: 1px outset black;
@@ -485,6 +501,13 @@ button {
     font-size: 1rem;
     height: 3vh;
     left: 0;
-    position: absolute;
+    position: inherit;
     width: 5vw;
   }
+
+.disabled-page {
+    color: black;
+    cursor: pointer;
+    
+  }
+

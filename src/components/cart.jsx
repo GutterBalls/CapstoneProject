@@ -4,10 +4,9 @@ import { useState, useEffect } from "react";
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const Cart = (props) => {
-    const { getProductData } = props; 
+    
 
     useEffect(() => {
-        getProductData();
         getCartData();
     }, []);
 
@@ -32,7 +31,7 @@ const Cart = (props) => {
         <div className="homepage">
             <p>Cart</p>
             {
-                cartData.length ? cartData.filter((item)=> item.user_id === ____________ ).map((singleItem) => {
+                cartData.length ? cartData.filter((item)=> item.user_id === props.userData.id ).map((singleItem) => {
                     return (
                         <div key={singleItem.id} className="singleProduct">
                             <div className="itemInfoFlex">

@@ -511,3 +511,23 @@ button {
     
   }
 
+/*  CART  */
+
+#cartOwner {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    margin-bottom: 2%;
+}
+
+.cartFlex {
+    display: flex;
+    border: 2px solid black;
+}
+
+.cartItem {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid red;
+    width: 75vw;
+}

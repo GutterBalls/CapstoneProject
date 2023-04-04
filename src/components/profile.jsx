@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const Profile = (props) => {
-    const { getUserData, userData, setUserData, isLoggedIn } = props;
+    const { getUserData, userData, setUserData, isLoggedIn, setIsLoggedIn } = props;
 
     const nav = useNavigate();
 
@@ -30,15 +30,24 @@ const Profile = (props) => {
         setListUsersBtn(!listUsersBtn)
     };
 
-    useEffect(() => {
-        getAllUsersData();
-    }, []);
+    // useEffect(() => {
+        
+    // }, []);
 
     useEffect(() => {
-        if (localStorage.getItem("token")){
+        if (localStorage.getItem("token")) {
+            setIsLoggedIn(true);
             getUserData();
-        };
-    }, [isLoggedIn]);
+        if(userData.isAdmin === true){
+            getAllUsersData();
+        }    
+            
+        } else {
+            setIsLoggedIn(false)
+            console.log("No Token!")
+        }
+    }, [])
+
 
 // Edit/Update User
     const editUser = async (event) => {

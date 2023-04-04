@@ -60,11 +60,13 @@ body{
     border: 1px solid black;
     border-radius: 3px;
     margin-right: 10px;
+    margin-bottom: 1px;
 }
 
 #search {
     position: absolute;
-    width: inherit;
+    /* width:fit-content; */
+    /* width: inherit; */
     overflow-y: auto;
     max-height: 36%;
     font-size: 16px;

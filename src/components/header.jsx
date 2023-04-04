@@ -34,7 +34,7 @@ const Header = (props) => {
             </div>
             <div className="header-bottom">
                  {/* SEARCHBOX */}
-                 <div onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
+                 <div id="search-primary" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
                     <input id="searchbox"
                     type="text"
                     placeholder="Search..."

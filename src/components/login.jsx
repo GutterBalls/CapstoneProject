@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
-const Login = () =>{
+const Login = (props) =>{
+    const { getUserData, isLoggedIn } = props;
     const [loginUser, setLoginUser] = useState("");
     const [loginPass, setLoginPass] = useState("");
 
     const nav = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("token")){
+            getUserData();
+            };
+    }, [isLoggedIn]);
 
     async function logIn(event){
         event.preventDefault();

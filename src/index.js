@@ -63,11 +63,11 @@ const App = () => {
                         getProductData={getProductData}
                         isLoggedIn={isLoggedIn} 
                     /></header>
-			        <aside className="br-sidebar"><Sidebar 
-                        productData={productData} 
-                        setProductData={setProductData} 
+			        {/* <aside className="br-sidebar"><Sidebar
+                        productData={productData}
+                        setProductData={setProductData}
                         getProductData={getProductData}
-                    /></aside>
+                    /></aside> */}
 			        <div className="br-main">
                         <Routes>
                             <Route path="/" element={<Homepage 

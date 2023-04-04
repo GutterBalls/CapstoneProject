@@ -30,9 +30,10 @@ const Header = (props) => {
                     // onMouseEnter={() => document.getElementById('search').style.visibility = 'visible'}
                     onChange={(event) => {
                     setSearch(
-                        props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase())) &&
-                        props.productData.filter((product) => product.brand.toLowerCase().includes(event.target.value.toLowerCase()))
-                        );
+                        props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase()) 
+                            || product.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
+                            || product.description.toLowerCase().includes(event.target.value.toLowerCase()) 
+                        ));
                     document.getElementById('search').style.visibility = 'visible'
                     }} />
                     <ul id="search">

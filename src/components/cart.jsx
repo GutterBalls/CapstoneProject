@@ -4,13 +4,12 @@ import { useState, useEffect } from "react";
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const Cart = (props) => {
-    
+    const [cartQuantity, setCartQuantity] = useState(1);
+    const [cartData, setCartData] = useState([]);
 
     useEffect(() => {
         getCartData();
     }, []);
-
-    const [cartData, setCartData] = useState([]);
 
     async function getCartData() {
         try {
@@ -27,6 +26,20 @@ const Cart = (props) => {
         };
     };
 
+    function cartItemQuantity(event) {
+        setCartQuantity(event.target.value)
+    };
+
+    function cartQuantityLoop() {
+        let number = [];
+
+        for (let i = 1; i <=10; i++) {
+            number.push(<option value={i}>{i}</option>)
+        }
+        return number
+    };
+
+
     return (
         <div className="homepage">
             <h1 id="cartOwner">{props.userData.username}'s Cart</h1>
@@ -36,10 +49,19 @@ const Cart = (props) => {
                         <div key={singleItem.id} className="cartFlex">
                             <div className="cartItem">
                                 <h3> Order ID: {singleItem.order_id}</h3> 
-                                {/* { props.productData.filter((singleProduct) =>  } */}
-                                <h4> Product ID: {singleItem.product_id}</h4>
-                                <h4> Quantity: {singleItem.qty}</h4>
+                                { props.productData.filter((singleProduct) => singleItem.product_id == singleProduct.id).map((product) => { 
+                                return (
+                                    <div>
+                                        <img src={product.image} style={{width: "auto", height: "5vh"}}/>
+                                        <div>
+                                            <h4> {product.brand} {product.name}</h4>
+                                        </div>
+                                    </div>
+                                )})}
+                                <label htmlFor="cartQuantity"> Quantity:</label> 
+                                <select id="cartQuantity" value={cartQuantity} onChange={cartItemQuantity}> {cartQuantityLoop()}</select>
                                 <h4> Price: ${singleItem.price}</h4>
+                                <h4> Total: ${(cartQuantity * singleItem.price).toFixed(2)}</h4>
                             </div>
                         </div>
                         
@@ -47,6 +69,7 @@ const Cart = (props) => {
                     
                 }) : <h1> No items in your cart. </h1>
             } 
+                        <h2> Total: {Math.reduce}</h2>
             {/* <div>
                 <form class="form">
                     <div class="checkout-method">

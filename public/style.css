@@ -28,6 +28,13 @@ body{
     width: 250px;
 }
 
+.nav-btn:hover {
+    color: red; 
+    text-shadow: 5px 5px 5px black;
+    transform: scale(1.1);
+    transition: all .2s ease-out;
+}
+
 .icon{
     font-size: 2em;
 }
@@ -76,21 +83,23 @@ body{
 
 }
 
-#indSearchPic {
+.indSearchPic {
     width: 3vw;
     height: auto;
 }
 
-#indSearchItem {
+.indSearchItem {
     display: flex;
      /* flex-direction: row; justify-content: flex-start; align-items: center; */
     /* border: 1px solid black; */
     width: inherit;
+    text-decoration: none;
     
 }
 
-#indSearchItem:hover {
+.indSearchItem:hover {
     background-color: lightgray;
+    transform: scale(1.05);
 }
 
 /* END OF HEADER SECTION */

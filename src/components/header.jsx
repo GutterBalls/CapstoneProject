@@ -50,13 +50,13 @@ const Header = (props) => {
                     <ul id="search">
                         { search.map((product) => {
                             return(
-                            <ul key={product.id}>
-                                <div id="indSearchItem" /* onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'} */>
-                                    <img src={product.image} id="indSearchPic" /> 
+                            <li className="indSearchItem" key={product.id}>
+                                <div /* onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'} */>
+                                    <img src={product.image} className="indSearchPic" /> 
                                     <Link to={`/single/${product.id}`}> {product.brand} {product.name}</Link>
 
                                 </div>
-                            </ul>
+                            </li>
                         )})}
                     </ul>
                 </div>

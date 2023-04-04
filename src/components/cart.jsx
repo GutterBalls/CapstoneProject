@@ -29,14 +29,14 @@ const Cart = (props) => {
 
     return (
         <div className="homepage">
-            <p>Cart</p>
+            <h1 id="cartOwner">{props.userData.username}'s Cart</h1>
             {
                 cartData.length ? cartData.filter((item)=> item.user_id === props.userData.id ).map((singleItem) => {
                     return (
-                        <div key={singleItem.id} className="singleProduct">
-                            <div className="itemInfoFlex">
-                                <h3> User ID: {singleItem.user_id}</h3>
+                        <div key={singleItem.id} className="cartFlex">
+                            <div className="cartItem">
                                 <h3> Order ID: {singleItem.order_id}</h3> 
+                                {/* { props.productData.filter((singleProduct) =>  } */}
                                 <h4> Product ID: {singleItem.product_id}</h4>
                                 <h4> Quantity: {singleItem.qty}</h4>
                                 <h4> Price: ${singleItem.price}</h4>
@@ -45,9 +45,9 @@ const Cart = (props) => {
                         
                     )
                     
-                }) : <h1> No data loaded. </h1>
-            }
-            <div>
+                }) : <h1> No items in your cart. </h1>
+            } 
+            {/* <div>
                 <form class="form">
                     <div class="checkout-method">
                         <button type="button" class="button">
@@ -79,8 +79,9 @@ const Cart = (props) => {
                     </div>
                     <button class="button button--checkout">Checkout</button>
                 </form>
-            </div>
+            </div> */}
         </div>
+
     )
 }
 

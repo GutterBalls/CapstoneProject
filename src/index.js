@@ -138,6 +138,7 @@ const App = () => {
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                getUserData={getUserData}
                                 productData={productData} 
                                 setProductData={setProductData} 
                                 getProductData={getProductData}

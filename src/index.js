@@ -1,7 +1,8 @@
-
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Sidebar, Footer, Login, Logout, Register } from "./components/index";
+import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Cart, Confirm, Sidebar, Footer, Login, Logout, Register, CartCheckout } from "./components/index";
 import { useState, useEffect } from "react";
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -133,11 +134,12 @@ const App = () => {
                                 getProductData={getProductData}
                                 
                             />}/>
-                            <Route path="/cart" element={<Cart 
+                            <Route path="/cart" element={<CartCheckout
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
                                 setUserData={setUserData}
+                                getUserData={getUserData}
                                 productData={productData} 
                                 setProductData={setProductData} 
                                 getProductData={getProductData}

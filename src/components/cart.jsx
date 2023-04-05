@@ -9,6 +9,7 @@ const Cart = (props) => {
 
     useEffect(() => {
         getCartData();
+        props.getUserData();
     }, []);
 
     async function getCartData() {
@@ -42,9 +43,9 @@ const Cart = (props) => {
 
     return (
         <div className="homepage">
-            <h1 id="cartOwner">{props.userData.username}'s Cart</h1>
+            <h1 id="cartOwner">{props.userData.username}</h1>
             {
-                cartData.length ? cartData.filter((item)=> item.user_id === props.userData.id ).map((singleItem) => {
+                cartData.length && localStorage.getItem("token") ? cartData.filter((item)=> item.user_id === props.userData.id ).map((singleItem) => {
                     return (
                         <div key={singleItem.id} className="cartFlex">
                             <div className="cartItem">
@@ -67,7 +68,7 @@ const Cart = (props) => {
                         
                     )
                     
-                }) : <h1> No items in your cart. </h1>
+                }) : <h1> No items in your cart. Please login or create an account to begin the process! </h1>
             } 
                         <h2> Total: {Math.reduce}</h2>
             {/* <div>

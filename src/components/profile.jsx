@@ -110,7 +110,7 @@ const Profile = (props) => {
 // Get User order history
     async function getOrderHistory() {
         try{
-            const response = await fetch(`${DATABASE_URL}/orders/${userData.id}`
+            const response = await fetch(`${DATABASE_URL}/orders/me`
             , {
                 headers: {
                     'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ const Profile = (props) => {
             console.log("translated Data:",translatedData);
             setOrderData(translatedData);
             console.log(orderData);
-            return translatedData
+
 
         } catch (error) {
             console.error("Error with orderHistory function", error);

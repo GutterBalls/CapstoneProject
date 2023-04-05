@@ -19,7 +19,7 @@ const Login = (props) =>{
     async function logIn(event){
         event.preventDefault();
         try{
-
+            console.log("Login info...",loginUser, loginPass);
             const response = await fetch(`${DATABASE_URL}/users/login`,{
                 method: "POST",
                 headers: {
@@ -31,7 +31,8 @@ const Login = (props) =>{
                 })
             });
             const transData = await response.json();
-
+            console.log("Translated response...");
+            console.log(transData);
             if(!transData){
                 alert("Login was unsuccessful. Please try again. ");
             } else {
@@ -49,31 +50,31 @@ const Login = (props) =>{
     return(
         <div className="homepage">
 
-        <div class="form">
-            <span class="form__title">Login</span>
+        <div className="form">
+            <span className="form__title">Login</span>
             <form action="" onSubmit={ logIn }>
-                <div class="form__input">
-                    <i class="ri-user-line"></i>
+                <div className="form__input">
+                    <i className="ri-user-line"></i>
                     <input 
                         type="text" 
                         placeholder="Username"
                         value={ loginUser }
                         onChange={(event)=> setLoginUser(event.target.value)}
                     />
-                    <span class="bar"></span>
+                    <span className="bar"></span>
                 </div>
-                <div class="form__input">
-                    <i class="ri-lock-line"></i>
+                <div className="form__input">
+                    <i className="ri-lock-line"></i>
                     <input 
                         type="password" 
                         placeholder="Password"
                         value={ loginPass }
                         onChange={(event)=> setLoginPass(event.target.value)}
                     />
-                    <span class="bar"></span>
+                    <span className="bar"></span>
                 </div>
-                <button type="submit" class="form__button">Login</button>
-                <span class="form__switch">
+                <button type="submit" className="form__button">Login</button>
+                <span className="form__switch">
                 </span>
             </form>
         </div>

@@ -18,42 +18,59 @@ const Accessories = (props) => {
     }, []);
 
     return (
-        <div className="homepage">
-            <p>1 - Accessories</p>
-            <div className="mainProductFlex">
-            {
-                props.productData.length ? props.productData.filter((singleAcc) => singleAcc.category_id === 4).slice(offset, offset + perPage).map((singleProduct) => {
-                    
-                    return (
-                        <div key={singleProduct.id} className="singleProduct">
-                            <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
-                            <div className="itemInfoFlex">
-                                <h3> Brand: {singleProduct.brand}</h3>
-                                <h3> Name: {singleProduct.name}</h3> 
-                                <h4> Price: ${singleProduct.price}</h4>
-                                <button> Add to Cart </button> 
-                            </div>
-                        </div>
+        <section className="main-container">
+            <aside className="main-left">Filter by...
+                <ul><strong>Brand:</strong>
+                    <li>BBF</li>
+                    <li>Brunswick</li>
+                    <li>Genesis</li>
+                    <li>Hammer</li>
+                    <li>KR Strikeforce</li>
+                    <li>Storm</li>
+                    <li>Vise</li>
+                </ul>
+                <ul><strong>Specials:</strong>
+                    <li>ON SALE!</li>
+                    <li>CLEARANCE</li>
+                </ul>
+            </aside>
+            <div>
+                {/* <div className="mainProductFlex"> */}
+                <div className="main-right">
+                {
+                    props.productData.length ? props.productData.filter((singleAcc) => singleAcc.category_id === 4).slice(offset, offset + perPage).map((singleProduct) => {
                         
-                    )
-                    
-                }) : <h1> No data loaded. </h1>
-            }
+                        return (
+                            <div key={singleProduct.id} className="main-singleProduct">
+                                <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
+                                <div className="itemInfoFlex">
+                                    <h5> Brand: {singleProduct.brand}</h5>
+                                    <h5> Name: {singleProduct.name}</h5> 
+                                    <h5> Price: ${singleProduct.price}</h5>
+                                    <button className="atc-btn"> Add to Cart </button> 
+                                </div>
+                            </div>
+                            
+                        )
+                        
+                    }) : <h1> No data loaded. </h1>
+                }
+                </div>
+                <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                pageCount={pageCount}
+                onPageChange={pageClick}
+                containerClassName={"pagination"}
+                previousLinkClassName={"item previous"}
+                nextLinkClassName={"item next"}
+                disabledClassName={"disabled-page"}
+                activeClassName={"item active"}
+                disabledLinkClassName={"item disabled"}
+                />
+            
             </div>
-            <ReactPaginate
-            previousLabel={"Previous"}
-            nextLabel={"Next"}
-            pageCount={pageCount}
-            onPageChange={pageClick}
-            containerClassName={"pagination"}
-            previousLinkClassName={"item previous"}
-            nextLinkClassName={"item next"}
-            disabledClassName={"disabled-page"}
-            activeClassName={"item active"}
-            disabledLinkClassName={"item disabled"}
-            />
-           
-        </div>
+        </section>
     )
 }
 

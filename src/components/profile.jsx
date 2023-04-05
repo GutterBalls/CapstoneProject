@@ -150,8 +150,9 @@ const Profile = (props) => {
 
 //Admin - Delete user
     async function deleteUser(event){
+        event.preventDefault();
         try{
-            const response = await fetch(`${DATABASE_URL}/users/${userData.id}`
+            const response = await fetch(`${DATABASE_URL}/users/1`
             , {
                 method: "DELETE",
                 headers: {

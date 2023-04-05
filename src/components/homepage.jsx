@@ -15,12 +15,13 @@ const Homepage = (props) => {
     }, [])
 
     return (
-        <div className="main-container">
-            <h1> Welcome to the Gutterball Bowling Superstore! </h1>
-            <h3> Please login or create an account above to place an order or feel free to browse our selection of products.</h3>
-            <h3> Thank you for your business. </h3>
-            
-        </div>
+        <section className="main-container">
+            <div className="main-full-width">
+                <h1> Welcome to the Gutterball Bowling Superstore! </h1>
+                <h3> Please login or create an account above to place an order or feel free to browse our selection of products.</h3>
+                <h3> Thank you for your business. </h3>
+            </div>           
+        </section>
     )
 }
 export default Homepage;

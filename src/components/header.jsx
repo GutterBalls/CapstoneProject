@@ -20,22 +20,18 @@ const Header = (props) => {
         return singleProduct.name //COME BACK FOR.
     })
     return (
-        <div className="header-jsx">
+        <div className="header-jsx" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
             <div className="header-top">
                 <Link to="/" ><img src="/images/logo-short.jpg" alt="Gutter Ball Logo" id="logo"/></Link>
                 <br />
                 { isLoggedIn ? <Link to="/profile" className="nav-btn-top icon"><CgProfile /></Link> :<Link to="/register" className="nav-btn-top icon"><BsPencilSquare /></Link> }
                 { isLoggedIn ? <Link to="/logout" className="nav-btn-top icon"><GrLogout /></Link> : <Link to="/login" className="nav-btn-top icon"><GrLogin /></Link> }
                 <Link to="/cart" className="nav-btn-top icon"><BsCart4 /></Link>
-               
 
-                
-                
-            </div>
-            <div className="header-bottom">
                  {/* SEARCHBOX */}
-                 <div id="search-primary" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
-                    <input id="searchbox"
+                 <div>
+                 {/* <div onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}> */}
+                    <input className="searchbox"
                     type="text"
                     placeholder="Search..."
                     // onMouseEnter={() => document.getElementById('search').style.visibility = 'visible'}
@@ -43,7 +39,7 @@ const Header = (props) => {
                     setSearch(
                         props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase()) 
                             || product.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
-                            || product.description.toLowerCase().includes(event.target.value.toLowerCase()) 
+                            // || product.description.toLowerCase().includes(event.target.value.toLowerCase()) 
                         ));
                     document.getElementById('search').style.visibility = 'visible'
                     }} />
@@ -60,6 +56,10 @@ const Header = (props) => {
                         )})}
                     </ul>
                 </div>
+                
+                
+            </div>
+            <div className="header-bottom">
                 <Link to="/balls" className="nav-btn">Balls</Link>
                 <Link to="/bags" className="nav-btn">Bags</Link>
                 <Link to="/shoes" className="nav-btn">Shoes</Link>

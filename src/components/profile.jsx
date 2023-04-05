@@ -148,12 +148,13 @@ const Profile = (props) => {
             };
         };
 
-//Admin - Delete user
-    async function deleteUser(event){
+//Admin - Disable user
+    async function disableUser(event){
+        event.preventDefault();
         try{
             const response = await fetch(`${DATABASE_URL}/users/${userData.id}`
             , {
-                method: "DELETE",
+                method: "PATCH",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -162,9 +163,23 @@ const Profile = (props) => {
             const translatedData = await response.json();
             console.log("Translated Data", translatedData);
             if(!translatedData){
-                alert("User was not deleted. Please try again.")
+                alert("User was not disabled. Please try again.")
             } else{
-                alert("User was delete.")
+                function updateUserData(){
+                    let updateArr = [];
+                    for(let i=0; i<userData.length; i++){
+                        let currentUser = userData[i];
+                        if(currentUser.id !== userData.id){
+                            updateArr.push(currentUser);
+                        }else{
+                            updateArr.push(transData);
+                        }
+                    }
+                    return updateArr
+                };
+                const newUserData = updateUserData();
+                setUserData(newUserData);
+                alert("User was disabled.")
             }
             
         } catch (error) {
@@ -255,9 +270,9 @@ const Profile = (props) => {
                                     <div key={singleUser.id}>
                                         <hr></hr>
                                         <h3>ID: {singleUser.id}</h3>
-                                        <h3>Username: {singleUser.username}
-                                            <button onClick={ deleteUser }>Delete User</button>
-                                        </h3>
+                                        <h3>Username: {singleUser.username}</h3>
+                                        <h3>Status: {singleUser.isActive}</h3>
+                                        <button onClick={ disableUser }>Disable User</button>
                                         <hr></hr>
                                     </div>
                                     

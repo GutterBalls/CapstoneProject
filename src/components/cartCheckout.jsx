@@ -30,7 +30,7 @@ const CartCheckout = (props) => {
     // GET all carts.
     async function getCartData() {
         try {
-            const response = await fetch(`${DATABASE_URL}/cartItems`)
+            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`)
             const translatedData = await response.json();
             console.log(translatedData);
 
@@ -85,7 +85,7 @@ const CartCheckout = (props) => {
                       Shopping Cart Items
                     
                     </MDBTypography>
-                    { cartData.length > 0 && localStorage.getItem("token") ? cartData.filter((item)=> item.user_id === props.userData.id).map((singleItem) => {
+                    { cartData.length > 0 && localStorage.getItem("token") ? cartData.map((singleItem) => {
                         return (
                     <div className="d-flex align-items-center mb-5" key={singleItem.id}>
                       <div className="flex-shrink-0">
@@ -244,7 +244,7 @@ const CartCheckout = (props) => {
                         label="Card number"
                         type="text"
                         size="lg"
-                        defaultValue="1234 5678 9012 3457"
+                        defaultValue=""
                       />
 
                       <MDBInput
@@ -252,7 +252,7 @@ const CartCheckout = (props) => {
                         label="Name on card"
                         type="text"
                         size="lg"
-                        defaultValue="John Smith"
+                        defaultValue=""
                       />
 
                       <MDBRow>
@@ -264,8 +264,8 @@ const CartCheckout = (props) => {
                             size="lg"
                             minLength="7"
                             maxLength="7"
-                            defaultValue="01/22"
-                            placeholder="MM/YYYY"
+                            defaultValue=""
+                            placeholder=""
                           />
                         </MDBCol>
                         <MDBCol md="6" className="mb-3">

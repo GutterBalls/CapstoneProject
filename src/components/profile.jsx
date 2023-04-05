@@ -50,7 +50,7 @@ const Profile = (props) => {
             setIsLoggedIn(false)
             console.log("No Token!")
         }
-    }, [])
+    }, [isLoggedIn])
 
 
 // Edit/Update User
@@ -149,12 +149,12 @@ const Profile = (props) => {
         };
 
 //Admin - Disable user
-    async function disableUser(event){
+    async function disableUser(singleUser, event){
         event.preventDefault();
         try{
-            const response = await fetch(`${DATABASE_URL}/users/${userData.id}`
+            const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
             , {
-                method: "PATCH",
+                method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -180,6 +180,7 @@ const Profile = (props) => {
                 const newUserData = updateUserData();
                 setUserData(newUserData);
                 alert("User was disabled.")
+                nav("/logout")
             }
             
         } catch (error) {
@@ -271,8 +272,8 @@ const Profile = (props) => {
                                         <hr></hr>
                                         <h3>ID: {singleUser.id}</h3>
                                         <h3>Username: {singleUser.username}</h3>
-                                        <h3>Status: {singleUser.isActive}</h3>
-                                        <button onClick={ disableUser }>Disable User</button>
+                                        <h3>Status: {singleUser.isActive ? "Active" : "Inactive"}</h3>
+                                        <button onClick={(event) => disableUser(singleUser.id, event)}>Disable</button>
                                         <hr></hr>
                                     </div>
                                     

@@ -39,7 +39,7 @@ const Login = (props) =>{
                 const tokenKey = transData.token;
                 console.log(tokenKey);
                 localStorage.setItem("token", tokenKey);
-                alert("Login was successful");
+                // alert("Login was successful");
                 nav("/")
             }
         } catch(error){

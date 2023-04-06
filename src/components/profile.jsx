@@ -157,7 +157,7 @@ const Profile = (props) => {
             };
         };
 
-// Admin - Disable user
+// Admin - Disable user account
     async function disableUser(singleUser, event){
         event.preventDefault();
         try{
@@ -173,6 +173,47 @@ const Profile = (props) => {
             // console.log("Translated Data", translatedData);
             if(!translatedData){
                 alert("User was not disabled. Please try again.")
+            } else{
+                function updateUserData(){
+                    let updateArr = [];
+                    for(let i=0; i<userData.length; i++){
+                        let currentUser = userData[i];
+                        if(currentUser.id !== userData.id){
+                            updateArr.push(currentUser);
+                        }else{
+                            updateArr.push(transData);
+                        }
+                    }
+                    return updateArr
+                };
+                const newUserData = updateUserData();
+                setUserData(newUserData);
+                // alert("User was disabled.")
+                nav("/profile")
+                return getAllUsersData();
+            }
+            
+        } catch (error) {
+            console.error("Error with deleteUser function", error);
+        };
+    };
+
+    // Admin - Enable user account
+    async function enableUser(singleUser, event){
+        event.preventDefault();
+        try{
+            const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
+            , {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            });
+            const translatedData = await response.json();
+            // console.log("Translated Data", translatedData);
+            if(!translatedData){
+                alert("User was not enabled. Please try again.")
             } else{
                 function updateUserData(){
                     let updateArr = [];

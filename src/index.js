@@ -12,6 +12,7 @@ const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userData, setUserData] = useState([]);
     const [productData, setProductData] = useState([]);
+    const [orderData, setOrderData] = useState([]);
     
     async function getProductData() {
         try {
@@ -45,11 +46,29 @@ const App = () => {
             };
         };
     
+    async function getOrderData () {
+        try {
+            const response = await fetch(`${DATABASE_URL}/orders/me`
+            , {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            });
+            const translatedData = await response.json();
+            console.log("Index 59, order data", translatedData);
+            setOrderData(translatedData);
+
+        } catch (error) {
+            console.error("Error", error);
+        }
+    }
 
         useEffect(()=>{
             getProductData();
             if (localStorage.getItem("token")){
             getUserData();
+            getOrderData();
             };
     }, [isLoggedIn])
 
@@ -86,6 +105,9 @@ const App = () => {
                                 productData={productData}
                                 setProductData={setProductData}
                                 getProductData={getProductData}
+                                orderData={orderData}
+                                setOrderData={setOrderData}
+                                getOrderData={getOrderData}
                             />}/>
                             <Route path="/bags" element={<Bags 
                                 isLoggedIn={isLoggedIn} 

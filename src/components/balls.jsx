@@ -25,8 +25,10 @@ const Balls = (props) => {
 
 
     async function addItemToCart (event) {
-        console.log("Balls LINE 27", props.orderData[0].id);
+        console.log("Balls LINE 27 orderID", props.orderData[0].id);
+        console.log("Balls LINE 29 evt", event.target.value[0])
         try {
+            const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value))
             const response = await fetch(`${DATABASE_URL}/cartItems`, {
                 method: "POST",
                 headers: {
@@ -34,9 +36,9 @@ const Balls = (props) => {
                 },
                 body: JSON.stringify({
                     order_id: props.orderData[0].id, 
-                    product_id: event.target.value[0],
+                    product_id: parseInt(event.target.value),
                     qty: 1,
-                    price: event.target.value[1]
+                    price: specificItem[0].price
                 })
             })
             const translatedData = await response.json()
@@ -88,7 +90,7 @@ const Balls = (props) => {
                                     <h5> Brand: {singleProduct.brand}</h5>
                                     <h5> Name: {singleProduct.name}</h5> 
                                     <h5> Price: ${singleProduct.price}</h5>
-                                    <button className='atc-btn' value={[singleProduct.id, singleProduct.price]} onClick={addItemToCart}> Add to Cart </button> 
+                                    <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
                                 </div>
                             </div>
                             

@@ -45,18 +45,19 @@ const CartCheckout = (props) => {
     };
 
     // DELETE a cart item.
-    async function deleteCartItem(id) {
-       
+    async function deleteCartItem(event) {
+        console.log("Delete Cart Item F(X) id parameter", event.target.value)
         try {
-            const response = await fetch(`${DATABASE_URL}/cartItems/${id}`, {
+            const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.value}`, {
                 method: "DELETE",
                 headers: {
                     'Content-type': 'application/json'
                 },
             });
-        setDeletedItem(response);
+            
+        
 
-        return nav('/cart');
+        return setDeletedItem("deleted", event.target.value);
 
 
             
@@ -65,10 +66,6 @@ const CartCheckout = (props) => {
         }
     };
 
-    function deleteButton(event) {
-        // console.log("LINE 68, event target value", event.target.value);
-        deleteCartItem(event.target.value);
-    }
 
     // Setting state for Cart Quantity
     // function quantityAddOrMinus(event) {
@@ -146,6 +143,10 @@ const CartCheckout = (props) => {
                     
                     </MDBTypography>
                     { cartData.length > 0 && localStorage.getItem("token") ? cartData.map((singleItem, idx) => {
+                        console.log("Cart line 150")
+                        console.log(singleItem)
+                        console.log("cartData")
+                        console.log(cartData)
                         return (
                     <div className="d-flex align-items-center mb-5" key={idx}>
                       <div className="flex-shrink-0">
@@ -158,8 +159,8 @@ const CartCheckout = (props) => {
                       </div>
 
                       <div className="flex-grow-1 ms-3">
-                        <button onClick={deleteButton} value={singleItem.product_id} className="float-end text-black">
-                          <MDBIcon fas icon="times" /> {singleItem.product_id}
+                        <button onClick={deleteCartItem} value={singleItem.id} className="float-end text-black">
+                          <MDBIcon fas icon="times" /> {singleItem.id}
                         </button>
                         <MDBTypography tag="h5" className="text-primary">
                           {singleItem.brand} {singleItem.name}

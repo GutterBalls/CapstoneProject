@@ -12,30 +12,41 @@ const Balls = (props) => {
    
     useEffect(() => {
         props.getProductData();
+        if (localStorage.getItem("token")){
+        props.getOrderData();
+        console.log("Bags component inside useEffect line 17", props.orderData)
+        };
     }, []);
 
     function pageClick({ selected: selectedPage}) {
         setCurrentPage(selectedPage)
     };
 
-    // async function addItemToCart () {
-    //     try {
-    //         const response = await fetch(`${DATABASE_URL}/cartItems`, {
-    //             method: "POST",
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({
-    //                 order_id: ,
-    //                 product_id: ,
-    //                 qty: 1
-    //             })
-    //         })
-    //         const result = await response.json()
-    //     } catch (error) {
-    //         console.log("Error w/ addItemToCart", error);
-    //     }
-    // }
+
+
+    async function addItemToCart (event) {
+        console.log("Balls LINE 27", props.orderData[0].id);
+        try {
+            const response = await fetch(`${DATABASE_URL}/cartItems`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    order_id: props.orderData[0].id, 
+                    product_id: event.target.value[0],
+                    qty: 1,
+                    price: event.target.value[1]
+                })
+            })
+            const translatedData = await response.json()
+
+            console.log("Balls LINE 40", translatedData);
+
+        } catch (error) {
+            console.log("Error w/ addItemToCart", error);
+        }
+    }
     
     
 
@@ -77,7 +88,7 @@ const Balls = (props) => {
                                     <h5> Brand: {singleProduct.brand}</h5>
                                     <h5> Name: {singleProduct.name}</h5> 
                                     <h5> Price: ${singleProduct.price}</h5>
-                                    <button className='atc-btn'> Add to Cart </button> 
+                                    <button className='atc-btn' value={[singleProduct.id, singleProduct.price]} onClick={addItemToCart}> Add to Cart </button> 
                                 </div>
                             </div>
                             

@@ -16,7 +16,7 @@ import {
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const CartCheckout = (props) => {
-    const [cartQuantity, setCartQuantity] = useState(1);
+    const [cartQuantity, setCartQuantity] = useState({});
     const [cartData, setCartData] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [deletedItem, setDeletedItem] = useState("");
@@ -54,7 +54,7 @@ const CartCheckout = (props) => {
                     'Content-type': 'application/json'
                 },
             });
-        setDeletedItem("You deleted an item");
+        setDeletedItem(response);
 
         return nav('/cart');
 
@@ -71,27 +71,63 @@ const CartCheckout = (props) => {
     }
 
     // Setting state for Cart Quantity
-    function quantityAddOrMinus(event) {
-        setCartQuantity(event.target.value)
-    };
+    // function quantityAddOrMinus(event) {
+    //     setCartQuantity(event.target.value)
+    // };
     
     // Adding 1 on + click to increase quantity state. 
-    function addQuantity() {
-        setCartQuantity(cartQuantity + 1);
+    function addQuantity(event) {
+        if ( cartQuantity[`${event.target.value}`]) {
+        setCartQuantity(cartQuantity[`${event.target.value}`] + 1);
+        }
     };
 
     // Subtracting 1 on - click to decrease quantity state. 
-    function minusQuantity() {
-        if (cartQuantity > 1) {
-        setCartQuantity(cartQuantity - 1);
-        };
+    async function minusQuantity(event) {
+        try {
+            // console.log("Minus button clicked")
+            // console.log(event.target.value)
+            // console.log("ETV type of", typeof event.target.value)
+            // console.log(typeof event.target.parentNode.getAttribute("value"))
+
+            if (parseInt(event.target.value) > 1){
+            // console.log("Inside if")
+            const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
+            
+            const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.parentNode.getAttribute("value")}`,{
+                method: "PATCH",
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    "order_id": currentItem[0].order_id,
+                    "product_id": currentItem[0].product_id,
+                    qty: parseInt(event.target.value) - 1,
+                    price: currentItem[0].price
+                })
+            })
+            const translatedData = await response.json();
+            // console.log("Line 100 cart", translatedData)
+            if (translatedData.qty) {
+                const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
+                currentItem[0].qty = parseInt(event.target.value) -1 
+                const newCart = cartData.filter((item) => item.id !== parseInt(event.target.parentNode.getAttribute("value")))
+                setCartData([...newCart, currentItem[0]])
+            }
+        }
+        } catch (error) {
+            throw error;
+        }
     };
+    
 
     function calculateTotal() {
 
     };
 
-    
+    // const checkOrderStatus = await getOrderByUserId(user.id);
+    //         if (checkOrderStatus.order_status === true)
 
   return (
     <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
@@ -109,9 +145,9 @@ const CartCheckout = (props) => {
                       Shopping Cart Items
                     
                     </MDBTypography>
-                    { cartData.length > 0 && localStorage.getItem("token") ? cartData.map((singleItem) => {
+                    { cartData.length > 0 && localStorage.getItem("token") ? cartData.map((singleItem, idx) => {
                         return (
-                    <div className="d-flex align-items-center mb-5" key={singleItem.id}>
+                    <div className="d-flex align-items-center mb-5" key={idx}>
                       <div className="flex-shrink-0">
                         <MDBCardImage
                           src={singleItem.image}
@@ -122,8 +158,8 @@ const CartCheckout = (props) => {
                       </div>
 
                       <div className="flex-grow-1 ms-3">
-                        <button onClick={deleteButton} value={singleItem.id} className="float-end text-black">
-                          <MDBIcon fas icon="times" />
+                        <button onClick={deleteButton} value={singleItem.product_id} className="float-end text-black">
+                          <MDBIcon fas icon="times" /> {singleItem.product_id}
                         </button>
                         <MDBTypography tag="h5" className="text-primary">
                           {singleItem.brand} {singleItem.name}
@@ -132,20 +168,20 @@ const CartCheckout = (props) => {
                         <div className="d-flex align-items-center">
                           <p className="fw-bold mb-0 me-5 pe-3">${singleItem.price}</p>
 
-                          <div className="def-number-input number-input safari_only">
-                            <button className="minus" onClick={minusQuantity}></button>
+                          <div value={singleItem.id} className="def-number-input number-input safari_only">
+                            <button className="minus" value={singleItem.qty} onClick={minusQuantity}></button>
                             <input
                               className="quantity fw-bold text-black"
                               min={1}
                               max={20}
-                              value={cartQuantity}
+                              value={singleItem.qty}
                               type="number"
-                              onChange={quantityAddOrMinus}
+                            //   onChange={quantityAddOrMinus}
                             />
-                            <button className="plus" onClick={addQuantity}></button>
+                            <button className="plus" value={singleItem.id} onClick={addQuantity}></button>
                           </div>
 
-                          <p className="fw-bold mb-0 me-5 pe-3"> = ${(singleItem.price * cartQuantity).toFixed(2)}</p>
+                          <p className="fw-bold mb-0 me-5 pe-3"> = ${(singleItem.price * singleItem.qty).toFixed(2)}</p>
                         </div>
                       </div>
                     </div>

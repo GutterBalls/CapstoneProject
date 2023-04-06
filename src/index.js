@@ -17,9 +17,9 @@ const App = () => {
         try {
             const response = await fetch(`${DATABASE_URL}/products`)
             const translatedData = await response.json();
-            console.log(translatedData);
+            // console.log(translatedData);
             setProductData(translatedData);
-            console.log("Product data", productData)
+            // console.log("Product data", productData)
             return translatedData
         } catch (error) {
             console.log(error)
@@ -37,7 +37,7 @@ const App = () => {
                 },
             });
             const translatedData = await response.json();
-            console.log("Translated Data", translatedData);
+            // console.log("Translated Data", translatedData);
             setUserData(translatedData);
 
             } catch (error) {

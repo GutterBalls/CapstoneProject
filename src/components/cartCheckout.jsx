@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {
   MDBBtn,
   MDBCard,
@@ -19,46 +19,70 @@ const CartCheckout = (props) => {
     const [cartQuantity, setCartQuantity] = useState(1);
     const [cartData, setCartData] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [deletedItem, setDeletedItem] = useState("");
+    const nav = useNavigate();
 
     useEffect(() => {
-        getCartData();
+    
         if (localStorage.getItem("token")) {
         props.getUserData();
+        getCartData();
         };
-    }, []);
+    }, [deletedItem]);
 
-    // GET all carts.
+    // GET logged in user cart.
     async function getCartData() {
         try {
-            const response = await fetch(`${DATABASE_URL}/cartItems`)
+            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`)
             const translatedData = await response.json();
-            console.log(translatedData);
-
+            
             setCartData(translatedData);
-            console.log("Cart data", cartData)
-            console.log("Props user data", props.userData.id)
+
             return translatedData
         } catch (error) {
             console.log(error)
         };
     };
 
+    // DELETE a cart item.
+    async function deleteCartItem(id) {
+       
+        try {
+            const response = await fetch(`${DATABASE_URL}/cartItems/${id}`, {
+                method: "DELETE",
+                headers: {
+                    'Content-type': 'application/json'
+                },
+            });
+        setDeletedItem("You deleted an item");
+
+        return nav('/cart');
+
+
+            
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    function deleteButton(event) {
+        // console.log("LINE 68, event target value", event.target.value);
+        deleteCartItem(event.target.value);
+    }
+
     // Setting state for Cart Quantity
     function quantityAddOrMinus(event) {
-        console.log(event.target.value)
         setCartQuantity(event.target.value)
     };
     
     // Adding 1 on + click to increase quantity state. 
     function addQuantity() {
-        console.log("Add was clicked!")
         setCartQuantity(cartQuantity + 1);
     };
 
     // Subtracting 1 on - click to decrease quantity state. 
     function minusQuantity() {
         if (cartQuantity > 1) {
-        console.log("Minus was clicked!")
         setCartQuantity(cartQuantity - 1);
         };
     };
@@ -85,7 +109,7 @@ const CartCheckout = (props) => {
                       Shopping Cart Items
                     
                     </MDBTypography>
-                    { cartData.length > 0 && localStorage.getItem("token") ? cartData.filter((item)=> item.user_id === props.userData.id).map((singleItem) => {
+                    { cartData.length > 0 && localStorage.getItem("token") ? cartData.map((singleItem) => {
                         return (
                     <div className="d-flex align-items-center mb-5" key={singleItem.id}>
                       <div className="flex-shrink-0">
@@ -98,9 +122,9 @@ const CartCheckout = (props) => {
                       </div>
 
                       <div className="flex-grow-1 ms-3">
-                        <a href="#!" className="float-end text-black">
+                        <button onClick={deleteButton} value={singleItem.id} className="float-end text-black">
                           <MDBIcon fas icon="times" />
-                        </a>
+                        </button>
                         <MDBTypography tag="h5" className="text-primary">
                           {singleItem.brand} {singleItem.name}
                         </MDBTypography>
@@ -244,7 +268,7 @@ const CartCheckout = (props) => {
                         label="Card number"
                         type="text"
                         size="lg"
-                        defaultValue="1234 5678 9012 3457"
+                        defaultValue=""
                       />
 
                       <MDBInput
@@ -252,7 +276,7 @@ const CartCheckout = (props) => {
                         label="Name on card"
                         type="text"
                         size="lg"
-                        defaultValue="John Smith"
+                        defaultValue=""
                       />
 
                       <MDBRow>
@@ -264,8 +288,8 @@ const CartCheckout = (props) => {
                             size="lg"
                             minLength="7"
                             maxLength="7"
-                            defaultValue="01/22"
-                            placeholder="MM/YYYY"
+                            defaultValue=""
+                            placeholder=""
                           />
                         </MDBCol>
                         <MDBCol md="6" className="mb-3">

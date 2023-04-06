@@ -23,7 +23,7 @@
     padding-left: 9.25%; padding-right: 5.3%;
     font-size: 22px;
     color: white;
-    background-color: rgba(0, 4, 82, 0.613);
+    background-color: rgba(65, 65, 130, 0.9);
 }
 
 #logo{
@@ -109,10 +109,19 @@
     display: flex; flex-direction: row;
     /* padding: 10px; */
     background-image: url(/images/background2o.png);
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
     background-size:cover; background-repeat: no-repeat;
     min-height: 40vw;
 }
+
+/* .hp-pic{
+    display: flex; flex-direction: row; justify-content: center;
+    background-color: white;
+    background-image: url(/images/background1.jpg);
+    width: 80%;
+    height: 50%;
+    background-size:contain; background-repeat: no-repeat; background-position: center;
+} */
 
 .main-left{
     font-size: 1em;
@@ -126,7 +135,7 @@
     min-height: fit-content ;
     height: 10%;
     border-radius: 10px;
-    background-color: rgba(0, 4, 82, 0.400);
+    background-color: rgba(130, 130, 250, 0.30);
     color: white;
 }
 
@@ -152,7 +161,7 @@
 }
 
 .main-singleProduct{
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.6);
     margin-left: 50px; margin-right: 50px;
     padding-top: 20px; padding-bottom: 20px;
     border-radius: 10px;
@@ -160,17 +169,18 @@
 }
 
 .main-singleProduct:hover {
-    color: rgb(4, 0, 255); 
+    color: white;
     text-shadow: 1px 1px 5px black;
     transform: scale(1.05);
     transition: all .2s ease-out;
-    background-color: rgba(0, 4, 82, 0.400);
-    color: white;
+    background-color: rgba(130, 130, 250, 0.30);
 }
 
 .singleProductImage {
     width: 20%;
     height: auto;
+    mix-blend-mode: multiply;
+    /* m-b-m removes white background from an image (Chrome, FF, Safari only)*/
     /* border: 2px solid black; */
     /* margin-left: 40%; */
 }
@@ -183,12 +193,11 @@
 }
 
 .atc-btn:hover{
-    color: rgb(4, 0, 255); 
-    text-shadow: 1px 1px 5px black;
+    color: white;
+    text-shadow: 2px 2px 5px black;
     transform: scale(1.05);
     transition: all .2s ease-out;
     background-color: rgb(188, 0, 0);
-    color: white;
 }
 
 /*-------------PAGINATION--------------- */
@@ -285,7 +294,7 @@
 
 .footer{
     display: flex; flex-direction: row; justify-content: center;
-    background-color: rgba(0, 4, 82, 0.613);
+    background-color: rgba(65, 65, 130, 0.9);
     color: white;
 }
 

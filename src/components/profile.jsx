@@ -255,21 +255,22 @@ const editUserAdmin = async (singleUser, event) => {
 
 
     return (
-        <div className="homepage">
+        <section className="main-container profile-mc">
             {
                 userData.isAdmin === false ? 
-                    <div key={userData.id} className="singleProduct">
-                        <div className="itemInfoFlex">
+                    <div key={userData.id} className="main-full-width profile-fw">
+                        <div className="">
                             <h1> Profile</h1>
                             <h3> Welcome {userData.username},</h3>
-                            <button onClick={ toggleEditUserForm}>Edit User</button>
+                            <button onClick={ toggleEditUserForm} className="atc-btn eu-btn">Edit User</button>
+                            <br />
                             {
                                 editUserBtn ? (
-                                    <div class="form">
-                                        <span class="form__title">Edit/Update</span>
+                                    <div className="form">
+                                        <span className="form__title">Edit/Update</span>
                                         <form action="" onSubmit={ editUser } >
-                                            <div class="form__input">
-                                                <i class="ri-user-line"></i>
+                                            <div className="form__input">
+                                                <i className="ri-user-line"></i>
                                                 <input 
                                                     type="text"
                                                     value={ editUsername }
@@ -279,8 +280,8 @@ const editUserAdmin = async (singleUser, event) => {
                                                     placeholder="New Username"
                                                 />
                                             </div>    
-                                            <div class="form__input">
-                                                <i class="ri-lock-line"></i>
+                                            <div className="form__input">
+                                                <i className="ri-lock-line"></i>
                                                 <input 
                                                     type="password"
                                                     value={ editPassword } 
@@ -290,8 +291,8 @@ const editUserAdmin = async (singleUser, event) => {
                                                     placeholder="New Password"
                                                 />
                                             </div>
-                                            <div class="form__input">
-                                                <i class="ri-mail-line"></i>
+                                            <div className="form__input">
+                                                <i className="ri-mail-line"></i>
                                                 <input 
                                                     type="text"
                                                     value={ editEmail } 
@@ -301,12 +302,12 @@ const editUserAdmin = async (singleUser, event) => {
                                                     placeholder="New Email"
                                                 />
                                             </div>
-                                            <button type="submit" class="form__button" >Submit</button>
+                                            <button type="submit" className="form__button" >Submit</button>
                                         </form>
                                     </div>    
                                 ): ""
                             }
-                            <button onClick={ toggleOrderHistory }>Order History</button>
+                            <button onClick={ toggleOrderHistory } className="atc-btn oh-btn">Order History</button>
                             <div>
                                 {
                                     orderHistoryBtn ? orderData.map((singleOrder)=>{
@@ -342,11 +343,11 @@ const editUserAdmin = async (singleUser, event) => {
                                         <button onClick={ toggleEditUserAdmin }>Edit User</button>
                                         {
                                             editUserAdminBtn ? (
-                                                <div class="form">
-                                                    <span class="form__title">Edit/Update</span>
+                                                <div className="form">
+                                                    <span className="form__title">Edit/Update</span>
                                                     <form action="" onSubmit={ (event) => editUserAdmin(singleUser.id, event) } >
-                                                        <div class="form__input">
-                                                            <i class="ri-user-line"></i>
+                                                        <div className="form__input">
+                                                            <i className="ri-user-line"></i>
                                                             <input 
                                                                 type="text"
                                                                 value={ editUsername }
@@ -356,8 +357,8 @@ const editUserAdmin = async (singleUser, event) => {
                                                                 placeholder="New Username"
                                                             />
                                                         </div>    
-                                                        <div class="form__input">
-                                                            <i class="ri-lock-line"></i>
+                                                        <div className="form__input">
+                                                            <i className="ri-lock-line"></i>
                                                             <input 
                                                                 type="password"
                                                                 value={ editPassword } 
@@ -367,8 +368,8 @@ const editUserAdmin = async (singleUser, event) => {
                                                                 placeholder="New Password"
                                                             />
                                                         </div>
-                                                        <div class="form__input">
-                                                            <i class="ri-mail-line"></i>
+                                                        <div className="form__input">
+                                                            <i className="ri-mail-line"></i>
                                                             <input 
                                                                 type="text"
                                                                 value={ editEmail } 
@@ -378,7 +379,7 @@ const editUserAdmin = async (singleUser, event) => {
                                                                 placeholder="New Email"
                                                             />
                                                         </div>
-                                                        <button type="submit" class="form__button" >Submit</button>
+                                                        <button type="submit" className="form__button" >Submit</button>
                                                     </form>
                                                 </div>    
                                             ): ""
@@ -392,7 +393,7 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                 </div>
             }
-        </div>
+        </section>
     )
 }
 

@@ -18,7 +18,24 @@ const Balls = (props) => {
         setCurrentPage(selectedPage)
     };
 
-
+    // async function addItemToCart () {
+    //     try {
+    //         const response = await fetch(`${DATABASE_URL}/cartItems`, {
+    //             method: "POST",
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 order_id: ,
+    //                 product_id: ,
+    //                 qty: 1
+    //             })
+    //         })
+    //         const result = await response.json()
+    //     } catch (error) {
+    //         console.log("Error w/ addItemToCart", error);
+    //     }
+    // }
     
     
 

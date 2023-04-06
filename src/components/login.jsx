@@ -19,7 +19,7 @@ const Login = (props) =>{
     async function logIn(event){
         event.preventDefault();
         try{
-            console.log("Login info...",loginUser, loginPass);
+            // console.log("Login info...",loginUser, loginPass);
             const response = await fetch(`${DATABASE_URL}/users/login`,{
                 method: "POST",
                 headers: {
@@ -35,9 +35,13 @@ const Login = (props) =>{
             console.log(transData);
             if(!transData){
                 alert("Login was unsuccessful. Please try again. ");
-            } else {
+            } 
+            // else if(transData.isActive == false){
+            //     alert("Account deactivated, please sign up!")
+            // } 
+            else {
                 const tokenKey = transData.token;
-                console.log(tokenKey);
+                // console.log(tokenKey);
                 localStorage.setItem("token", tokenKey);
                 // alert("Login was successful");
                 nav("/")

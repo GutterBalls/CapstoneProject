@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const Profile = (props) => {
-    const { getUserData, userData, setUserData, isLoggedIn, setIsLoggedIn } = props;
+    const { getUserData, userData, setUserData, isLoggedIn, setIsLoggedIn, productData, setProductData, getProductData } = props;
 
     const nav = useNavigate();
 
@@ -19,6 +19,8 @@ const Profile = (props) => {
     const [listUsersBtn, setListUsersBtn] = useState (false);
 //Admin Button (Edit User Form)    
     const [editUserAdminBtn, setEditUserAdminBtn] = useState (false);
+//Admin Button (Add New Product Form)    
+    const [addProductBtn, setAddProductBtn] = useState (false);    
 
 //User Edit Form State 
     const [editUsername, setEditUsername ] = useState("");
@@ -29,6 +31,15 @@ const Profile = (props) => {
 
 //Admin - List Users State 
     const [allUsers, setAllUsers] = useState([]);
+//Admin - Add Product State
+    const [ addImage, setAddImage ] = useState("");
+    const [ addBrand, setAddBrand ] = useState("");
+    const [ addName, setAddName ] = useState("");
+    const [ addDescription, setAddDescription ] = useState("");
+    const [ addPrice, setAddPrice ] = useState("");
+    const [ addSale, setAddSale ] = useState("");
+    const [ addClearance, setAddClearance ] = useState("");
+    const [ addCatId, setAddCatId ] = useState("");
 
 // User - toggle edit user form (button) 
     function toggleEditUserForm() {
@@ -51,12 +62,17 @@ const Profile = (props) => {
     function toggleEditUserAdmin() {
         setEditUserAdminBtn(!editUserAdminBtn)
     };
+// Admin - toggle Add Product(button)
+function toggleAddProduct() {
+    setAddProductBtn(!addProductBtn)
+};
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
             setIsLoggedIn(true);
             getUserData();
             getOrderHistory();
+            getProductData();
         if(userData.isAdmin === true){
             getAllUsersData();
         }    
@@ -67,20 +83,20 @@ const Profile = (props) => {
         }
     }, [])
 
-    useEffect(() => {
-        if (localStorage.getItem("token")) {
-            setIsLoggedIn(true);
-            getUserData();
-            getOrderHistory();
-        if(userData.isAdmin === true){
-            getAllUsersData();
-        }    
+    // useEffect(() => {
+    //     if (localStorage.getItem("token")) {
+    //         setIsLoggedIn(true);
+    //         getUserData();
+    //         getOrderHistory();
+    //     if(userData.isAdmin === true){
+    //         getAllUsersData();
+    //     }    
             
-        } else {
-            setIsLoggedIn(false)
-            console.log("No Token!")
-        }
-    }, [disableAccountBtn])
+    //     } else {
+    //         setIsLoggedIn(false)
+    //         console.log("No Token!")
+    //     }
+    // }, [disableAccountBtn])
 
 // User - Edit/Update
     const editUser = async (event) => {
@@ -358,6 +374,58 @@ const editUserAdmin = async (singleUser, event) => {
     }
 };
 
+// Admin - Add New Product
+    async function addProduct(event){
+        event.preventDefault();
+
+        const tokenKey = localStorage.getItem("token");
+    
+        try {
+            const response = await fetch(`${DATABASE_URL}/products`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenKey}`
+                },
+                body: JSON.stringify({
+                    image: addImage,
+                    brand: addBrand,
+                    name: addName,
+                    description: addDescription,
+                    price: addPrice,
+                    sale: addSale,
+                    clearance: addClearance,
+                    category_id: addCatId
+                })
+            
+            });
+            const transData = await response.json();
+                console.log("Add Product TransData:")
+                console.log(transData);
+    
+            if (!transData){
+                alert("Product was not created. Please try again. ");
+            } else {
+                setProductData([...productData, transData]);
+                alert("Product was successfully created.");
+    // reset form
+                setAddProductBtn(false);
+                setAddImage("");
+                setAddBrand("");
+                setAddName("");
+                setAddDescription("");
+                setAddPrice("");
+                setAddSale("");
+                setAddClearance("");
+                setAddCatId("");
+                nav("/profile");
+                return getProductData();
+            }
+        } catch (error){
+            console.log(error);
+        }
+    };
+
 
     return (
         <section className="main-container profile-mc">
@@ -444,9 +512,9 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                 : 
                 <div>
-                    <h1> Welcome Administrator</h1>
+                    <h1> Administrator Dashboard</h1>
                     <h3> Username: {userData.username}</h3>
-                    <button onClick={ toggleListUsers}>List All Users</button>
+                    <button onClick={ toggleListUsers }>List All Users</button>
                     <div>
                         {
                             listUsersBtn ? allUsers.map((singleUser)=>{
@@ -517,6 +585,105 @@ const editUserAdmin = async (singleUser, event) => {
                             }): ""
                         }
                     </div>
+                    <button onClick={ toggleAddProduct }>Add New Product</button>
+                    {
+                        addProductBtn ? (
+                            <div className="form">
+                                <span className="form__title">Add Product</span>
+                                <form action="" onSubmit={ addProduct } >
+                                    <div className="form__input">
+                                        {/* <i className="ri-user-line"></i> */}
+                                        <input 
+                                            type="url"
+                                            value={ addImage }
+                                            onChange={(event)=>{
+                                                setAddImage(event.target.value);
+                                            }}
+                                            placeholder="Image URL"
+                                        />
+                                    </div>    
+                                    <div className="form__input">
+                                        {/* <i className="ri-lock-line"></i> */}
+                                        <input 
+                                            type="text"
+                                            value={ addBrand } 
+                                            onChange={(event)=>{
+                                                setAddBrand(event.target.value);
+                                            }}
+                                            placeholder="Brand"
+                                        />
+                                    </div>
+                                    <div className="form__input">
+                                        {/* <i className="ri-mail-line"></i> */}
+                                        <input 
+                                            type="text"
+                                            value={ addName } 
+                                            onChange={(event)=>{
+                                                setAddName(event.target.value);
+                                            }}
+                                            placeholder="Name"
+                                        />
+                                    </div>
+                                    <div className="form__input">
+                                        {/* <i className="ri-mail-line"></i> */}
+                                        <input 
+                                            type="text"
+                                            value={ addDescription } 
+                                            onChange={(event)=>{
+                                                setAddDescription(event.target.value);
+                                            }}
+                                            placeholder="Description"
+                                        />
+                                    </div>
+                                    <div className="form__input">
+                                        {/* <i className="ri-mail-line"></i> */}
+                                        <input 
+                                            type="number"
+                                            value={ addPrice } 
+                                            onChange={(event)=>{
+                                                setAddPrice(event.target.value);
+                                            }}
+                                            placeholder="Price"
+                                        />
+                                    </div>
+                                    <div className="form__input">
+                                        {/* <i className="ri-mail-line"></i> */}
+                                        <input 
+                                            type="text"
+                                            value={ addSale } 
+                                            onChange={(event)=>{
+                                                setAddSale(event.target.value);
+                                            }}
+                                            placeholder="Sale: true or false"
+                                        />
+                                    </div>
+                                    <div className="form__input">
+                                        {/* <i className="ri-mail-line"></i> */}
+                                        <input 
+                                            type="text"
+                                            value={ addClearance } 
+                                            onChange={(event)=>{
+                                                setAddClearance(event.target.value);
+                                            }}
+                                            placeholder="Clearance: true or false"
+                                        />
+                                    </div>
+                                    <div className="form__input">
+                                        {/* <i className="ri-mail-line"></i> */}
+                                        <input 
+                                            type="number"
+                                            value={ addCatId } 
+                                            onChange={(event)=>{
+                                                setAddCatId(event.target.value);
+                                            }}
+                                            placeholder="Category ID"
+                                        />
+                                    </div>
+                                    <button type="submit" className="form__button" >Submit</button>
+                                </form>
+                            </div>    
+                        ): ""
+                    }
                 </div>
             }
         </section>

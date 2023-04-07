@@ -67,6 +67,21 @@ const Profile = (props) => {
         }
     }, [])
 
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            setIsLoggedIn(true);
+            getUserData();
+            getOrderHistory();
+        if(userData.isAdmin === true){
+            getAllUsersData();
+        }    
+            
+        } else {
+            setIsLoggedIn(false)
+            console.log("No Token!")
+        }
+    }, [disableAccountBtn])
+
 // User - Edit/Update
     const editUser = async (event) => {
         event.preventDefault();
@@ -247,46 +262,46 @@ const Profile = (props) => {
         };
     };
 
-// Admin - Enable user account
-    async function enableUser(singleUser, event){
-        event.preventDefault();
-        try{
-            const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
-            , {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
-                },
-            });
-            const transData = await response.json();
-            // console.log("transData ", transData);
-            if(!transData){
-                alert("User was not enabled. Please try again.")
-            } else{
-                function updateUserData(){
-                    let updateArr = [];
-                    for(let i=0; i<userData.length; i++){
-                        let currentUser = userData[i];
-                        if(currentUser.id !== userData.id){
-                            updateArr.push(currentUser);
-                        }else{
-                            updateArr.push(transData);
-                        }
-                    }
-                    return updateArr
-                };
-                const newUserData = updateUserData();
-                setUserData(newUserData);
-                // alert("User was disabled.")
-                nav("/profile")
-                return getAllUsersData();
-            }
+// Admin - Enable user account (Might not be needed at all)
+    // async function enableUser(singleUser, event){
+    //     event.preventDefault();
+    //     try{
+    //         const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
+    //         , {
+    //             method: "DELETE",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`
+    //             },
+    //         });
+    //         const transData = await response.json();
+    //         // console.log("transData ", transData);
+    //         if(!transData){
+    //             alert("User was not enabled. Please try again.")
+    //         } else{
+    //             function updateUserData(){
+    //                 let updateArr = [];
+    //                 for(let i=0; i<userData.length; i++){
+    //                     let currentUser = userData[i];
+    //                     if(currentUser.id !== userData.id){
+    //                         updateArr.push(currentUser);
+    //                     }else{
+    //                         updateArr.push(transData);
+    //                     }
+    //                 }
+    //                 return updateArr
+    //             };
+    //             const newUserData = updateUserData();
+    //             setUserData(newUserData);
+    //             // alert("User was disabled.")
+    //             nav("/profile")
+    //             return getAllUsersData();
+    //         }
             
-        } catch (error) {
-            console.error("Error with deleteUser function", error);
-        };
-    };
+    //     } catch (error) {
+    //         console.error("Error with deleteUser function", error);
+    //     };
+    // };
 
 // Admin - Edit/Update User
 const editUserAdmin = async (singleUser, event) => {

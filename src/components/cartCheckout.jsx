@@ -18,7 +18,7 @@ const DATABASE_URL = 'http://localhost:1337/api';
 
 const CartCheckout = (props) => {
     const [cartData, setCartData] = useState([]);
-    const [deletedItem, setDeletedItem] = useState("");
+    const [deletedItem, setDeletedItem] = useState(0);
     const [ccNum, setCCNum] = useState("");
     const [nameOnCard, setNameOnCard] = useState("");
     const [exp, setExp] = useState("");
@@ -37,7 +37,7 @@ const CartCheckout = (props) => {
         props.getUserData();
         getCartData();
         };
-    }, []);
+    }, [deletedItem]);
 
     // GET logged in user cart.
     async function getCartData() {
@@ -66,7 +66,7 @@ const CartCheckout = (props) => {
             
         
 
-        // return setDeletedItem("deleted", event.target.value);
+        setDeletedItem(deleted +1);
 
 
             
@@ -158,7 +158,44 @@ const CartCheckout = (props) => {
     // POST payment data
     async function postPaymentData (event) {
         event.preventDefault();
-    }
+        try {
+            const response = await fetch(`${DATABASE_URL}/payment`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    user_id: props.userData.id,
+                    cardnum: ccNum,
+                    exp: exp,
+                    cvv: cvv,
+                    name: nameOnCard,
+                    address: address,
+                    city: city,
+                    state: state,
+                    zip_code: zipcode
+                })
+            });
+            const translatedData = await response.json();
+
+            if (translatedData) {
+                setCCNum("");
+                setNameOnCard("");
+                setCvv("");
+                setExp("");
+                setAddress("");
+                setState("");
+                setCity("");   
+                setZipcode("");
+                alert("Thank you for submitting your order.");
+                nav('/');
+            };
+
+        } catch (error) {
+            throw error;
+        };
+    };
     // const checkOrderStatus = await getOrderByUserId(user.id);
     //         if (checkOrderStatus.order_status === true)
 
@@ -263,7 +300,6 @@ const CartCheckout = (props) => {
                         label="Card number"
                         type="text"
                         size="lg"
-                        defaultValue=""
                         value={ccNum}
                         onChange={(event) => setCCNum(event.target.value) }
                       />
@@ -273,7 +309,6 @@ const CartCheckout = (props) => {
                         label="Name on card"
                         type="text"
                         size="lg"
-                        defaultValue=""
                         value={nameOnCard}
                         onChange={(event) => setNameOnCard(event.target.value)}
                       />
@@ -287,7 +322,6 @@ const CartCheckout = (props) => {
                             size="lg"
                             minLength="4"
                             maxLength="7"
-                            defaultValue=""
                             placeholder="042023"
                             value={exp}
                             onChange={(event) => setExp(event.target.value)}
@@ -302,7 +336,6 @@ const CartCheckout = (props) => {
                             minLength="3"
                             maxLength="3"
                             placeholder="&#9679;&#9679;&#9679;"
-                            defaultValue="&#9679;&#9679;&#9679;"
                             value={cvv}
                             onChange={(event) => setCvv(event.target.value)}
                           />
@@ -321,7 +354,6 @@ const CartCheckout = (props) => {
                         type="text"
                         size="lg"
                         placeholder=""
-                        defaultValue=""
                         value={address}
                         onChange={(event) => setAddress(event.target.value)}
                       />
@@ -332,7 +364,6 @@ const CartCheckout = (props) => {
                         type="text"
                         size="lg"
                         placeholder=""
-                        defaultValue=""
                         value={city}
                         onChange={(event) => setCity(event.target.value)}
                       />
@@ -344,7 +375,6 @@ const CartCheckout = (props) => {
                             label="State"
                             type="text"
                             size="lg"
-                            defaultValue=""
                             placeholder=""
                             value={state}
                             onChange={(event) => setState(event.target.value)}
@@ -357,7 +387,6 @@ const CartCheckout = (props) => {
                             type="text"
                             size="lg"
                             placeholder=""
-                            defaultValue=""
                             value={zipcode}
                             onChange={(event) => setZipcode(event.target.value)}
                           />

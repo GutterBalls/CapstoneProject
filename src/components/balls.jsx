@@ -35,6 +35,7 @@ const Balls = (props) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    user_id: props.userData.id,
                     order_id: props.orderData[0].id, 
                     product_id: parseInt(event.target.value),
                     qty: 1,

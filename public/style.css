@@ -109,7 +109,7 @@
     display: flex; flex-direction: row;
     /* padding: 10px; */
     background-image: url(/images/background2o.png);
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     background-size:cover; background-repeat: no-repeat;
     min-height: 40vw;
 }
@@ -162,7 +162,7 @@
 
 .main-singleProduct{
     background-color: rgba(255, 255, 255, 0.6);
-    margin-left: 50px; margin-right: 50px;
+    margin-left: 1em; margin-right: 1em;
     padding-top: 20px; padding-bottom: 20px;
     border-radius: 10px;
     text-align: center;
@@ -193,29 +193,34 @@
 }
 
 .atc-btn:hover{
-    color: white;
+    color: black;
     text-shadow: 2px 2px 5px black;
-    transform: scale(1.05);
-    transition: all .2s ease-out;
-    background-color: rgb(188, 0, 0);
+    border: .5px solid rgb(188, 0, 0);
 }
+
+.atc-btn:active{
+    background-color: rgb(188, 0, 0);
+    color: white;
+}
+
 
 /*-------------PAGINATION--------------- */
 .item {
     align-items: center;
     cursor: pointer;
     display: flex;
-    font-size: 1.7em;
-    height: 1em;
+    font-size: 18px;
+    /* height: 1em; */
     justify-content: center;
-    width: 1em;
+    /* width: 1em; */
     background-color: white;
 }
 
 .active {
-    border: 1px outset black;
+    border: 1px outset rgb(188, 0, 0);;
     border-radius: 50%;
-    color: black;   
+    color: black;
+    width: 1.7em;
 }
 
 .next {
@@ -224,68 +229,78 @@
     border-radius: 3px;
     box-shadow: 1px 1px 1px 1px black;;
     color: black;
-    font-size: 1rem;
-    height: 3vh;
+    /* font-size: 1rem; */
+    /* height: 3vh; */
     position: inherit;
     right: 0;
-    width: 5vw;
+    width: 100px;
 }
 
 .next:hover{
-    color: rgb(4, 0, 255); 
-    text-shadow: 1px 1px 5px black;
-    transform: scale(1.05);
-    transition: all .2s ease-out;
+    color: black;
+    text-shadow: 2px 2px 5px black;
+    border: .5px solid rgb(188, 0, 0);
+}
+
+.next:active{
     background-color: rgb(188, 0, 0);
     color: white;
 }
-  
+
 .pagination {
-    align-items: center;
-    /* background-color: blue; */
+    align-items:center;
+    background-color: rgba(211, 211, 211, 0.6);
     display: flex;
     flex-direction: row;
-    height: 5vh;
+    /* height: 50px; */
     justify-content: space-evenly;
     list-style-type: none;
     position: relative;
-    width: 20vw;
-    margin-left: 33%;
-    /* border: 2px solid black; */
-}
-  
-.pagination-page {
-    font-weight: 700;
-    cursor: pointer;
+    width: 400px;
+    /* margin-left: 37%; */
+    border-radius: 5px;
 }
 
 .previous {
     background-color: white;
     border: none;
     border-radius: 3px;
-    box-shadow: 1px 1px 1px 1px black;
-    cursor: pointer;
+    box-shadow: 1px 1px 1px 1px black;;
     color: black;
-    font-size: 1rem;
-    height: 3vh;
-    left: 0;
+    /* font-size: 1rem; */
+    /* height: 3vh; */
     position: inherit;
-    width: 5vw;
+    right: 0;
+    width: 100px;
 }
 
 .previous:hover{
-    color: rgb(4, 0, 255); 
-    text-shadow: 1px 1px 5px black;
-    transform: scale(1.05);
-    transition: all .2s ease-out;
+    color: black;
+    text-shadow: 2px 2px 5px black;
+    border: .5px solid rgb(188, 0, 0);
+}
+
+.previous:active{
     background-color: rgb(188, 0, 0);
     color: white;
+}
+
+.r-pag{
+    display: flex; flex-direction: row; justify-content: center;
+}
+
+/* I dont think these are being used */
+/* .pagination-page {
+    font-weight: 700;
+    cursor: pointer;
 }
 
 .disabled-page {
     color: black;
     cursor: pointer;
-}
+} */
+/* --------------------------------- */
+
 /* ---------------END PAGINATION----------------- */
 
 /* ---------------END MAIN SECTION---------------- */
@@ -293,9 +308,32 @@
 /* ---------------FOOTER SECTION----------------- */
 
 .footer{
-    display: flex; flex-direction: row; justify-content: center;
+    display: flex; flex-direction: row; justify-content: space-between;
     background-color: rgba(65, 65, 130, 0.9);
     color: white;
+}
+
+
+/* .foot-sub{
+    display: flex; flex-direction: column; align-items: center;
+} */
+
+.foot-p-l{
+    display: flex; flex-direction: column; align-items: flex-start;
+    margin-left: 30px; padding-right: 30px;
+    /* justify-content: center; */
+}
+
+.foot-p-c{
+    display: flex; flex-direction: column; align-items: center;
+    margin-left: 30px; padding-right: 30px;
+    /* justify-content: center; */
+}
+
+.foot-p-r{
+    display: flex; flex-direction: column; align-items: flex-end;
+    margin-left: 30px; padding-right: 30px;
+    /* justify-content: center; */
 }
 
 /* --------------END FOOTER SECTION-------------- */

@@ -117,6 +117,9 @@ const App = () => {
                                 productData={productData}
                                 setProductData={setProductData}
                                 getProductData={getProductData}
+                                orderData={orderData}
+                                setOrderData={setOrderData}
+                                getOrderData={getOrderData}
                             />}/>
                             <Route path="/shoes" element={<Shoes 
                                 isLoggedIn={isLoggedIn} 
@@ -126,6 +129,9 @@ const App = () => {
                                 productData={productData}
                                 setProductData={setProductData}
                                 getProductData={getProductData}
+                                orderData={orderData}
+                                setOrderData={setOrderData}
+                                getOrderData={getOrderData}
                             />}/>
                             <Route path="/accessories" element={<Accessories   
                                 isLoggedIn={isLoggedIn} 
@@ -135,6 +141,9 @@ const App = () => {
                                 productData={productData}
                                 setProductData={setProductData}
                                 getProductData={getProductData}
+                                orderData={orderData}
+                                setOrderData={setOrderData}
+                                getOrderData={getOrderData}
                             />}/>
                             <Route path="/single/:id" element={<Single 
                                 isLoggedIn={isLoggedIn} 
@@ -144,6 +153,9 @@ const App = () => {
                                 productData={productData}
                                 setProductData={setProductData}
                                 getProductData={getProductData}
+                                orderData={orderData}
+                                setOrderData={setOrderData}
+                                getOrderData={getOrderData}
                             />}/>
                             <Route path="/profile" element={<Profile 
                                 isLoggedIn={isLoggedIn} 

@@ -37,7 +37,8 @@ const Register = () =>{
                     username: newUser,
                     password: newPass,
                     email: newEmail,
-                    isAdmin: false
+                    isAdmin: false,
+                    isActive: true
                 })
             })
             const transData = await response.json();
@@ -59,51 +60,51 @@ const Register = () =>{
 
     return (
         <div className="homepage">
-            <div class="form">
-                <span class="form__title">Sign up</span>
+            <div className="form">
+                <span className="form__title">Sign up</span>
                 <form action="" onSubmit={ registerUser }>
-                    <div class="form__input">
-                        <i class="ri-user-line"></i>
+                    <div className="form__input">
+                        <i className="ri-user-line"></i>
                         <input 
                             type="text" 
                             placeholder="Username"
                             value={ newUser }
                             onChange={(event)=> setNewUser(event.target.value)}
                         />
-                        <span class="bar"></span>
+                        <span className="bar"></span>
                     </div>
-                    <div class="form__input">
-                        <i class="ri-mail-line"></i>
+                    <div className="form__input">
+                        <i className="ri-mail-line"></i>
                         <input 
                             type="text" 
                             placeholder="Email"
                             value={ newEmail }
                             onChange={(event)=> setNewEmail(event.target.value)}
                         />
-                        <span class="bar"></span>
+                        <span className="bar"></span>
                     </div>
-                    <div class="form__input">
-                        <i class="ri-lock-line"></i>
+                    <div className="form__input">
+                        <i className="ri-lock-line"></i>
                         <input 
                             type="password" 
                             placeholder="Password"
                             value={ newPass }
                             onChange={(event)=> setNewPass(event.target.value)}
                         />
-                        <span class="bar"></span>
+                        <span className="bar"></span>
                     </div>
-                    <div class="form__input">
-                        <i class="ri-lock-line"></i>
+                    <div className="form__input">
+                        <i className="ri-lock-line"></i>
                         <input 
                             type="password" 
                             placeholder="Confirm password"
                             value={ confirmPass }
                             onChange={(event)=> setConfirmPass(event.target.value)}
                         />
-                        <span class="bar"></span>
+                        <span className="bar"></span>
                     </div>
-                    <button type="submit" class="form__button">Sign up</button>
-                    <span class="form__switch">
+                    <button type="submit" className="form__button">Sign up</button>
+                    <span className="form__switch">
                         Already have an account? <Link to="/login">Login</Link>
                     </span>
                 </form>

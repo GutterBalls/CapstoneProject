@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ReactPaginate from "react-paginate";
 const DATABASE_URL = 'http://localhost:1337/api';
 const perPage = 6;
@@ -13,8 +13,8 @@ const Balls = (props) => {
     useEffect(() => {
         props.getProductData();
         if (localStorage.getItem("token")){
-        props.getOrderData();
-        console.log("Bags component inside useEffect line 17", props.orderData)
+            props.getOrderData();
+            console.log("Balls component inside useEffect line 17", props.orderData)
         };
     }, []);
 
@@ -22,11 +22,9 @@ const Balls = (props) => {
         setCurrentPage(selectedPage)
     };
 
-
-
     async function addItemToCart (event) {
-        console.log("Balls LINE 27 orderID", props.orderData[0].id);
-        console.log("Balls LINE 29 evt", event.target.value[0])
+        // console.log("Balls LINE 26 orderID", props.orderData[0].id);
+        // console.log("Balls LINE 27 evt", event.target.value[0])
         try {
             const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value))
             const response = await fetch(`${DATABASE_URL}/cartItems`, {
@@ -44,10 +42,10 @@ const Balls = (props) => {
             })
             const translatedData = await response.json()
 
-            console.log("Balls LINE 40", translatedData);
+            console.log("Balls LINE 45", translatedData);
 
         } catch (error) {
-            console.log("Error w/ addItemToCart", error);
+            console.log("Error w/ balls/addItemToCart", error);
         }
     }
     

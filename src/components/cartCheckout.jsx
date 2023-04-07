@@ -15,12 +15,13 @@ import {
 } from "mdb-react-ui-kit";
 const DATABASE_URL = 'http://localhost:1337/api';
 
+
 const CartCheckout = (props) => {
-    const [cartQuantity, setCartQuantity] = useState({});
     const [cartData, setCartData] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [deletedItem, setDeletedItem] = useState("");
     const nav = useNavigate();
+    let cartTotal = 0;
 
     useEffect(() => {
     
@@ -65,12 +66,6 @@ const CartCheckout = (props) => {
             console.log(error);
         }
     };
-
-
-    // Setting state for Cart Quantity
-    // function quantityAddOrMinus(event) {
-    //     setCartQuantity(event.target.value)
-    // };
     
     // Adding 1 on + click to increase quantity state. 
     async function addQuantity(event) {
@@ -105,6 +100,7 @@ const CartCheckout = (props) => {
                 const newCart = cartData.filter((item) => item.id !== parseInt(event.target.parentNode.getAttribute("value")))
                 setCartData([...newCart, currentItem[0]])
             }
+
         
         } catch (error) {
             throw error;
@@ -150,10 +146,7 @@ const CartCheckout = (props) => {
         }
     };
     
-
-    function calculateTotal() {
-
-    };
+    
 
     // const checkOrderStatus = await getOrderByUserId(user.id);
     //         if (checkOrderStatus.order_status === true)
@@ -175,17 +168,15 @@ const CartCheckout = (props) => {
                     
                     </MDBTypography>
                     { cartData.length > 0 && localStorage.getItem("token") ? cartData.map((singleItem, idx) => {
-                        console.log("Cart line 150")
-                        console.log(singleItem)
-                        console.log("cartData")
-                        console.log(cartData)
+                        const itemTotal = singleItem.price * singleItem.qty 
+                        cartTotal += itemTotal
                         return (
                     <div className="d-flex align-items-center mb-5" key={idx}>
                       <div className="flex-shrink-0">
                         <MDBCardImage
                           src={singleItem.image}
                           fluid
-                          style={{ width: "100px" }}
+                          style={{ width: "5vw" }}
                           alt="Generic placeholder image"
                         />
                       </div>
@@ -212,7 +203,8 @@ const CartCheckout = (props) => {
                             <button className="plus" value={singleItem.qty} onClick={addQuantity}></button>
                           </div>
 
-                          <p className="fw-bold mb-0 me-5 pe-3"> = ${(singleItem.price * singleItem.qty).toFixed(2)}</p>
+                          <p className="fw-bold mb-0 me-5 pe-3"> = ${itemTotal.toFixed(2)}</p>
+                
                         </div>
                       </div>
                     </div>
@@ -227,6 +219,10 @@ const CartCheckout = (props) => {
                         opacity: 1,
                       }}
                     />
+                    <div className="d-flex justify-content-between px-x">
+                      <p className="fw-bold">Subtotal:</p>
+                      <p className="fw-bold">${cartTotal.toFixed(2)}</p>
+                    </div>
                     <div
                       className="d-flex justify-content-between p-2 mb-2"
                       style={{ backgroundColor: "#e1f5fe" }}
@@ -235,7 +231,10 @@ const CartCheckout = (props) => {
                         Total:
                       </MDBTypography>
                       <MDBTypography tag="h5" className="fw-bold mb-0">
-                        $2261
+                        Tax 8%
+                      </MDBTypography>
+                      <MDBTypography tag="h5" className="fw-bold mb-0">
+                        ${(cartTotal * 1.08).toFixed(2)}
                       </MDBTypography>
                     </div>
                   </MDBCol>
@@ -271,10 +270,10 @@ const CartCheckout = (props) => {
                             label="Expiration"
                             type="text"
                             size="lg"
-                            minLength="7"
+                            minLength="4"
                             maxLength="7"
                             defaultValue=""
-                            placeholder=""
+                            placeholder="042023"
                           />
                         </MDBCol>
                         <MDBCol md="6" className="mb-3">
@@ -308,7 +307,7 @@ const CartCheckout = (props) => {
 
                       <MDBInput
                         className="mb-3"
-                        label="Apt or Suite #"
+                        label="City"
                         type="text"
                         size="lg"
                         placeholder=""
@@ -319,7 +318,7 @@ const CartCheckout = (props) => {
                         <MDBCol md="6" className="mb-3">
                           <MDBInput
                             className="mb-3"
-                            label="City"
+                            label="State"
                             type="text"
                             size="lg"
                             defaultValue=""
@@ -329,7 +328,7 @@ const CartCheckout = (props) => {
                         <MDBCol md="6" className="mb-3">
                           <MDBInput
                             className="mb-3"
-                            label="State"
+                            label="Zip"
                             type="text"
                             size="lg"
                             placeholder=""

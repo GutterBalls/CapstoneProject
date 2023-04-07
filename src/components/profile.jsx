@@ -12,6 +12,8 @@ const Profile = (props) => {
     const [editUserBtn, setEditUserBtn] = useState (false);
 //User Button (Order History List)
     const [orderHistoryBtn, setOrderHistoryBtn]= useState(false);
+//User Button (Disable Account Form)
+    const [disableAccountBtn, setDisableAccountBtn] = useState(false);
 
 //Admin Button (List All Users) 
     const [listUsersBtn, setListUsersBtn] = useState (false);
@@ -36,6 +38,10 @@ const Profile = (props) => {
     function toggleOrderHistory() {
         setOrderHistoryBtn(!orderHistoryBtn)
     };
+// User - toggle Disable Account Form (button) 
+    function toggleDisableAccountForm(){
+        setDisableAccountBtn(!disableAccountBtn)
+    }
 
 // Admin - toggle list users(button)
     function toggleListUsers() {
@@ -115,6 +121,46 @@ const Profile = (props) => {
             console.log(error);
         }
     };
+// User - Disable account
+    async function disableSingleUser(event){
+        event.preventDefault();
+        try{
+            const response = await fetch(`${DATABASE_URL}/users/${userData.id}`
+            , {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+            });
+            const transData = await response.json();
+            // console.log("transData ", translatedData);
+            if(!transData){
+                alert("User was not disabled. Please try again.")
+            } else{
+                function updateUserData(){
+                    let updateArr = [];
+                    for(let i=0; i<userData.length; i++){
+                        let currentUser = userData[i];
+                        if(currentUser.id !== userData.id){
+                            updateArr.push(currentUser);
+                        }else{
+                            updateArr.push(translateData);
+                        }
+                    }
+                    return updateArr
+                };
+                const newUserData = updateUserData();
+                setUserData(newUserData);
+                // alert("User was disabled.")
+                nav("/logout")
+                return getAllUsersData();
+            }
+            
+        } catch (error) {
+            console.error("Error with deleteUser function", error);
+        };
+    };
 
 // User - Get order history
     async function getOrderHistory() {
@@ -169,16 +215,19 @@ const Profile = (props) => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
             });
-            const translatedData = await response.json();
-            // console.log("Translated Data", translatedData);
-            if(!translatedData){
+            const transData = await response.json();
+            console.log("Translated Data", transData);
+            console.log(singleUser);
+
+            if(!transData){
                 alert("User was not disabled. Please try again.")
             } else{
                 function updateUserData(){
                     let updateArr = [];
                     for(let i=0; i<userData.length; i++){
                         let currentUser = userData[i];
-                        if(currentUser.id !== userData.id){
+                        // if(currentUser.id !== userData.id){
+                        if(currentUser.id !== singleUser){
                             updateArr.push(currentUser);
                         }else{
                             updateArr.push(transData);
@@ -348,6 +397,18 @@ const editUserAdmin = async (singleUser, event) => {
                                     </div>    
                                 ): ""
                             }
+                            <button onClick={ toggleDisableAccountForm} className="atc-btn eu-btn">Disable Account Form</button>
+                            {
+                                disableAccountBtn ? (
+                                    <div className="form">
+                                        <span className="form__title">Disable Account</span>
+                                        <form action="" onSubmit={ disableSingleUser } >
+                                            <div className="form__button">Are you sure you want to disable your account? You will need to contact an administrator to re-activate your account. Click "Submit" below to disable account.</div>
+                                            <button type="submit" className="form__button" >Submit</button>
+                                        </form>
+                                    </div>    
+                                ): ""
+                            }
                             <button onClick={ toggleOrderHistory } className="atc-btn oh-btn">Order History</button>
                             <div>
                                 {
@@ -381,11 +442,12 @@ const editUserAdmin = async (singleUser, event) => {
                                         <h3>Username: {singleUser.username}</h3>
                                         <h3>Status: {singleUser.isActive ? "Active" : "Inactive"}</h3>
                                         <button onClick={(event) => {
-                                            if(singleUser.isActive === false){
-                                                enableUser(singleUser.id, event)
-                                            } else if(singleUser.isActive === true){
-                                                disableUser(singleUser.id, event)
-                                            }
+                                            disableUser(singleUser.id, event)
+                                            // if(singleUser.isActive === false){
+                                            //     enableUser(singleUser.id, event)
+                                            // } else if(singleUser.isActive === true){
+                                            //     disableUser(singleUser.id, event)
+                                            // }
                                         }}>
                                             { singleUser.isActive ? "Disable Account" : "Enable Account"}
                                         </button>

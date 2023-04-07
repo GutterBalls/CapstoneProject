@@ -198,7 +198,7 @@ const Profile = (props) => {
         };
     };
 
-    // Admin - Enable user account
+// Admin - Enable user account
     async function enableUser(singleUser, event){
         event.preventDefault();
         try{
@@ -210,9 +210,9 @@ const Profile = (props) => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
             });
-            const translatedData = await response.json();
-            // console.log("Translated Data", translatedData);
-            if(!translatedData){
+            const transData = await response.json();
+            console.log("transData ", transData);
+            if(!transData){
                 alert("User was not enabled. Please try again.")
             } else{
                 function updateUserData(){
@@ -380,7 +380,15 @@ const editUserAdmin = async (singleUser, event) => {
                                         <h3>ID: {singleUser.id}</h3>
                                         <h3>Username: {singleUser.username}</h3>
                                         <h3>Status: {singleUser.isActive ? "Active" : "Inactive"}</h3>
-                                        <button onClick={(event) => disableUser(singleUser.id, event)}>Disable Account</button>
+                                        <button onClick={(event) => {
+                                            if(singleUser.isActive === false){
+                                                enableUser(singleUser.id, event)
+                                            } else if(singleUser.isActive === true){
+                                                disableUser(singleUser.id, event)
+                                            }
+                                        }}>
+                                            { singleUser.isActive ? "Disable Account" : "Enable Account"}
+                                        </button>
                                         <button onClick={ toggleEditUserAdmin }>Edit User</button>
                                         {
                                             editUserAdminBtn ? (

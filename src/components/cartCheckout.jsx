@@ -28,7 +28,7 @@ const CartCheckout = (props) => {
         props.getUserData();
         getCartData();
         };
-    }, [deletedItem]);
+    }, []);
 
     // GET logged in user cart.
     async function getCartData() {
@@ -57,7 +57,7 @@ const CartCheckout = (props) => {
             
         
 
-        return setDeletedItem("deleted", event.target.value);
+        // return setDeletedItem("deleted", event.target.value);
 
 
             
@@ -73,9 +73,41 @@ const CartCheckout = (props) => {
     // };
     
     // Adding 1 on + click to increase quantity state. 
-    function addQuantity(event) {
-        if ( cartQuantity[`${event.target.value}`]) {
-        setCartQuantity(cartQuantity[`${event.target.value}`] + 1);
+    async function addQuantity(event) {
+        try {
+            // console.log("Minus button clicked")
+            // console.log(event.target.value)
+            // console.log("ETV type of", typeof event.target.value)
+            // console.log(typeof event.target.parentNode.getAttribute("value"))
+
+            
+            // console.log("Inside if")
+            const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
+            
+            const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.parentNode.getAttribute("value")}`,{
+                method: "PATCH",
+                headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    "order_id": currentItem[0].order_id,
+                    "product_id": currentItem[0].product_id,
+                    qty: parseInt(event.target.value) + 1,
+                    price: currentItem[0].price
+                })
+            })
+            const translatedData = await response.json();
+            // console.log("Line 100 cart", translatedData)
+            if (translatedData.qty) {
+                const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
+                currentItem[0].qty = parseInt(event.target.value) + 1 
+                const newCart = cartData.filter((item) => item.id !== parseInt(event.target.parentNode.getAttribute("value")))
+                setCartData([...newCart, currentItem[0]])
+            }
+        
+        } catch (error) {
+            throw error;
         }
     };
 
@@ -153,7 +185,7 @@ const CartCheckout = (props) => {
                         <MDBCardImage
                           src={singleItem.image}
                           fluid
-                          style={{ width: "150px" }}
+                          style={{ width: "100px" }}
                           alt="Generic placeholder image"
                         />
                       </div>
@@ -172,14 +204,12 @@ const CartCheckout = (props) => {
                           <div value={singleItem.id} className="def-number-input number-input safari_only">
                             <button className="minus" value={singleItem.qty} onClick={minusQuantity}></button>
                             <input
-                              className="quantity fw-bold text-black"
-                              min={1}
-                              max={20}
-                              value={singleItem.qty}
-                              type="number"
+                                className="quantity fw-bold text-black"
+                                value={singleItem.qty}
+                                type="number"
                             //   onChange={quantityAddOrMinus}
                             />
-                            <button className="plus" value={singleItem.id} onClick={addQuantity}></button>
+                            <button className="plus" value={singleItem.qty} onClick={addQuantity}></button>
                           </div>
 
                           <p className="fw-bold mb-0 me-5 pe-3"> = ${(singleItem.price * singleItem.qty).toFixed(2)}</p>
@@ -189,83 +219,6 @@ const CartCheckout = (props) => {
                         ) 
                     }) : <h1> No Items in your cart. </h1>
                 }
-                    
-                    {/* <div className="d-flex align-items-center mb-5">
-                      <div className="flex-shrink-0">
-                        <MDBCardImage
-                          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp"
-                          fluid
-                          style={{ width: "150px" }}
-                          alt="Generic placeholder image"
-                        />
-                      </div>
-
-                      <div className="flex-grow-1 ms-3">
-                        <a href="#!" className="float-end text-black">
-                          <MDBIcon fas icon="times" />
-                        </a>
-                        <MDBTypography tag="h5" className="text-primary">
-                          Headphones Bose 35 II
-                        </MDBTypography>
-                        <MDBTypography tag="h6" style={{ color: "#9e9e9e" }}>
-                          Color: red
-                        </MDBTypography>
-
-                        <div className="d-flex align-items-center">
-                          <p className="fw-bold mb-0 me-5 pe-3">239$</p>
-
-                          <div className="def-number-input number-input safari_only">
-                            <button className="minus"></button>
-                            <input
-                              className="quantity fw-bold text-black"
-                              min={0}
-                              defaultValue={1}
-                              type="number"
-                            />
-                            <button className="plus"></button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="d-flex align-items-center mb-5">
-                      <div className="flex-shrink-0">
-                        <MDBCardImage
-                          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/1.webp"
-                          fluid
-                          style={{ width: "150px" }}
-                          alt="Generic placeholder image"
-                        />
-                      </div>
-
-                      <div className="flex-grow-1 ms-3">
-                        <a href="#!" className="float-end text-black">
-                          <MDBIcon fas icon="times" />
-                        </a>
-                        <MDBTypography tag="h5" className="text-primary">
-                          iPad 9.7 6-gen WiFi 32GB
-                        </MDBTypography>
-                        <MDBTypography tag="h6" style={{ color: "#9e9e9e" }}>
-                          Color: rose pink
-                        </MDBTypography>
-
-                        <div className="d-flex align-items-center">
-                          <p className="fw-bold mb-0 me-5 pe-3">659$</p>
-
-                          <div className="def-number-input number-input safari_only">
-                            <button className="minus"></button>
-                            <input
-                              className="quantity fw-bold text-black"
-                              min={0}
-                              defaultValue={2}
-                              type="number"
-                            />
-                            <button className="plus"></button>
-                          </div>
-                        </div>
-                      </div>
-                    </div> */}
-
                     <hr
                       className="mb-4"
                       style={{
@@ -274,11 +227,6 @@ const CartCheckout = (props) => {
                         opacity: 1,
                       }}
                     />
-
-                    {/* <div className="d-flex justify-content-between px-x">
-                      <p className="fw-bold">Sub:</p>
-                      <p className="fw-bold">95$</p>
-                    </div> */}
                     <div
                       className="d-flex justify-content-between p-2 mb-2"
                       style={{ backgroundColor: "#e1f5fe" }}
@@ -287,7 +235,7 @@ const CartCheckout = (props) => {
                         Total:
                       </MDBTypography>
                       <MDBTypography tag="h5" className="fw-bold mb-0">
-                        2261$
+                        $2261
                       </MDBTypography>
                     </div>
                   </MDBCol>

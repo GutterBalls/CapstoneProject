@@ -211,7 +211,7 @@ const Profile = (props) => {
                 },
             });
             const transData = await response.json();
-            console.log("transData ", transData);
+            // console.log("transData ", transData);
             if(!transData){
                 alert("User was not enabled. Please try again.")
             } else{

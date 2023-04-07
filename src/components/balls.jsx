@@ -26,7 +26,8 @@ const Balls = (props) => {
         // console.log("Balls LINE 26 orderID", props.orderData[0].id);
         // console.log("Balls LINE 27 evt", event.target.value[0])
         try {
-            const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value))
+            const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value));
+            const falseOrder = props.orderData.filter((order) => order.order_status === false);
             const response = await fetch(`${DATABASE_URL}/cartItems`, {
                 method: "POST",
                 headers: {
@@ -34,7 +35,7 @@ const Balls = (props) => {
                 },
                 body: JSON.stringify({
                     user_id: props.userData.id,
-                    order_id: props.orderData[0].id, 
+                    order_id: falseOrder[0].id, 
                     product_id: parseInt(event.target.value),
                     qty: 1,
                     price: specificItem[0].price
@@ -98,18 +99,20 @@ const Balls = (props) => {
                     }) : <h1> ...data loading, make a sammich. </h1>
                 }
                 </div>
-                <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                pageCount={pageCount}
-                onPageChange={pageClick}
-                containerClassName={"pagination"}
-                previousLinkClassName={"item previous"}
-                nextLinkClassName={"item next"}
-                disabledClassName={"disabled-page"}
-                activeClassName={"item active"}
-                disabledLinkClassName={"item disabled"}
-                />
+                <div className='r-pag'>
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        pageCount={pageCount}
+                        onPageChange={pageClick}
+                        containerClassName={"pagination"}
+                        previousLinkClassName={"item previous"}
+                        nextLinkClassName={"item next"}
+                        disabledClassName={"disabled-page"}
+                        activeClassName={"item active"}
+                        disabledLinkClassName={"item disabled"}
+                    />
+                </div>
             </div>
         </section>
     )

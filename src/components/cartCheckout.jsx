@@ -18,8 +18,16 @@ const DATABASE_URL = 'http://localhost:1337/api';
 
 const CartCheckout = (props) => {
     const [cartData, setCartData] = useState([]);
-    const [totalPrice, setTotalPrice] = useState(0);
     const [deletedItem, setDeletedItem] = useState("");
+    const [ccNum, setCCNum] = useState("");
+    const [nameOnCard, setNameOnCard] = useState("");
+    const [exp, setExp] = useState("");
+    const [cvv, setCvv] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [zipcode, setZipcode] = useState("");
+
     const nav = useNavigate();
     let cartTotal = 0;
 
@@ -147,7 +155,10 @@ const CartCheckout = (props) => {
     };
     
     
-
+    // POST payment data
+    async function postPaymentData (event) {
+        event.preventDefault();
+    }
     // const checkOrderStatus = await getOrderByUserId(user.id);
     //         if (checkOrderStatus.order_status === true)
 
@@ -246,13 +257,15 @@ const CartCheckout = (props) => {
                       Payment
                     </MDBTypography>
 
-                    <form className="mb-3">
+                    <form className="mb-3" onSubmit={postPaymentData}>
                       <MDBInput
                         className="mb-3"
                         label="Card number"
                         type="text"
                         size="lg"
                         defaultValue=""
+                        value={ccNum}
+                        onChange={(event) => setCCNum(event.target.value) }
                       />
 
                       <MDBInput
@@ -261,6 +274,8 @@ const CartCheckout = (props) => {
                         type="text"
                         size="lg"
                         defaultValue=""
+                        value={nameOnCard}
+                        onChange={(event) => setNameOnCard(event.target.value)}
                       />
 
                       <MDBRow>
@@ -274,6 +289,8 @@ const CartCheckout = (props) => {
                             maxLength="7"
                             defaultValue=""
                             placeholder="042023"
+                            value={exp}
+                            onChange={(event) => setExp(event.target.value)}
                           />
                         </MDBCol>
                         <MDBCol md="6" className="mb-3">
@@ -286,6 +303,8 @@ const CartCheckout = (props) => {
                             maxLength="3"
                             placeholder="&#9679;&#9679;&#9679;"
                             defaultValue="&#9679;&#9679;&#9679;"
+                            value={cvv}
+                            onChange={(event) => setCvv(event.target.value)}
                           />
                         </MDBCol>
                       </MDBRow>
@@ -303,6 +322,8 @@ const CartCheckout = (props) => {
                         size="lg"
                         placeholder=""
                         defaultValue=""
+                        value={address}
+                        onChange={(event) => setAddress(event.target.value)}
                       />
 
                       <MDBInput
@@ -312,6 +333,8 @@ const CartCheckout = (props) => {
                         size="lg"
                         placeholder=""
                         defaultValue=""
+                        value={city}
+                        onChange={(event) => setCity(event.target.value)}
                       />
 
                       <MDBRow>
@@ -323,6 +346,8 @@ const CartCheckout = (props) => {
                             size="lg"
                             defaultValue=""
                             placeholder=""
+                            value={state}
+                            onChange={(event) => setState(event.target.value)}
                           />
                         </MDBCol>
                         <MDBCol md="6" className="mb-3">
@@ -333,11 +358,13 @@ const CartCheckout = (props) => {
                             size="lg"
                             placeholder=""
                             defaultValue=""
+                            value={zipcode}
+                            onChange={(event) => setZipcode(event.target.value)}
                           />
                         </MDBCol>
                       </MDBRow>
 
-                    <MDBBtn block size="lg" className="mb-5">
+                    <MDBBtn block size="lg" className="mb-5" type="submit">
                         Buy now
                       </MDBBtn>
 

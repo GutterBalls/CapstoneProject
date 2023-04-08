@@ -59,10 +59,13 @@ const Register = () =>{
     }
 
     return (
-        <div className="homepage">
+        <div className='sign-up-log-in'>
             <div className="form">
-                <span className="form__title">Sign up</span>
+                {/* <span className="form__title">Sign up</span> */}
                 <form action="" onSubmit={ registerUser }>
+                    <span className="form__switch">
+                        Sign up for a new account
+                    </span>
                     <div className="form__input">
                         <i className="ri-user-line"></i>
                         <input 

@@ -46,7 +46,7 @@ const Balls = (props) => {
 
     function pageClick({ selected: selectedPage}) {
         setCurrentPage(selectedPage)
-        console.log(selectedPage)
+        console.log("Selected page", selectedPage)
     };
 
     
@@ -71,13 +71,14 @@ const Balls = (props) => {
                 })
             })
             const translatedData = await response.json()
-
+            
             console.log("Balls LINE 45", translatedData);
 
         } catch (error) {
             console.log("Error w/ balls/addItemToCart", error);
-        }
-    }
+            alert("Duplicate Product: Visit cart to update quantity.")
+        };
+    };
     
     
 
@@ -91,7 +92,7 @@ const Balls = (props) => {
                             setPrice(0)
                             setSpecials("")
                             setCurrentPage(0)
-                        }} link> All Bowling Balls </MDBBtn>
+                        }} link> All Balls </MDBBtn>
                     </li>
                     <li>
                         <MDBDropdown dropright group>
@@ -102,7 +103,6 @@ const Balls = (props) => {
                                 setPrice(0)
                                 setSpecials("")
                                 setCurrentPage(0)
-                                
                             }}>Brand</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => setBrand("Brunswick") && setCurrentPage(0)} link>Brunswick</MDBDropdownItem>

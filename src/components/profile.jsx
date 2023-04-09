@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -21,6 +22,12 @@ const Profile = (props) => {
     const [editUserAdminBtn, setEditUserAdminBtn] = useState (false);
 //Admin Button (Add New Product Form)    
     const [addProductBtn, setAddProductBtn] = useState (false);    
+//Admin Button (List Products )    
+    const [listProductsBtn, setListProductsBtn] = useState (false);
+//Admin Button (Edit/update Product )    
+    const [editProductBtn, setEditProductBtn] = useState (false);
+//Admin Button (Delete Product )    
+    const [deleteProductBtn, setDeleteProductBtn] = useState (false);
 
 //User Edit Form State 
     const [editUsername, setEditUsername ] = useState("");
@@ -40,6 +47,16 @@ const Profile = (props) => {
     const [ addSale, setAddSale ] = useState("");
     const [ addClearance, setAddClearance ] = useState("");
     const [ addCatId, setAddCatId ] = useState("");
+
+//Admin - Edit Product State
+    // const [ editImage, setEditImage ] = useState(productData.image);
+    // const [ editBrand, setEditBrand ] = useState(productData.brand);
+    // const [ editName, setEditName ] = useState(productData.name);
+    // const [ editDescription, setEditDescription ] = useState(productData.description);
+    // const [ editPrice, setEditPrice ] = useState(productData.price);
+    // const [ editSale, setEditSale ] = useState(productData.sale);
+    // const [ editClearance, setEditClearance ] = useState(productData.clearance);
+    // const [ editCatId, setEditCatId ] = useState(productData.category_id);
 
 // User - toggle edit user form (button) 
     function toggleEditUserForm() {
@@ -66,6 +83,18 @@ const Profile = (props) => {
 function toggleAddProduct() {
     setAddProductBtn(!addProductBtn)
 };
+// Admin - toggle List Product(button)
+function toggleListProducts() {
+    setListProductsBtn(!listProductsBtn)
+};
+// Admin - toggle List Product(button)
+function toggleEditProduct() {
+    setEditProductBtn(!editProductBtn)
+};
+ // Admin - toggle List Product(button)
+function toggleDeleteProduct() {
+    setDeleteProductBtn(!deleteProductBtn)
+};   
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
@@ -278,47 +307,6 @@ function toggleAddProduct() {
         };
     };
 
-// Admin - Enable user account (Might not be needed at all)
-    // async function enableUser(singleUser, event){
-    //     event.preventDefault();
-    //     try{
-    //         const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
-    //         , {
-    //             method: "DELETE",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`
-    //             },
-    //         });
-    //         const transData = await response.json();
-    //         // console.log("transData ", transData);
-    //         if(!transData){
-    //             alert("User was not enabled. Please try again.")
-    //         } else{
-    //             function updateUserData(){
-    //                 let updateArr = [];
-    //                 for(let i=0; i<userData.length; i++){
-    //                     let currentUser = userData[i];
-    //                     if(currentUser.id !== userData.id){
-    //                         updateArr.push(currentUser);
-    //                     }else{
-    //                         updateArr.push(transData);
-    //                     }
-    //                 }
-    //                 return updateArr
-    //             };
-    //             const newUserData = updateUserData();
-    //             setUserData(newUserData);
-    //             // alert("User was disabled.")
-    //             nav("/profile")
-    //             return getAllUsersData();
-    //         }
-            
-    //     } catch (error) {
-    //         console.error("Error with deleteUser function", error);
-    //     };
-    // };
-
 // Admin - Edit/Update User
 const editUserAdmin = async (singleUser, event) => {
     event.preventDefault();
@@ -426,7 +414,121 @@ const editUserAdmin = async (singleUser, event) => {
         }
     };
 
+// Admin - Edit/Update Product
+async function editProduct(singleProduct, event){
+    event.preventDefault();
 
+    const tokenKey = localStorage.getItem("token");
+
+    console.log("singleProduct:")
+    console.log(singleProduct)
+    try {
+        const response = await fetch(`${DATABASE_URL}/products/${singleProduct}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokenKey}`
+            },
+            body: JSON.stringify({
+                image: addImage,
+                brand: addBrand,
+                name: addName,
+                description: addDescription,
+                price: addPrice,
+                sale: addSale,
+                clearance: addClearance,
+                category_id: addCatId
+            })
+        
+        });
+        const transData = await response.json();
+            console.log("Add Product TransData:")
+            console.log(transData);
+
+        if (!transData){
+            alert("Product was not updated. Please try again. ");
+        } else {
+            function updateProductData(){
+                let updateArr = [];
+                for(let i=0; i<productData.length; i++){
+                    let currentProduct = productData[i];
+                    if(currentProduct.id !== productData.id){
+                        updateArr.push(currentProduct);
+                    }else{
+                        updateArr.push(transData);
+                    }
+                }
+                return updateArr
+            };
+            const newProductData = updateProductData();
+            setProductData(newProductData);
+            alert("Product was successfully Updated.");
+// reset form
+            setEditProductBtn(false);
+            setAddImage("");
+            setAddBrand("");
+            setAddName("");
+            setAddDescription("");
+            setAddPrice("");
+            setAddSale("");
+            setAddClearance("");
+            setAddCatId("");
+            nav("/profile");
+            return getProductData();
+        }
+    } catch (error){
+        console.log(error);
+    }
+};    
+
+// Admin - Delete Product
+    const deleteProduct = async (singleProduct, event) => {
+        event.preventDefault();
+
+        const tokenKey = localStorage.getItem("token");
+
+        console.log("singleProduct:")
+        console.log(singleProduct)
+        try {
+            const response = await fetch(`${DATABASE_URL}/products/1`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenKey}`
+                }
+            });
+            const transData = await response.json();
+                console.log("Delete Product TransData:")
+                console.log(transData);
+
+            if (!transData){
+                alert("Product was not deleted. Please try again. ");
+            } else {
+                // function updateProductData(){
+                //     let updateArr = [];
+                //     for(let i=0; i<productData.length; i++){
+                //         let currentProduct = productData[i];
+                //         if(currentProduct.id !== productData.id){
+                //             updateArr.push(currentProduct);
+                //         }else{
+                //             updateArr.push(transData);
+                //         }
+                //     }
+                //     return updateArr
+                // };
+                // const newProductData = updateProductData();
+                // setProductData(newProductData);
+                alert("Product was successfully Deleted.");
+                // nav("/profile");
+                return getProductData();
+            }
+        } catch (error){
+            console.log(error);
+        }
+    }; 
+
+
+// Admin - List All Products 
     return (
         <section className="main-container profile-mc">
             {
@@ -580,110 +682,255 @@ const editUserAdmin = async (singleUser, event) => {
                                         }
                                         <hr></hr>
                                     </div>
-                                    
                                 )
                             }): ""
                         }
                     </div>
                     <button onClick={ toggleAddProduct }>Add New Product</button>
-                    {
-                        addProductBtn ? (
-                            <div className="form">
-                                <span className="form__title">Add Product</span>
-                                <form action="" onSubmit={ addProduct } >
-                                    <div className="form__input">
-                                        {/* <i className="ri-user-line"></i> */}
-                                        <input 
-                                            type="url"
-                                            value={ addImage }
-                                            onChange={(event)=>{
-                                                setAddImage(event.target.value);
-                                            }}
-                                            placeholder="Image URL"
-                                        />
-                                    </div>    
-                                    <div className="form__input">
-                                        {/* <i className="ri-lock-line"></i> */}
-                                        <input 
-                                            type="text"
-                                            value={ addBrand } 
-                                            onChange={(event)=>{
-                                                setAddBrand(event.target.value);
-                                            }}
-                                            placeholder="Brand"
-                                        />
+                    <div>
+                        {   
+                            addProductBtn ? (
+                                <div className="form">
+                                    <span className="form__title">Add Product</span>
+                                    <form action="" onSubmit={ addProduct } >
+                                        <div className="form__input">
+                                            {/* <i className="ri-user-line"></i> */}
+                                            <input 
+                                                type="url"
+                                                value={ addImage }
+                                                onChange={(event)=>{
+                                                    setAddImage(event.target.value);
+                                                }}
+                                                placeholder="Image URL"
+                                            />
+                                        </div>    
+                                        <div className="form__input">
+                                            {/* <i className="ri-lock-line"></i> */}
+                                            <input 
+                                                type="text"
+                                                value={ addBrand } 
+                                                onChange={(event)=>{
+                                                    setAddBrand(event.target.value);
+                                                }}
+                                                placeholder="Brand"
+                                            />
+                                        </div>
+                                        <div className="form__input">
+                                            {/* <i className="ri-mail-line"></i> */}
+                                            <input 
+                                                type="text"
+                                                value={ addName } 
+                                                onChange={(event)=>{
+                                                    setAddName(event.target.value);
+                                                }}
+                                                placeholder="Name"
+                                            />
+                                        </div>
+                                        <div className="form__input">
+                                            {/* <i className="ri-mail-line"></i> */}
+                                            <input 
+                                                type="text"
+                                                value={ addDescription } 
+                                                onChange={(event)=>{
+                                                    setAddDescription(event.target.value);
+                                                }}
+                                                placeholder="Description"
+                                            />
+                                        </div>
+                                        <div className="form__input">
+                                            {/* <i className="ri-mail-line"></i> */}
+                                            <input 
+                                                type="number"
+                                                value={ addPrice } 
+                                                onChange={(event)=>{
+                                                    setAddPrice(event.target.value);
+                                                }}
+                                                placeholder="Price"
+                                            />
+                                        </div>
+                                        <div className="form__input">
+                                            {/* <i className="ri-mail-line"></i> */}
+                                            <input 
+                                                type="text"
+                                                value={ addSale } 
+                                                onChange={(event)=>{
+                                                    setAddSale(event.target.value);
+                                                }}
+                                                placeholder="Sale: true or false"
+                                            />
+                                        </div>
+                                        <div className="form__input">
+                                            {/* <i className="ri-mail-line"></i> */}
+                                            <input 
+                                                type="text"
+                                                value={ addClearance } 
+                                                onChange={(event)=>{
+                                                    setAddClearance(event.target.value);
+                                                }}
+                                                placeholder="Clearance: true or false"
+                                            />
+                                        </div>
+                                        <div className="form__input">
+                                            {/* <i className="ri-mail-line"></i> */}
+                                            <input 
+                                                type="number"
+                                                value={ addCatId } 
+                                                onChange={(event)=>{
+                                                    setAddCatId(event.target.value);
+                                                }}
+                                                placeholder="Category ID"
+                                            />
+                                        </div>
+                                        <button type="submit" className="form__button" >Submit</button>
+                                    </form>
+                                </div>    
+                            ): ""
+                        }   
+                    </div>
+                    <button onClick={ toggleListProducts }>List All Products</button>
+                    <div>
+                        {
+                            listProductsBtn ? productData.map((singleProduct)=>{
+                                return(
+                                    <div key={singleProduct.id} className="main-singleProduct">
+                                        <hr></hr>
+                                        <h3>Product: {singleProduct.id}
+                                        <br></br>
+                                        {singleProduct.brand} {singleProduct.name}</h3>
+                                        <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
+                                        <button onClick={ toggleEditProduct }>Edit/Update</button>
+                                        <div>
+                                        {   
+                                            editProductBtn ? (
+                                                <div className="form">
+                                                    <span className="form__title">Edit/Update Product</span>
+                                                    <form action="" onSubmit={ (event) => editProduct(singleProduct.id, event) }>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-user-line"></i> */}
+                                                            <input 
+                                                                type="text"
+                                                                value={ addImage === "" ? singleProduct.image : addImage }
+                                                                onChange={(event)=>{
+                                                                    setAddImage(event.target.value === "" ? singleProduct.image : event.target.value);
+                                                                }}
+                                                                placeholder={ singleProduct.image }
+                                                            />
+                                                        </div>    
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-lock-line"></i> */}
+                                                            <input 
+                                                                type="text"
+                                                                value={ addBrand }
+                                                                //  === "" ? singleProduct.brand : addBrand } 
+                                                                onChange={(event)=>{
+                                                                    if(event.target.value === "" ){
+                                                                        setAddBrand(singleProduct.brand)
+                                                                    } else{ 
+                                                                        setAddBrand(event.target.value) 
+                                                                    }
+                                                                }}
+                                                                
+                                                                placeholder={ singleProduct.brand } 
+                                                            />
+                                                        </div>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-mail-line"></i> */}
+                                                            <input 
+                                                                type="text"
+                                                                value={ addName } 
+                                                                onChange={(event)=>{
+                                                                    setAddName(event.target.value)
+                                                                    // === "" ? singleProduct.name : event.target.value);
+                                                                }}
+                                                                placeholder={ singleProduct.name }
+                                                            />
+                                                        </div>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-mail-line"></i> */}
+                                                            <textarea 
+                                                                type="text"
+                                                                rows="4"
+                                                                cols="75"
+                                                                value={ addDescription } 
+                                                                onChange={(event)=>{
+                                                                    setAddDescription(event.target.value)
+                                                                    //   === "" ? singleProduct.description : event.target.value );
+                                                                }}
+                                                                placeholder={ singleProduct.description }
+                                                            />
+                                                        </div>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-mail-line"></i> */}
+                                                            <input 
+                                                                type="number"
+                                                                value={ addPrice } 
+                                                                onChange={(event)=>{
+                                                                    setAddPrice(event.target.value)
+                                                                    //  === "" ? singleProduct.price : event.target.value);
+                                                                }}
+                                                                placeholder={ singleProduct.price }
+                                                            />
+                                                        </div>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-mail-line"></i> */}
+                                                            <input 
+                                                                type="text"
+                                                                value={ addSale } 
+                                                                onChange={(event)=>{
+                                                                    setAddSale(event.target.value)
+                                                                    //  === "" ? singleProduct.sale : event.target.value);
+                                                                }}
+                                                                placeholder={ singleProduct.sale ? "true" : "false" }
+                                                            />
+                                                        </div>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-mail-line"></i> */}
+                                                            <input 
+                                                                type="text"
+                                                                value={ addClearance } 
+                                                                onChange={(event)=>{
+                                                                    setAddClearance(event.target.value)
+                                                                    //  === "" ? singleProduct.clearance : event.target.value);
+                                                                }}
+                                                                placeholder={ singleProduct.clearance ? "true" : "false"  }
+                                                            />
+                                                        </div>
+                                                        <div className="form__input">
+                                                            {/* <i className="ri-mail-line"></i> */}
+                                                            <input 
+                                                                type="number"
+                                                                value={ addCatId } 
+                                                                onChange={(event)=>{
+                                                                    setAddCatId(event.target.value)
+                                                                    //  === "" ? singleProduct.category_id : event.target.value );
+                                                                }}
+                                                                placeholder={ singleProduct.category_id }
+                                                            />
+                                                        </div>
+                                                        <button type="submit" className="form__button" >Submit</button>
+                                                    </form>
+                                                </div>    
+                                            ): ""
+                                        } 
+                                        </div>
+                                        <button onClick={ toggleDeleteProduct }>Delete</button>
+                                        {
+                                            deleteProductBtn ? (
+                                                <div className="form">
+                                                    <span className="form__title">Delete Product</span>
+                                                    <form action="" onSubmit={ (event) => deleteProduct(singleProduct.id, event) } >
+                                                        <div className="form__button">Are you sure you want to delete {singleProduct.name}? Click Delete to confirm selection. </div>
+                                                        <button type="submit" className="form__button" >Delete</button>
+                                                    </form>
+                                                </div>    
+                                            ): ""
+                                        }
+                                        <hr></hr>
                                     </div>
-                                    <div className="form__input">
-                                        {/* <i className="ri-mail-line"></i> */}
-                                        <input 
-                                            type="text"
-                                            value={ addName } 
-                                            onChange={(event)=>{
-                                                setAddName(event.target.value);
-                                            }}
-                                            placeholder="Name"
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        {/* <i className="ri-mail-line"></i> */}
-                                        <input 
-                                            type="text"
-                                            value={ addDescription } 
-                                            onChange={(event)=>{
-                                                setAddDescription(event.target.value);
-                                            }}
-                                            placeholder="Description"
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        {/* <i className="ri-mail-line"></i> */}
-                                        <input 
-                                            type="number"
-                                            value={ addPrice } 
-                                            onChange={(event)=>{
-                                                setAddPrice(event.target.value);
-                                            }}
-                                            placeholder="Price"
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        {/* <i className="ri-mail-line"></i> */}
-                                        <input 
-                                            type="text"
-                                            value={ addSale } 
-                                            onChange={(event)=>{
-                                                setAddSale(event.target.value);
-                                            }}
-                                            placeholder="Sale: true or false"
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        {/* <i className="ri-mail-line"></i> */}
-                                        <input 
-                                            type="text"
-                                            value={ addClearance } 
-                                            onChange={(event)=>{
-                                                setAddClearance(event.target.value);
-                                            }}
-                                            placeholder="Clearance: true or false"
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        {/* <i className="ri-mail-line"></i> */}
-                                        <input 
-                                            type="number"
-                                            value={ addCatId } 
-                                            onChange={(event)=>{
-                                                setAddCatId(event.target.value);
-                                            }}
-                                            placeholder="Category ID"
-                                        />
-                                    </div>
-                                    <button type="submit" className="form__button" >Submit</button>
-                                </form>
-                            </div>    
-                        ): ""
-                    }
+                                )
+                            }): ""
+                        }
+                    </div>
                 </div>
             }
         </section>

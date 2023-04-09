@@ -113,14 +113,17 @@
     text-shadow: 5px 5px 5px black;
 }
 
-/* .hp-pic{
-    display: flex; flex-direction: row; justify-content: center;
-    background-color: white;
-    background-image: url(/images/background1.jpg);
-    width: 80%;
-    height: 50%;
-    background-size:contain; background-repeat: no-repeat; background-position: center;
-} */
+.filter {
+    list-style-type: none;
+    
+   
+}
+
+.filter-item {
+    margin-top: 8%;
+    margin-bottom: 8%;
+    margin-left: -15%;
+}
 
 .main-left{
     font-size: 1em;

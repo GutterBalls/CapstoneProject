@@ -87,19 +87,19 @@ const Balls = (props) => {
     return (
         <section className="main-container">
             <aside className="main-left">Filter by...
-                <ul>
-                    <li>
-                        <MDBBtn style={{backgroundColor: "rgb(110,0,0)"}} onClick={() => {
+                <ul className="filter">
+                    <li className="filter-item">
+                        <MDBBtn style={{backgroundColor: "rgb(110,0,0)", width: "115px"}} onClick={() => {
                             setBrand(null)
                             setPrice(0)
                             setSpecials("")
                             setCurrentPage(0)
                         }} link> All Balls </MDBBtn>
                     </li>
-                    <li>
+                    <li className="filter-item">
                         <MDBDropdown dropright group>
                             <MDBDropdownToggle 
-                            style={{backgroundColor: "rgb(188,0,0)"}} 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
                             onClick={() => {
                                 setBrand(null)
                                 setPrice(0)
@@ -115,10 +115,10 @@ const Balls = (props) => {
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
-                    <li>
+                    <li className="filter-item">
                         <MDBDropdown dropright group>
                             <MDBDropdownToggle 
-                            style={{backgroundColor: "rgb(188,0,0)"}} 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
                             onClick={() => {
                                 setBrand(null)
                                 setPrice(0)
@@ -132,10 +132,10 @@ const Balls = (props) => {
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
-                    <li>
+                    <li className="filter-item">
                         <MDBDropdown dropright group>
                             <MDBDropdownToggle 
-                            style={{backgroundColor: "rgb(188,0,0)"}} 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
                             onClick={() => {
                                 setBrand(null)
                                 setPrice(0)

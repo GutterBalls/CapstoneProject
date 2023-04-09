@@ -66,7 +66,7 @@ const CartCheckout = (props) => {
             
         
 
-        setDeletedItem(deleted +1);
+        setDeletedItem(deletedItem +1);
 
 
             
@@ -106,7 +106,7 @@ const CartCheckout = (props) => {
                 const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
                 currentItem[0].qty = parseInt(event.target.value) + 1 
                 const newCart = cartData.filter((item) => item.id !== parseInt(event.target.parentNode.getAttribute("value")))
-                setCartData([...newCart, currentItem[0]])
+                setCartData([currentItem[0],...newCart])
             }
 
         
@@ -146,7 +146,7 @@ const CartCheckout = (props) => {
                 const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
                 currentItem[0].qty = parseInt(event.target.value) -1 
                 const newCart = cartData.filter((item) => item.id !== parseInt(event.target.parentNode.getAttribute("value")))
-                setCartData([...newCart, currentItem[0]])
+                setCartData([ currentItem[0],...newCart])
             }
         }
         } catch (error) {
@@ -200,8 +200,8 @@ const CartCheckout = (props) => {
     //         if (checkOrderStatus.order_status === true)
 
   return (
-    <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
-      <MDBContainer className="h-100 py-5">
+    <section className="h-100 w-100 h-custom" style={{ backgroundImage: "url(/images/old_school_lanes.png)" }}>
+      <MDBContainer className="h-100 py-5"  style={{ backgroundImage: "url(/images/old_school_lanes.png)", boxShadow: "inset 0px 0px 0px 100px black" }}>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol>
             <MDBCard className="shopping-cart" style={{ borderRadius: "15px" }}>
@@ -231,7 +231,7 @@ const CartCheckout = (props) => {
 
                       <div className="flex-grow-1 ms-3">
                         <button onClick={deleteCartItem} value={singleItem.id} className="float-end text-black">
-                          <MDBIcon fas icon="times" /> {singleItem.id}
+                          <MDBIcon fas icon="times" style={{ color: "red" }} /> {singleItem.id}
                         </button>
                         <MDBTypography tag="h5" className="text-primary">
                           {singleItem.brand} {singleItem.name}

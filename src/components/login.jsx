@@ -52,11 +52,14 @@ const Login = (props) =>{
     }
 
     return(
-        <div className="homepage">
+        <div className="sign-up-log-in">
 
         <div className="form">
-            <span className="form__title">Login</span>
+            {/* <span className="form__title">Login</span> */}
             <form action="" onSubmit={ logIn }>
+                <span className="form__switch">
+                    Log in to your account
+                </span>
                 <div className="form__input">
                     <i className="ri-user-line"></i>
                     <input 
@@ -79,6 +82,9 @@ const Login = (props) =>{
                 </div>
                 <button type="submit" className="form__button">Login</button>
                 <span className="form__switch">
+                </span>
+                <span className="form__switch">
+                    Don't have an account? <Link to="/register">Sign Up</Link>
                 </span>
             </form>
         </div>

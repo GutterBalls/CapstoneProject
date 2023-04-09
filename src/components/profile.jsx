@@ -490,7 +490,7 @@ async function editProduct(singleProduct, event){
         console.log("singleProduct:")
         console.log(singleProduct)
         try {
-            const response = await fetch(`${DATABASE_URL}/products/1`, {
+            const response = await fetch(`${DATABASE_URL}/products/${singleProduct}`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
@@ -504,22 +504,22 @@ async function editProduct(singleProduct, event){
             if (!transData){
                 alert("Product was not deleted. Please try again. ");
             } else {
-                // function updateProductData(){
-                //     let updateArr = [];
-                //     for(let i=0; i<productData.length; i++){
-                //         let currentProduct = productData[i];
-                //         if(currentProduct.id !== productData.id){
-                //             updateArr.push(currentProduct);
-                //         }else{
-                //             updateArr.push(transData);
-                //         }
-                //     }
-                //     return updateArr
-                // };
-                // const newProductData = updateProductData();
-                // setProductData(newProductData);
+                function updateProductData(){
+                    let updateArr = [];
+                    for(let i=0; i<productData.length; i++){
+                        let currentProduct = productData[i];
+                        if(currentProduct.id !== singleProduct.id){
+                            updateArr.push(currentProduct);
+                        }else{
+                            updateArr.push(transData);
+                        }
+                    }
+                    return updateArr
+                };
+                const newProductData = updateProductData();
+                setProductData(newProductData);
                 alert("Product was successfully Deleted.");
-                // nav("/profile");
+                nav("/profile");
                 return getProductData();
             }
         } catch (error){
@@ -813,15 +813,15 @@ async function editProduct(singleProduct, event){
                                                                 onChange={(event)=>{
                                                                     setAddImage(event.target.value === "" ? singleProduct.image : event.target.value);
                                                                 }}
-                                                                placeholder={ singleProduct.image }
+                                                                defaultValue={ singleProduct.image }
                                                             />
                                                         </div>    
                                                         <div className="form__input">
                                                             {/* <i className="ri-lock-line"></i> */}
                                                             <input 
                                                                 type="text"
-                                                                value={ addBrand }
-                                                                //  === "" ? singleProduct.brand : addBrand } 
+                                                                value={ addBrand 
+                                                                === "" ? singleProduct.brand : addBrand } 
                                                                 onChange={(event)=>{
                                                                     if(event.target.value === "" ){
                                                                         setAddBrand(singleProduct.brand)
@@ -830,7 +830,7 @@ async function editProduct(singleProduct, event){
                                                                     }
                                                                 }}
                                                                 
-                                                                placeholder={ singleProduct.brand } 
+                                                                defaultValue={ singleProduct.brand } 
                                                             />
                                                         </div>
                                                         <div className="form__input">

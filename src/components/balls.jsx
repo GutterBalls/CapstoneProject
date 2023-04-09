@@ -45,9 +45,11 @@ const Balls = (props) => {
     }, []);
 
     function pageClick({ selected: selectedPage}) {
-        setCurrentPage(selectedPage)
-        console.log("Selected page", selectedPage)
-    };
+        
+            setCurrentPage(selectedPage)
+            // console.log("Selected page", selectedPage)
+        };
+
 
     
 
@@ -102,14 +104,14 @@ const Balls = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                setCurrentPage(0)
+                                // setCurrentPage(0)
                             }}>Brand</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => setBrand("Brunswick") && setCurrentPage(0)} link>Brunswick</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setBrand("DV8") && setCurrentPage(0)} link>DV8</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setBrand("Hammer") && setCurrentPage(0)} link>Hammer</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setBrand("Motiv") && setCurrentPage(0)} link>Motiv</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setBrand("Storm") && setCurrentPage(0)} link>Storm</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link>Brunswick</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("DV8") , setCurrentPage(0)}} link>DV8</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Hammer") , setCurrentPage(0)}} link>Hammer</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Motiv") , setCurrentPage(0)}} link>Motiv</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link>Storm</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -121,12 +123,12 @@ const Balls = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                setCurrentPage(0)
+                                // setCurrentPage(0)
                             }}>Price</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => setPrice(100) && setCurrentPage(0)} link>$</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setPrice(150) && setCurrentPage(0)} link>$$</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setPrice(250) && setCurrentPage(0)} link>$$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link>$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(150) , setCurrentPage(0)}} link>$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(250) , setCurrentPage(0)}} link>$$$</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -138,11 +140,11 @@ const Balls = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                setCurrentPage(0)
+                                // setCurrentPage(0)
                             }}>Specials</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => setSpecials("Sale") && setCurrentPage(0)} link>Sale</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => setSpecials("Clearance") && setCurrentPage(0)} link>Clearance</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link>Sale</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link>Clearance</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -181,7 +183,8 @@ const Balls = (props) => {
                         nextLinkClassName={"item next"}
                         disabledClassName={"disabled-page"}
                         activeClassName={"item active"}
-                        disabledLinkClassName={"item disabled"}  
+                        disabledLinkClassName={"item disabled"}
+                        forcePage={currentPage}
                     />
                 </div>
             </div>

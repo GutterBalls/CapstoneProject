@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
+
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const Profile = (props) => {
@@ -48,14 +49,14 @@ const Profile = (props) => {
     const [ addCatId, setAddCatId ] = useState("");
 
 //Admin - Edit Product State
-    const [ editImage, setEditImage ] = useState(productData.image);
-    const [ editBrand, setEditBrand ] = useState(productData.brand);
-    const [ editName, setEditName ] = useState(productData.name);
-    const [ editDescription, setEditDescription ] = useState(productData.description);
-    const [ editPrice, setEditPrice ] = useState(productData.price);
-    const [ editSale, setEditSale ] = useState(productData.sale);
-    const [ editClearance, setEditClearance ] = useState(productData.clearance);
-    const [ editCatId, setEditCatId ] = useState(productData.category_id);
+    // const [ editImage, setEditImage ] = useState(productData.image);
+    // const [ editBrand, setEditBrand ] = useState(productData.brand);
+    // const [ editName, setEditName ] = useState(productData.name);
+    // const [ editDescription, setEditDescription ] = useState(productData.description);
+    // const [ editPrice, setEditPrice ] = useState(productData.price);
+    // const [ editSale, setEditSale ] = useState(productData.sale);
+    // const [ editClearance, setEditClearance ] = useState(productData.clearance);
+    // const [ editCatId, setEditCatId ] = useState(productData.category_id);
 
 // User - toggle edit user form (button) 
     function toggleEditUserForm() {
@@ -306,47 +307,6 @@ function toggleDeleteProduct() {
         };
     };
 
-// Admin - Enable user account (Might not be needed at all)
-    // async function enableUser(singleUser, event){
-    //     event.preventDefault();
-    //     try{
-    //         const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
-    //         , {
-    //             method: "DELETE",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`
-    //             },
-    //         });
-    //         const transData = await response.json();
-    //         // console.log("transData ", transData);
-    //         if(!transData){
-    //             alert("User was not enabled. Please try again.")
-    //         } else{
-    //             function updateUserData(){
-    //                 let updateArr = [];
-    //                 for(let i=0; i<userData.length; i++){
-    //                     let currentUser = userData[i];
-    //                     if(currentUser.id !== userData.id){
-    //                         updateArr.push(currentUser);
-    //                     }else{
-    //                         updateArr.push(transData);
-    //                     }
-    //                 }
-    //                 return updateArr
-    //             };
-    //             const newUserData = updateUserData();
-    //             setUserData(newUserData);
-    //             // alert("User was disabled.")
-    //             nav("/profile")
-    //             return getAllUsersData();
-    //         }
-            
-    //     } catch (error) {
-    //         console.error("Error with deleteUser function", error);
-    //     };
-    // };
-
 // Admin - Edit/Update User
 const editUserAdmin = async (singleUser, event) => {
     event.preventDefault();
@@ -520,6 +480,53 @@ async function editProduct(singleProduct, event){
         console.log(error);
     }
 };    
+
+// Admin - Delete Product
+    const deleteProduct = async (singleProduct, event) => {
+        event.preventDefault();
+
+        const tokenKey = localStorage.getItem("token");
+
+        console.log("singleProduct:")
+        console.log(singleProduct)
+        try {
+            const response = await fetch(`${DATABASE_URL}/products/1`, {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tokenKey}`
+                }
+            });
+            const transData = await response.json();
+                console.log("Delete Product TransData:")
+                console.log(transData);
+
+            if (!transData){
+                alert("Product was not deleted. Please try again. ");
+            } else {
+                // function updateProductData(){
+                //     let updateArr = [];
+                //     for(let i=0; i<productData.length; i++){
+                //         let currentProduct = productData[i];
+                //         if(currentProduct.id !== productData.id){
+                //             updateArr.push(currentProduct);
+                //         }else{
+                //             updateArr.push(transData);
+                //         }
+                //     }
+                //     return updateArr
+                // };
+                // const newProductData = updateProductData();
+                // setProductData(newProductData);
+                alert("Product was successfully Deleted.");
+                // nav("/profile");
+                return getProductData();
+            }
+        } catch (error){
+            console.log(error);
+        }
+    }; 
+
 
 // Admin - List All Products 
     return (
@@ -802,10 +809,9 @@ async function editProduct(singleProduct, event){
                                                             {/* <i className="ri-user-line"></i> */}
                                                             <input 
                                                                 type="text"
-                                                                value={ addImage }
+                                                                value={ addImage === "" ? singleProduct.image : addImage }
                                                                 onChange={(event)=>{
-                                                                    setAddImage(event.target.value) 
-                                                                        // === "" ? singleProduct.image : event.target.value);
+                                                                    setAddImage(event.target.value === "" ? singleProduct.image : event.target.value);
                                                                 }}
                                                                 placeholder={ singleProduct.image }
                                                             />
@@ -814,11 +820,14 @@ async function editProduct(singleProduct, event){
                                                             {/* <i className="ri-lock-line"></i> */}
                                                             <input 
                                                                 type="text"
-                                                                value={ addBrand } 
+                                                                value={ addBrand }
+                                                                //  === "" ? singleProduct.brand : addBrand } 
                                                                 onChange={(event)=>{
                                                                     if(event.target.value === "" ){
                                                                         setAddBrand(singleProduct.brand)
-                                                                    } else{ setAddBrand(event.target.value) }
+                                                                    } else{ 
+                                                                        setAddBrand(event.target.value) 
+                                                                    }
                                                                 }}
                                                                 
                                                                 placeholder={ singleProduct.brand } 
@@ -905,6 +914,17 @@ async function editProduct(singleProduct, event){
                                         } 
                                         </div>
                                         <button onClick={ toggleDeleteProduct }>Delete</button>
+                                        {
+                                            deleteProductBtn ? (
+                                                <div className="form">
+                                                    <span className="form__title">Delete Product</span>
+                                                    <form action="" onSubmit={ (event) => deleteProduct(singleProduct.id, event) } >
+                                                        <div className="form__button">Are you sure you want to delete {singleProduct.name}? Click Delete to confirm selection. </div>
+                                                        <button type="submit" className="form__button" >Delete</button>
+                                                    </form>
+                                                </div>    
+                                            ): ""
+                                        }
                                         <hr></hr>
                                     </div>
                                 )

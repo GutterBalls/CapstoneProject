@@ -12,13 +12,10 @@ const Header = (props) => {
     const [search, setSearch] = useState([]);
 
     useEffect(() => {
-        props.getProductData();
+        getProductData();
         
     }, []);
 
-    let searchProducts = props.productData.filter((singleProduct) => {
-        return singleProduct.name //COME BACK FOR.
-    })
     return (
         <div className="header-jsx" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
             <div className="header-top">

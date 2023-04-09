@@ -257,7 +257,7 @@ const CartCheckout = (props) => {
                       </div>
                     </div>
                         ) 
-                    }) : <h1> No Items in your cart. </h1>
+                    }) : <></>
                 }
                     <hr
                       className="mb-4"
@@ -287,6 +287,8 @@ const CartCheckout = (props) => {
                     </div>
                   </MDBCol>
                   <MDBCol lg="5" className="px-5 py-4">
+                { props.isLoggedIn ? 
+                <>
                     <MDBTypography
                       tag="h3"
                       className="mb-3 pt-2 text-center fw-bold text-uppercase"
@@ -397,17 +399,22 @@ const CartCheckout = (props) => {
                         Buy now
                       </MDBBtn>
 
-                      <MDBTypography
+                    <MDBTypography
                         tag="h5"
                         className="fw-bold mb-5"
                         style={{ position: "absolute", bottom: "0" }}
-                      >
+                        >
                         <Link to='/'>
                           <MDBIcon fas icon="angle-left me-2" />
                           Back to shopping
                         </Link>
                       </MDBTypography>
                     </form>
+                </> : <ul> <h2>Please login or create an account for:</h2> 
+                        <li> Adding products to cart.</li>
+                        <li> Entering payment and shipping information. </li>
+                    </ul>
+                } 
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>

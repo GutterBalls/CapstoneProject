@@ -1,13 +1,15 @@
 import { Nav } from "../components";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { BsCart4, BsPencilSquare, BsSearch } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
-import { GrLogin, GrLogout } from 'react-icons/gr';
+// import { BsCart4, BsPencilSquare, BsSearch } from 'react-icons/bs';
+// import { CgProfile } from 'react-icons/cg';
+// import { GrLogin, GrLogout } from 'react-icons/gr';
+import { MdAssignmentAdd, MdLogin, MdLogout, MdAccountCircle, MdShoppingCart } from 'react-icons/md';
+
 
 
 const Header = (props) => {
-    const { isLoggedIn, getProductData } = props;
+    const { isLoggedIn, getProductData, userData } = props;
 
     const [search, setSearch] = useState([]);
 
@@ -21,22 +23,21 @@ const Header = (props) => {
             <div className="header-top">
                 <Link to="/" ><img src="/images/logo-short.jpg" alt="Gutter Ball Logo" id="logo"/></Link>
                 <br />
-                { isLoggedIn ? <Link to="/profile" className="nav-btn-top icon"><CgProfile /></Link> :<Link to="/register" className="nav-btn-top icon"><BsPencilSquare /></Link> }
-                { isLoggedIn ? <Link to="/logout" className="nav-btn-top icon"><GrLogout /></Link> : <Link to="/login" className="nav-btn-top icon"><GrLogin /></Link> }
-                <Link to="/cart" className="nav-btn-top icon"><BsCart4 /></Link>
+                {isLoggedIn ? <p>Welcome {userData.username}</p> : <p>Welcome Guest</p> }
+                {/* ICONS */}
+                { isLoggedIn ? <Link to="/profile" className="nav-btn-top icon"><MdAccountCircle /></Link> :<Link to="/register" className="nav-btn-top icon">< MdAssignmentAdd /></Link> }
+                { isLoggedIn ? <Link to="/logout" className="nav-btn-top icon"><MdLogout /></Link> : <Link to="/login" className="nav-btn-top icon"><MdLogin /></Link> }
+                <Link to="/cart" className="nav-btn-top icon"><MdShoppingCart /></Link>
 
                  {/* SEARCHBOX */}
                  <div>
-                 {/* <div onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}> */}
                     <input className="searchbox"
                     type="text"
                     placeholder="Search..."
-                    // onMouseEnter={() => document.getElementById('search').style.visibility = 'visible'}
                     onChange={(event) => {
                     setSearch(
                         props.productData.filter((product) => product.name.toLowerCase().includes(event.target.value.toLowerCase()) 
                             || product.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
-                            // || product.description.toLowerCase().includes(event.target.value.toLowerCase()) 
                         ));
                     document.getElementById('search').style.visibility = 'visible'
                     }} />
@@ -44,10 +45,9 @@ const Header = (props) => {
                         { search.map((product) => {
                             return(
                             <li className="indSearchItem" key={product.id}>
-                                <div /* onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'} */>
+                                <div>
                                     <img src={product.image} className="indSearchPic" /> 
                                     <Link to={`/single/${product.id}`}> {product.brand} {product.name}</Link>
-
                                 </div>
                             </li>
                         )})}

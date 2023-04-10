@@ -48,10 +48,10 @@ const Single = (props) => {
             })
             const translatedData = await response.json()
 
-            console.log("Balls LINE 45", translatedData);
+            console.log("Single.jsx 51 - addItemToCart", translatedData);
 
         } catch (error) {
-            console.log("Error w/ balls/addItemToCart", error);
+            console.log("Error w/ singleItem/addItemToCart", error);
         };
     };
 
@@ -107,7 +107,9 @@ const Single = (props) => {
                     <h4> {singleProduct.name} </h4>
                     <h5> ${singleProduct.price}</h5>
                     <h5> {singleProduct.description}</h5>
-                    <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}>Add to Cart</button>
+                    { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                    : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
+                    }
                     <br />
                     <button onClick={()=> nav(-1)}>Go Back</button>
                     {
@@ -127,7 +129,7 @@ const Single = (props) => {
                      )}) : <p> No reviews yet for this product ! </p>
                     }       
 
-                </div> : <p> no single product data </p>   
+                </div> : <p> ...We're bowling. BRB! </p>   
             }
             {
                 props.isLoggedIn ?

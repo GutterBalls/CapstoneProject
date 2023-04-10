@@ -31,7 +31,7 @@ const Login = (props) =>{
                 })
             });
             const transData = await response.json();
-            console.log("Translated response...");
+            console.log("Translated response logIn login.jsx 34");
             console.log(transData);
             if(!transData){
                 alert("Login was unsuccessful. Please try again. ");
@@ -47,7 +47,7 @@ const Login = (props) =>{
                 nav("/")
             }
         } catch(error){
-            console.log(error)
+            console.log("Error w/ logIn login.jsx 50", error)
         }
     }
 

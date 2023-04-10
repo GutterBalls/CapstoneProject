@@ -41,7 +41,7 @@ const Balls = (props) => {
         props.getProductData();
         if (localStorage.getItem("token")){
             props.getOrderData();
-            console.log("Balls component inside useEffect line 17", props.orderData)
+            // console.log("Balls component inside useEffect line 17", props.orderData)
         };
     }, []);
 
@@ -75,10 +75,10 @@ const Balls = (props) => {
             })
             const translatedData = await response.json()
             
-            console.log("Balls LINE 45", translatedData);
+            console.log("Balls.jsx 78 - addItemToCart", translatedData);
 
         } catch (error) {
-            console.log("Error w/ balls/addItemToCart", error);
+            console.log("Error w/ balls.jsx/addItemToCart", error);
             alert("Duplicate Product: Visit cart to update quantity.")
         };
     };

@@ -49,7 +49,7 @@ const CartCheckout = (props) => {
 
             return translatedData
         } catch (error) {
-            console.log(error)
+            console.log("Error w/ getCartData in cartCechout.jsx 52", error)
         };
     };
 
@@ -71,7 +71,7 @@ const CartCheckout = (props) => {
 
             
         } catch (error) {
-            console.log(error);
+            console.log("Error w/ deleteCartItem in cartCheckout.jsx 74", error);
         }
     };
     
@@ -230,8 +230,8 @@ const CartCheckout = (props) => {
                       </div>
 
                       <div className="flex-grow-1 ms-3">
-                        <button onClick={deleteCartItem} value={singleItem.id} className="float-end text-black">
-                          <MDBIcon fas icon="times" style={{ color: "red" }} /> {singleItem.id}
+                        <button onClick={deleteCartItem} value={singleItem.id} className="float-end">X
+                          {/* <MDBIcon fas icon="times" style={{ color: "red" }} /> {singleItem.id} */}
                         </button>
                         <MDBTypography tag="h5" className="text-primary">
                           {singleItem.brand} {singleItem.name}

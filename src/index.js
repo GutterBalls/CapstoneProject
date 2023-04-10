@@ -2,7 +2,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Confirm, Footer, Login, Logout, Register, CartCheckout } from "./components/index";
+import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Footer, Login, Logout, Register, CartCheckout } from "./components/index";
 import { useState, useEffect } from "react";
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -23,7 +23,7 @@ const App = () => {
             // console.log("Product data", productData)
             return translatedData
         } catch (error) {
-            console.log(error)
+            console.log("Error w/ getProductData index.js 26", error)
         };
     };
 
@@ -56,11 +56,11 @@ const App = () => {
                 },
             });
             const translatedData = await response.json();
-            console.log("Index 59, order data", translatedData);
+            console.log("Index 59, getOrderData", translatedData);
             setOrderData(translatedData);
 
         } catch (error) {
-            console.error("Error", error);
+            console.error("Error w. getOrderData index.js 63", error);
         }
     }
 
@@ -75,9 +75,9 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <div className="br">
-                <section className="br-showcase">
-			        <header className="br-header"><Header 
+            <div>
+                <section>
+			        <header><Header 
                         isLoggedIn={isLoggedIn} 
                         setIsLoggedIn={setIsLoggedIn} 
                         userData={userData}
@@ -179,7 +179,8 @@ const App = () => {
                                 setProductData={setProductData} 
                                 getProductData={getProductData}
                             />}/>
-                            <Route path="/confirm" element={<Confirm 
+
+                            {/* <Route path="/confirm" element={<Confirm 
                                 isLoggedIn={isLoggedIn} 
                                 setIsLoggedIn={setIsLoggedIn} 
                                 userData={userData} 
@@ -187,7 +188,8 @@ const App = () => {
                                 productData={productData} 
                                 setProductData={setProductData} 
                                 getProductData={getProductData}
-                            />}/>
+                            />}/> */}
+
                             <Route path="/register" element={<Register />}/>
                             <Route path="/login" element={<Login />}/>
                             <Route path="/logout" element={<Logout
@@ -195,7 +197,7 @@ const App = () => {
                             />}/>
                         </Routes>
                     </div>
-			        <footer className="br-footer"><Footer /></footer>
+			        <footer><Footer /></footer>
 		        </section>
 
                 

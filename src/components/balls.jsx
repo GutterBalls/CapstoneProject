@@ -11,6 +11,7 @@ const Balls = (props) => {
     const [price, setPrice] = useState(0);
     const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
+    const { isLoggedIn } = props;
     // let ballProducts = props.productData.filter((singleBall) => singleBall.category_id === 1);
     // const pageCount = Math.ceil(ballProducts.length / perPage);
 
@@ -94,7 +95,7 @@ const Balls = (props) => {
                             setPrice(0)
                             setSpecials("")
                             setCurrentPage(0)
-                        }} link> All Balls </MDBBtn>
+                        }} link="true"> All Balls </MDBBtn>
                     </li>
                     <li className="filter-item">
                         <MDBDropdown dropright group>
@@ -107,11 +108,11 @@ const Balls = (props) => {
                                 // setCurrentPage(0)
                             }}>Brand</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link>Brunswick</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("DV8") , setCurrentPage(0)}} link>DV8</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Hammer") , setCurrentPage(0)}} link>Hammer</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Motiv") , setCurrentPage(0)}} link>Motiv</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link>Storm</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link="true">Brunswick</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("DV8") , setCurrentPage(0)}} link="true">DV8</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Hammer") , setCurrentPage(0)}} link="true">Hammer</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Motiv") , setCurrentPage(0)}} link="true">Motiv</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link="true">Storm</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -126,9 +127,9 @@ const Balls = (props) => {
                                 // setCurrentPage(0)
                             }}>Price</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link>$</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setPrice(150) , setCurrentPage(0)}} link>$$</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setPrice(250) , setCurrentPage(0)}} link>$$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link="true">$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(150) , setCurrentPage(0)}} link="true">$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(250) , setCurrentPage(0)}} link="true">$$$</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -143,15 +144,14 @@ const Balls = (props) => {
                                 // setCurrentPage(0)
                             }}>Specials</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link>Sale</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link>Clearance</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link="true">Clearance</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
                 </ul>
             </aside>
             <div>
-                {/* <div className="mainProductFlex"> */}
                 <div className="main-right">
                 {
                     props.productData.length ? filteredProducts.slice(offset, offset + perPage).map((singleProduct) => {
@@ -160,33 +160,38 @@ const Balls = (props) => {
                             <div key={singleProduct.id} className="main-singleProduct">
                                 <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
                                 <div className="itemInfoFlex">
-                                    <h5> Brand: {singleProduct.brand}</h5>
-                                    <h5> Name: {singleProduct.name}</h5> 
-                                    <h5> Price: ${singleProduct.price}</h5>
-                                    <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                                    <h4> <Link to={`/single/${singleProduct.id}`} className="prod-grid-txt"> {singleProduct.brand} </Link> </h4>
+                                    <h5> <Link to={`/single/${singleProduct.id}`} className="prod-grid-txt"> {singleProduct.name} </Link> </h5> 
+                                    <h6> <Link to={`/single/${singleProduct.id}`} className="prod-grid-txt"> ${singleProduct.price} </Link> </h6>
+                                    { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                                    : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
+                                    }
                                 </div>
                             </div>
-                            
                         )
                         
-                    }) : <h1> ...data loading, make a sammich. </h1>
+                    }) : <h3 className='cursor-load'> ...We're bowling. BRB! </h3>
                 }
                 </div>
-                <div className='r-pag'>
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        pageCount={pageCount}
-                        onPageChange={pageClick}
-                        containerClassName={"pagination"}
-                        previousLinkClassName={"item previous"}
-                        nextLinkClassName={"item next"}
-                        disabledClassName={"disabled-page"}
-                        activeClassName={"item active"}
-                        disabledLinkClassName={"item disabled"}
-                        forcePage={currentPage}
-                    />
-                </div>
+
+                { props.productData.length ?
+                    <div className='r-pag'>
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            pageCount={pageCount}
+                            onPageChange={pageClick}
+                            containerClassName={"pagination"}
+                            previousLinkClassName={"item previous"}
+                            nextLinkClassName={"item next"}
+                            disabledClassName={"disabled-page"}
+                            activeClassName={"item active"}
+                            disabledLinkClassName={"item disabled"}
+                            forcePage={currentPage}
+                        />
+                    </div>
+                    : ''
+                }
             </div>
         </section>
     )

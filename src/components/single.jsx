@@ -58,11 +58,17 @@ const Single = (props) => {
     async function getReviews () {
         try {
             console.log("Inside try getReviews")
-            const response = await fetch(`${DATABASE_URL}/products/reviews`)
+            const response = await fetch(`${DATABASE_URL}/reviews`)
             console.log("Response getReviews", response)
             const translatedData = await response.json();
-            console.log("Get reviews TRANS DATA line 64", translatedData)
-            setAllReviews(translatedData);
+            if (translatedData) {
+                console.log("Get reviews TRANS DATA line 64", translatedData)
+                setAllReviews(translatedData);
+            } else {
+                console.log("No reviews yet.")
+            }
+
+            console.log(allReviews)
 
         } catch (error) {
             throw error;
@@ -73,10 +79,11 @@ const Single = (props) => {
         console.log("Post Review USERNAME on USERDATA", props.userData.username)
         event.preventDefault();
         try {
-            const response = await fetch(`${DATABASE_URL}/products/reviews`, {
+            const response = await fetch(`${DATABASE_URL}/reviews`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({
                     username: props.userData.username,
@@ -89,6 +96,8 @@ const Single = (props) => {
             });
 
             const translatedData = await response.json()
+            setProductRating("")
+            setProductReview("")
             console.log("Post Review trans data", translatedData);
 
         } catch (error) {
@@ -107,25 +116,21 @@ const Single = (props) => {
                     <h4> {singleProduct.name} </h4>
                     <h5> ${singleProduct.price}</h5>
                     <h5> {singleProduct.description}</h5>
-                    { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                    { props.isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
                     : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
                     }
                     <br />
                     <button onClick={()=> nav(-1)}>Go Back</button>
                     {
-                        allReviews.length ?  allReviews.filter((single) => {
-                             if (single.product_id !== singleProduct.id){
-                                return false
-                             }
-                             if (single.username !== props.userData.username){
-                                return false
-                             }}).map((singleReview) => {
+                        allReviews.length > 0 ?  allReviews.filter((single) => {
+                             return single.product_id === singleProduct.id
+                             }).map((singleReview) => {
                             return(
-                                <div>
+                                <span key={singleReview.id}>
                                     <h3> Review by: {singleReview.username} </h3>
                                     <h4> Rating: {singleReview.rating}</h4>
                                     <h4> Review: {singleReview.review}</h4>
-                                </div> 
+                                </span> 
                      )}) : <p> No reviews yet for this product ! </p>
                     }       
 

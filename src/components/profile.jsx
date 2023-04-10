@@ -490,7 +490,7 @@ async function editProduct(singleProduct, event){
         console.log("singleProduct:")
         console.log(singleProduct)
         try {
-            const response = await fetch(`${DATABASE_URL}/products/${singleProduct}`, {
+            const response = await fetch(`${DATABASE_URL}/products/1`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
@@ -504,22 +504,22 @@ async function editProduct(singleProduct, event){
             if (!transData){
                 alert("Product was not deleted. Please try again. ");
             } else {
-                function updateProductData(){
-                    let updateArr = [];
-                    for(let i=0; i<productData.length; i++){
-                        let currentProduct = productData[i];
-                        if(currentProduct.id !== singleProduct.id){
-                            updateArr.push(currentProduct);
-                        }else{
-                            updateArr.push(transData);
-                        }
-                    }
-                    return updateArr
-                };
-                const newProductData = updateProductData();
-                setProductData(newProductData);
+                // function updateProductData(){
+                //     let updateArr = [];
+                //     for(let i=0; i<productData.length; i++){
+                //         let currentProduct = productData[i];
+                //         if(currentProduct.id !== productData.id){
+                //             updateArr.push(currentProduct);
+                //         }else{
+                //             updateArr.push(transData);
+                //         }
+                //     }
+                //     return updateArr
+                // };
+                // const newProductData = updateProductData();
+                // setProductData(newProductData);
                 alert("Product was successfully Deleted.");
-                nav("/profile");
+                // nav("/profile");
                 return getProductData();
             }
         } catch (error){
@@ -529,19 +529,24 @@ async function editProduct(singleProduct, event){
 
 
 // Admin - List All Products 
+
+
     return (
         <section className="main-container profile-mc">
             {
                 userData.isAdmin === false ? 
-                    <div key={userData.id} className="main-full-width profile-fw">
-                        <div className="">
+                    <div key={userData.id} className="profile-lvl-1">
+                        
                             <h1> Profile</h1>
-                            <h3> Welcome {userData.username},</h3>
-                            <button onClick={ toggleEditUserForm} className="atc-btn eu-btn">Edit User</button>
-                            <br />
+                            <h3> Welcome {userData.username}</h3>
+                            <button onClick={ toggleEditUserForm} className="atc-btn profile-btn">Edit User Details</button>
+                            <button onClick={ toggleDisableAccountForm} className="atc-btn profile-btn">Disable Account Form</button>
+                            <button onClick={ toggleOrderHistory } className="atc-btn profile-btn">Order History</button>
+
+                {/* EDIT USER FORM */}
                             {
                                 editUserBtn ? (
-                                    <div className="form">
+                                    <div className="del-acct">
                                         <span className="form__title">Edit/Update</span>
                                         <form action="" onSubmit={ editUser } >
                                             <div className="form__input">
@@ -582,35 +587,38 @@ async function editProduct(singleProduct, event){
                                     </div>    
                                 ): ""
                             }
-                            <button onClick={ toggleDisableAccountForm} className="atc-btn eu-btn">Disable Account Form</button>
+                            
+                {/* DISABLE ACCOUNT */}
                             {
                                 disableAccountBtn ? (
-                                    <div className="form">
-                                        <span className="form__title">Disable Account</span>
+                                    <div className="prof-form">
                                         <form action="" onSubmit={ disableSingleUser } >
-                                            <div className="form__button">Are you sure you want to disable your account? You will need to contact an administrator to re-activate your account. Click "Submit" below to disable account.</div>
-                                            <button type="submit" className="form__button" >Submit</button>
+                                            <div className="del-acct">
+                                                <h3>Disable Account</h3>
+                                                <p>Are you sure you want to disable your account?</p>
+                                                <p>You will need to contact an administrator to re-activate.</p>
+                                                <p>Click "Submit" below to disable your account now.</p>
+                                                <button type="submit" className="form__button" >Submit</button>
+                                            </div>
                                         </form>
                                     </div>    
                                 ): ""
                             }
-                            <button onClick={ toggleOrderHistory } className="atc-btn oh-btn">Order History</button>
-                            <div>
-                                {
-                                    orderHistoryBtn ? orderData.map((singleOrder)=>{
-                                        return(
-                                            <div key={singleOrder.id}>
-                                                <hr></hr>
-                                                <h3>ID: {singleOrder.id}</h3>
-                                                <h3>Order Date: {singleOrder.order_date}</h3>
-                                                <h3>Order Status: {singleOrder.order_status}</h3>
-                                                <hr></hr>
-                                            </div>
-                                        )
-                                    }) : ""
-                                }
+                                  
+                {/* ORDER HISTORY */}
+                            <div className='flex-container'>
+                            {
+                                orderHistoryBtn ? orderData.map((singleOrder)=>{
+                                    return(
+                                        <div key={singleOrder.id} className='flex-item'>
+                                                <h4>ID: {singleOrder.id}</h4>
+                                                <h4>Order Date: {singleOrder.order_date}</h4>
+                                                <h4>Order Status: {singleOrder.order_status}</h4>
+                                        </div>
+                                    )
+                                }) : ""
+                            }
                             </div>
-                        </div>
                     </div>
                 : 
                 <div>
@@ -813,15 +821,15 @@ async function editProduct(singleProduct, event){
                                                                 onChange={(event)=>{
                                                                     setAddImage(event.target.value === "" ? singleProduct.image : event.target.value);
                                                                 }}
-                                                                defaultValue={ singleProduct.image }
+                                                                placeholder={ singleProduct.image }
                                                             />
                                                         </div>    
                                                         <div className="form__input">
                                                             {/* <i className="ri-lock-line"></i> */}
                                                             <input 
                                                                 type="text"
-                                                                value={ addBrand 
-                                                                === "" ? singleProduct.brand : addBrand } 
+                                                                value={ addBrand }
+                                                                //  === "" ? singleProduct.brand : addBrand } 
                                                                 onChange={(event)=>{
                                                                     if(event.target.value === "" ){
                                                                         setAddBrand(singleProduct.brand)
@@ -830,7 +838,7 @@ async function editProduct(singleProduct, event){
                                                                     }
                                                                 }}
                                                                 
-                                                                defaultValue={ singleProduct.brand } 
+                                                                placeholder={ singleProduct.brand } 
                                                             />
                                                         </div>
                                                         <div className="form__input">

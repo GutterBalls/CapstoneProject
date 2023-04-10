@@ -1,14 +1,40 @@
 import { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem, MDBBtn } from 'mdb-react-ui-kit';
 const DATABASE_URL = 'http://localhost:1337/api';
 const perPage = 6;
 
 const Bags = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
+    const [brand, setBrand] = useState(null);
+    const [price, setPrice] = useState(0);
+    const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
-    const bagProducts = props.productData.filter((singleBag) => singleBag.category_id === 2);
-    const pageCount = Math.ceil(bagProducts.length / perPage);
+    // const bagProducts = props.productData.filter((singleBag) => singleBag.category_id === 2);
+    // const pageCount = Math.ceil(bagProducts.length / perPage);
+
+    const filteredProducts = props.productData.filter((singleBag) => {
+        if (brand && singleBag.brand != brand) {
+            return false;
+        }
+
+        if (price && singleBag.price > price) {
+            return false;
+        }
+
+        if (specials === "Sale" && singleBag.sale === false) {
+            return false;
+        }
+
+        if (specials === "Clearance" && singleBag.clearance === false) {
+            return false;
+        }
+        
+        return singleBag.category_id === 2
+    });
+
+    const pageCount = Math.ceil(filteredProducts.length / perPage);
 
     useEffect(() => {
         props.getProductData();
@@ -55,32 +81,72 @@ const Bags = (props) => {
     return (
         <section className="main-container">
             <aside className="main-left">Filter by...
-                <ul><strong>Brand:</strong>
-                    <li>Brunswick</li>
-                    <li>Elite</li>
-                    <li>Storm</li>
-                </ul>
-                <ul><strong>Capacity:</strong>
-                    <li>1 Ball Totes</li>
-                    <li>1 Ball Rollers</li>
-                    <li>2 Ball Rollers</li>
-                    <li>3+ Ball Rollers</li>
-                </ul>
-                <ul><strong>Price:</strong>
-                    <li>$$$</li>
-                    <li>$$</li>
-                    <li>$</li>
-                </ul>
-                <ul><strong>Specials:</strong>
-                    <li>ON SALE!</li>
-                    <li>CLEARANCE</li>
-                </ul>
+                <ul className="filter">
+                        <li className="filter-item">
+                            <MDBBtn style={{backgroundColor: "rgb(110,0,0)", width: "115px"}} onClick={() => {
+                                setBrand(null)
+                                setPrice(0)
+                                setSpecials("")
+                                setCurrentPage(0)
+                            }} link> All Bags </MDBBtn>
+                        </li>
+                        <li className="filter-item">
+                            <MDBDropdown dropright group>
+                                <MDBDropdownToggle 
+                                style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                                onClick={() => {
+                                    setBrand(null)
+                                    setPrice(0)
+                                    setSpecials("")
+                                    // setCurrentPage(0)
+                                }}>Brand</MDBDropdownToggle>
+                                <MDBDropdownMenu>
+                                    <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link>Brunswick</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setBrand("Elite") , setCurrentPage(0)}} link>Elite</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link>Storm</MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
+                        </li>
+                        <li className="filter-item">
+                            <MDBDropdown dropright group>
+                                <MDBDropdownToggle 
+                                style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                                onClick={() => {
+                                    setBrand(null)
+                                    setPrice(0)
+                                    setSpecials("")
+                                    // setCurrentPage(0)
+                                }}>Price</MDBDropdownToggle>
+                                <MDBDropdownMenu>
+                                    <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link>$</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setPrice(150) , setCurrentPage(0)}} link>$$</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setPrice(260) , setCurrentPage(0)}} link>$$$</MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
+                        </li>
+                        <li className="filter-item">
+                            <MDBDropdown dropright group>
+                                <MDBDropdownToggle 
+                                style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                                onClick={() => {
+                                    setBrand(null)
+                                    setPrice(0)
+                                    setSpecials("")
+                                    // setCurrentPage(0)
+                                }}>Specials</MDBDropdownToggle>
+                                <MDBDropdownMenu>
+                                    <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link>Sale</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link>Clearance</MDBDropdownItem>
+                                </MDBDropdownMenu>
+                            </MDBDropdown>
+                        </li>
+                    </ul>
             </aside>
             <div>
                 {/* <div className="mainProductFlex"> */}
                 <div className="main-right">
                 {
-                    props.productData.length ? props.productData.filter((singleBag) => singleBag.category_id === 2).slice(offset, offset + perPage).map((singleProduct) => {
+                    props.productData.length ? filteredProducts.slice(offset, offset + perPage).map((singleProduct) => {
                         
                         return (
                             <div key={singleProduct.id} className="main-singleProduct">
@@ -110,6 +176,7 @@ const Bags = (props) => {
                         disabledClassName={"disabled-page"}
                         activeClassName={"item active"}
                         disabledLinkClassName={"item disabled"}
+                        forcePage={currentPage}
                     />
                 </div>
             </div>

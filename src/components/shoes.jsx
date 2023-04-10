@@ -1,14 +1,40 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem, MDBBtn } from 'mdb-react-ui-kit';
 const DATABASE_URL = 'http://localhost:1337/api';
 const perPage = 6;
 
 const Shoes = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
+    const [brand, setBrand] = useState(null);
+    const [price, setPrice] = useState(0);
+    const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
-    const shoeProducts = props.productData.filter((singleShoe) => singleShoe.category_id === 3);
-    const pageCount = Math.ceil(shoeProducts.length / perPage);
+    // const shoeProducts = props.productData.filter((singleShoe) => singleShoe.category_id === 3);
+    // const pageCount = Math.ceil(shoeProducts.length / perPage);
+
+    const filteredProducts = props.productData.filter((singleShoe) => {
+        if (brand && singleShoe.brand != brand) {
+            return false;
+        }
+
+        if (price && singleShoe.price > price) {
+            return false;
+        }
+
+        if (specials === "Sale" && singleShoe.sale === false) {
+            return false;
+        }
+
+        if (specials === "Clearance" && singleShoe.clearance === false) {
+            return false;
+        }
+        
+        return singleShoe.category_id === 3
+    });
+
+    const pageCount = Math.ceil(filteredProducts.length / perPage);
 
     useEffect(() => {
         props.getProductData();
@@ -55,7 +81,68 @@ const Shoes = (props) => {
     return (
         <section className="main-container">
             <aside className="main-left">Filter by...
-                <ul><strong>Brand:</strong>
+                <ul className="filter">
+                    <li className="filter-item">
+                        <MDBBtn style={{backgroundColor: "rgb(110,0,0)", width: "115px"}} onClick={() => {
+                            setBrand(null)
+                            setPrice(0)
+                            setSpecials("")
+                            setCurrentPage(0)
+                        }} link> All Shoes </MDBBtn>
+                    </li>
+                    <li className="filter-item">
+                        <MDBDropdown dropright group>
+                            <MDBDropdownToggle 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                            onClick={() => {
+                                setBrand(null)
+                                setPrice(0)
+                                setSpecials("")
+                                // setCurrentPage(0)
+                            }}>Brand</MDBDropdownToggle>
+                            <MDBDropdownMenu>
+                                <MDBDropdownItem onClick={() => {setBrand("Dexter") , setCurrentPage(0)}} link>Dexter</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Elite") , setCurrentPage(0)}} link>Elite</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("KR Strikeforce") , setCurrentPage(0)}} link>KR</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Motiv") , setCurrentPage(0)}} link>Motiv</MDBDropdownItem>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
+                    </li>
+                    <li className="filter-item">
+                        <MDBDropdown dropright group>
+                            <MDBDropdownToggle 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                            onClick={() => {
+                                setBrand(null)
+                                setPrice(0)
+                                setSpecials("")
+                                // setCurrentPage(0)
+                            }}>Price</MDBDropdownToggle>
+                            <MDBDropdownMenu>
+                                <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link>$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(200) , setCurrentPage(0)}} link>$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(250) , setCurrentPage(0)}} link>$$$</MDBDropdownItem>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
+                    </li>
+                    <li className="filter-item">
+                        <MDBDropdown dropright group>
+                            <MDBDropdownToggle 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                            onClick={() => {
+                                setBrand(null)
+                                setPrice(0)
+                                setSpecials("")
+                                // setCurrentPage(0)
+                            }}>Specials</MDBDropdownToggle>
+                            <MDBDropdownMenu>
+                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link>Sale</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link>Clearance</MDBDropdownItem>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
+                    </li>
+                </ul>
+                {/* <ul><strong>Brand:</strong>
                     <li>Dexter</li>
                     <li>Elite</li>
                     <li>KR Strikeforce</li>
@@ -73,13 +160,13 @@ const Shoes = (props) => {
                 <ul><strong>Specials:</strong>
                     <li>ON SALE!</li>
                     <li>CLEARANCE</li>
-                </ul>
+                </ul> */}
             </aside>
             <div>
                 {/* <div className="mainProductFlex"> */}
                 <div className="main-right">
                 {
-                    props.productData.length ? props.productData.filter((singleShoe) => singleShoe.category_id === 3).slice(offset, offset + perPage).map((singleProduct) => {
+                    props.productData.length ? filteredProducts.slice(offset, offset + perPage).map((singleProduct) => {
                         
                         return (
                             <div key={singleProduct.id} className="main-singleProduct">
@@ -109,6 +196,7 @@ const Shoes = (props) => {
                         disabledClassName={"disabled-page"}
                         activeClassName={"item active"}
                         disabledLinkClassName={"item disabled"}
+                        forcePage={currentPage}
                     />
                 </div>
             </div>

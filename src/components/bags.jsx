@@ -11,6 +11,7 @@ const Bags = (props) => {
     const [price, setPrice] = useState(0);
     const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
+    const { isLoggedIn } = props;
     // const bagProducts = props.productData.filter((singleBag) => singleBag.category_id === 2);
     // const pageCount = Math.ceil(bagProducts.length / perPage);
 
@@ -40,7 +41,7 @@ const Bags = (props) => {
         props.getProductData();
         if (localStorage.getItem("token")){
             props.getOrderData();
-            console.log("Bags component inside useEffect line 17", props.orderData)
+            // console.log("Bags component inside useEffect line 17", props.orderData)
         };
     }, []);
 
@@ -69,10 +70,11 @@ const Bags = (props) => {
             })
             const translatedData = await response.json()
 
-            console.log("Bags LINE 45", translatedData);
+            console.log("Bags.jsx 73 - addItemToCart", translatedData);
 
         } catch (error) {
-            console.log("Error w/ bags/addItemToCart", error);
+            console.log("Error w/ bags.jsx/addItemToCart", error);
+            alert("Duplicate Product: Visit cart to update quantity.")
         }
     }
 
@@ -88,7 +90,7 @@ const Bags = (props) => {
                                 setPrice(0)
                                 setSpecials("")
                                 setCurrentPage(0)
-                            }} link> All Bags </MDBBtn>
+                            }} link="true"> All Bags </MDBBtn>
                         </li>
                         <li className="filter-item">
                             <MDBDropdown dropright group>
@@ -101,9 +103,9 @@ const Bags = (props) => {
                                     // setCurrentPage(0)
                                 }}>Brand</MDBDropdownToggle>
                                 <MDBDropdownMenu>
-                                    <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link>Brunswick</MDBDropdownItem>
-                                    <MDBDropdownItem onClick={() => {setBrand("Elite") , setCurrentPage(0)}} link>Elite</MDBDropdownItem>
-                                    <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link>Storm</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link="true">Brunswick</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setBrand("Elite") , setCurrentPage(0)}} link="true">Elite</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link="true">Storm</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </li>
@@ -118,9 +120,9 @@ const Bags = (props) => {
                                     // setCurrentPage(0)
                                 }}>Price</MDBDropdownToggle>
                                 <MDBDropdownMenu>
-                                    <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link>$</MDBDropdownItem>
-                                    <MDBDropdownItem onClick={() => {setPrice(150) , setCurrentPage(0)}} link>$$</MDBDropdownItem>
-                                    <MDBDropdownItem onClick={() => {setPrice(260) , setCurrentPage(0)}} link>$$$</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link="true">$</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setPrice(150) , setCurrentPage(0)}} link="true">$$</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setPrice(260) , setCurrentPage(0)}} link="true">$$$</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </li>
@@ -135,8 +137,8 @@ const Bags = (props) => {
                                     // setCurrentPage(0)
                                 }}>Specials</MDBDropdownToggle>
                                 <MDBDropdownMenu>
-                                    <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link>Sale</MDBDropdownItem>
-                                    <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link>Clearance</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
+                                    <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link="true">Clearance</MDBDropdownItem>
                                 </MDBDropdownMenu>
                             </MDBDropdown>
                         </li>
@@ -155,30 +157,35 @@ const Bags = (props) => {
                                     <h5> Brand: {singleProduct.brand}</h5>
                                     <h5> Name: {singleProduct.name}</h5> 
                                     <h5> Price: ${singleProduct.price}</h5>
-                                    <button className="atc-btn" value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                                    { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                                    : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
+                                    }
                                 </div>
                             </div>
                             
                         )
                         
-                    }) : <h1> ...data loading, make a sammich. </h1>
+                    }) : <h1> ...We're bowling. BRB! </h1>
                 }
                 </div>
-                <div className="r-pag">
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        pageCount={pageCount}
-                        onPageChange={pageClick}
-                        containerClassName={"pagination"}
-                        previousLinkClassName={"item previous"}
-                        nextLinkClassName={"item next"}
-                        disabledClassName={"disabled-page"}
-                        activeClassName={"item active"}
-                        disabledLinkClassName={"item disabled"}
-                        forcePage={currentPage}
-                    />
-                </div>
+                { props.productData.length ?
+                    <div className='r-pag'>
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            pageCount={pageCount}
+                            onPageChange={pageClick}
+                            containerClassName={"pagination"}
+                            previousLinkClassName={"item previous"}
+                            nextLinkClassName={"item next"}
+                            disabledClassName={"disabled-page"}
+                            activeClassName={"item active"}
+                            disabledLinkClassName={"item disabled"}
+                            forcePage={currentPage}
+                        />
+                    </div>
+                    : ''
+                }
             </div>
         </section>
     )

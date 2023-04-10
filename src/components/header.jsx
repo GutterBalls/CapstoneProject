@@ -27,7 +27,12 @@ const Header = (props) => {
                 {/* ICONS */}
                 { isLoggedIn ? <Link to="/profile" className="nav-btn-top icon"><MdAccountCircle /></Link> :<Link to="/register" className="nav-btn-top icon">< MdAssignmentAdd /></Link> }
                 { isLoggedIn ? <Link to="/logout" className="nav-btn-top icon"><MdLogout /></Link> : <Link to="/login" className="nav-btn-top icon"><MdLogin /></Link> }
-                <Link to="/cart" className="nav-btn-top icon"><MdShoppingCart /></Link>
+                
+                    <button type="button" className="icon-button">
+                        <Link to="/cart" className="nav-btn-top icon"><MdShoppingCart /></Link>
+                        {/* <span className="material-icons"></span> */}
+                        <span className="icon-button__badge">5</span>
+                    </button>
 
                  {/* SEARCHBOX */}
                  <div>

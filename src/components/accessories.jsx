@@ -11,6 +11,7 @@ const Accessories = (props) => {
     const [price, setPrice] = useState(0);
     const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
+    const { isLoggedIn } = props;
     // const accProducts = props.productData.filter((singleAcc) => singleAcc.category_id === 4);
     // const pageCount = Math.ceil(accProducts.length / perPage);
 
@@ -40,7 +41,7 @@ const Accessories = (props) => {
         props.getProductData();
         if (localStorage.getItem("token")){
             props.getOrderData();
-            console.log("Accessories component inside useEffect line 17", props.orderData)
+            // console.log("Accessories component inside useEffect line 17", props.orderData)
         };
     }, []);
 
@@ -69,10 +70,11 @@ const Accessories = (props) => {
             })
             const translatedData = await response.json()
 
-            console.log("Accessories LINE 45", translatedData);
+            console.log("Accessories.jsx 73 - addItemToCart", translatedData);
 
         } catch (error) {
             console.log("Error w/ accessories/addItemToCart", error);
+            alert("Duplicate Product: Visit cart to update quantity.")
         }
     }
 
@@ -86,7 +88,7 @@ const Accessories = (props) => {
                             setPrice(0)
                             setSpecials("")
                             setCurrentPage(0)
-                        }} link> All Acc </MDBBtn>
+                        }} link="true"> All Acc </MDBBtn>
                     </li>
                     <li className="filter-item">
                         <MDBDropdown dropright group>
@@ -99,13 +101,13 @@ const Accessories = (props) => {
                                 // setCurrentPage(0)
                             }}>Brand</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => {setBrand("BowlingBallFactory.com") , setCurrentPage(0)}} link>BBF</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link>Brunswick</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Genesis") , setCurrentPage(0)}} link>Genesis</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Hammer") , setCurrentPage(0)}} link>Hammer</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("KR Strikeforce") , setCurrentPage(0)}} link>KR</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link>Storm</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setBrand("Vise") , setCurrentPage(0)}} link>Vise</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("BowlingBallFactory.com") , setCurrentPage(0)}} link="true">BBF</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link="true">Brunswick</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Genesis") , setCurrentPage(0)}} link="true">Genesis</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Hammer") , setCurrentPage(0)}} link="true">Hammer</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("KR Strikeforce") , setCurrentPage(0)}} link="true">KR</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Storm") , setCurrentPage(0)}} link="true">Storm</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setBrand("Vise") , setCurrentPage(0)}} link="true">Vise</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -120,9 +122,9 @@ const Accessories = (props) => {
                                 // setCurrentPage(0)
                             }}>Price</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => {setPrice(10) , setCurrentPage(0)}} link>$</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setPrice(20) , setCurrentPage(0)}} link>$$</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setPrice(30) , setCurrentPage(0)}} link>$$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(10) , setCurrentPage(0)}} link="true">$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(20) , setCurrentPage(0)}} link="true">$$</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setPrice(30) , setCurrentPage(0)}} link="true">$$$</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -137,8 +139,8 @@ const Accessories = (props) => {
                                 // setCurrentPage(0)
                             }}>Specials</MDBDropdownToggle>
                             <MDBDropdownMenu>
-                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link>Sale</MDBDropdownItem>
-                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link>Clearance</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link="true">Clearance</MDBDropdownItem>
                             </MDBDropdownMenu>
                         </MDBDropdown>
                     </li>
@@ -170,30 +172,35 @@ const Accessories = (props) => {
                                     <h5> Brand: {singleProduct.brand}</h5>
                                     <h5> Name: {singleProduct.name}</h5> 
                                     <h5> Price: ${singleProduct.price}</h5>
-                                    <button className="atc-btn" value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                                    { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
+                                    : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
+                                    }
                                 </div>
                             </div>
                             
                         )
                         
-                    }) : <h1> No data loaded. </h1>
+                    }) : <h1> ...We're bowling. BRB! </h1>
                 }
                 </div>
-                <div className='r-pag'>
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        pageCount={pageCount}
-                        onPageChange={pageClick}
-                        containerClassName={"pagination"}
-                        previousLinkClassName={"item previous"}
-                        nextLinkClassName={"item next"}
-                        disabledClassName={"disabled-page"}
-                        activeClassName={"item active"}
-                        disabledLinkClassName={"item disabled"}
-                        forcePage={currentPage}
-                    />
-                </div>
+                { props.productData.length ?
+                    <div className='r-pag'>
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            pageCount={pageCount}
+                            onPageChange={pageClick}
+                            containerClassName={"pagination"}
+                            previousLinkClassName={"item previous"}
+                            nextLinkClassName={"item next"}
+                            disabledClassName={"disabled-page"}
+                            activeClassName={"item active"}
+                            disabledLinkClassName={"item disabled"}
+                            forcePage={currentPage}
+                        />
+                    </div>
+                    : ''
+                }
             </div>
         </section>
     )

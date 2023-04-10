@@ -613,7 +613,7 @@ async function editProduct(singleProduct, event){
                                         <div key={singleOrder.id} className='flex-item'>
                                                 <h4>ID: {singleOrder.id}</h4>
                                                 <h4>Order Date: {singleOrder.order_date}</h4>
-                                                <h4>Order Status: {singleOrder.order_status}</h4>
+                                                <h4>Order Status: {singleOrder.order_status ? "Completed" : "In Progress"}</h4>
                                         </div>
                                     )
                                 }) : ""

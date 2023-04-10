@@ -9,13 +9,13 @@ const Footer = () => {
             </div>
             <div className="foot-p-c">
                 <p> Copyright &#169; 10th Board Equities, GutterBall Inc. </p>
-                <p> 1-(800)-GUT-BALL </p>
-                <p> Email: info@gutterballss.com </p>
+                <p> 1-(800)-GTR-BALL </p>
+                <p> <a href="mailto:info@gutterballss.com">Send us an email</a> </p>
             </div>
             <div>
-                <p className="foot-p-r">About Us </p>
-                <p className="foot-p-r">Privacy Policy </p>
-                <p className="foot-p-r">Terms Of Service </p>
+                <p className="foot-p-r">Since 1977 </p>
+                <p className="foot-p-r">No Refunds </p>
+                <p className="foot-p-r">No Exchanges</p>
             </div>
         </div>
     )

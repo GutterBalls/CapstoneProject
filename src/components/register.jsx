@@ -48,13 +48,13 @@ const Register = () =>{
                 alert("Account Registration Unsuccessful")
             } else {
                 const tokenKey = transData.token;
-                console.log(tokenKey);
+                // console.log(tokenKey);
                 localStorage.setItem("token", tokenKey);
                 alert("New Account was successfully created.")
                 nav("/")
             }
         } catch(error){
-            console.log(error)
+            console.log("Error w/ registerUser in register.jsx 57", error)
         }
     }
 

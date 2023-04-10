@@ -5,19 +5,21 @@ const DATABASE_URL = 'http://localhost:1337/api';
 
 const Single = (props) => {
     const [singleProduct, setSingleProduct] = useState([]);
+    const [allReviews, setAllReviews] = useState([]);
+    const [productRating, setProductRating] = useState(0);
+    const [productReview, setProductReview] = useState("");
     const { id } = useParams();
     const nav = useNavigate();
-    console.log("UseParams", useParams())
+    
     useEffect(() => {
         getProductById();
-        
-    }, [useParams()]);
+        getReviews();
+    }, []);
     
     async function getProductById () {
         try {
             const response = await fetch(`${DATABASE_URL}/products/${id}`)
             const translatedData = await response.json();
-            console.log("Single product", translatedData)
             setSingleProduct(translatedData)
             return singleProduct
         } catch (error) {
@@ -50,6 +52,47 @@ const Single = (props) => {
 
         } catch (error) {
             console.log("Error w/ balls/addItemToCart", error);
+        };
+    };
+
+    async function getReviews () {
+        try {
+            console.log("Inside try getReviews")
+            const response = await fetch(`${DATABASE_URL}/products/reviews`)
+            console.log("Response getReviews", response)
+            const translatedData = await response.json();
+            console.log("Get reviews TRANS DATA line 64", translatedData)
+            setAllReviews(translatedData);
+
+        } catch (error) {
+            throw error;
+        };
+    };
+
+    async function postReview (event) {
+        console.log("Post Review USERNAME on USERDATA", props.userData.username)
+        event.preventDefault();
+        try {
+            const response = await fetch(`${DATABASE_URL}/products/reviews`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: props.userData.username,
+                    product_id: id,
+                    product_brand: singleProduct.brand,
+                    product_name: singleProduct.name,
+                    rating: productRating,
+                    review: productReview
+                })
+            });
+
+            const translatedData = await response.json()
+            console.log("Post Review trans data", translatedData);
+
+        } catch (error) {
+            throw error;
         }
     }
     
@@ -67,8 +110,46 @@ const Single = (props) => {
                     <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}>Add to Cart</button>
                     <br />
                     <button onClick={()=> nav(-1)}>Go Back</button>
+                    {
+                        allReviews.length ?  allReviews.filter((single) => {
+                             if (single.product_id !== singleProduct.id){
+                                return false
+                             }
+                             if (single.username !== props.userData.username){
+                                return false
+                             }}).map((singleReview) => {
+                            return(
+                                <div>
+                                    <h3> Review by: {singleReview.username} </h3>
+                                    <h4> Rating: {singleReview.rating}</h4>
+                                    <h4> Review: {singleReview.review}</h4>
+                                </div> 
+                     )}) : <p> No reviews yet for this product ! </p>
+                    }       
+
                 </div> : <p> no single product data </p>   
-            } 
+            }
+            {
+                props.isLoggedIn ?
+                <div>
+                    <form onSubmit={postReview}>
+                        <input
+                        type="text"
+                        placeholder="Rating"
+                        value={productRating}
+                        onChange={(event) => setProductRating(event.target.value)} />
+                        <textarea
+                        type="text"
+                        placeholder="Product Review"
+                        rows="2"
+                        cols="15"
+                        value={productReview}
+                        onChange={(event) => setProductReview(event.target.value)} />
+                        <button type="submit"> Submit Product Review </button>
+                    </form>
+                </div> : <h1> Please login to review this product. </h1>
+            }
+            
         </div>
     )
 }

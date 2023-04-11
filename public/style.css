@@ -1,8 +1,4 @@
-/* Link:link {color: black; text-decoration: none;}
 
-Link:visited {color: black; text-decoration: none;}
-
-Link:hover {color: black; text-decoration: none;} */
 /* -------------HEADER SECTION START----------------*/
 
 .header-jsx{
@@ -133,6 +129,7 @@ Link:hover {color: black; text-decoration: none;} */
     background-color: white;
     border-radius: 3px;
     box-shadow: 1px 1px 10px black;
+    z-index: 9999;
     /* padding: 1px; Shifts images to the left edge*/
 }
 
@@ -176,7 +173,6 @@ Link:hover {color: black; text-decoration: none;} */
 
 .main-container{
     display: flex; flex-direction: row;
-    /* padding: 10px; */
     background-image: url(/images/background2o.png);
     background-color: rgba(0, 0, 0, 0.9);
     background-size:cover; background-repeat: no-repeat;
@@ -185,7 +181,6 @@ Link:hover {color: black; text-decoration: none;} */
 
 .main-left{
     font-size: 1em;
-    /* box-shadow: 1px 1px 5px 1px black; */
     background-color: none;
     padding: 10px;
     margin-top: 20px;
@@ -206,7 +201,6 @@ Link:hover {color: black; text-decoration: none;} */
     grid-template-rows: repeat(2, 1fr);
     gap: 10px;
     font-size: 1em;
-    /* box-shadow: 1px 1px 5px 1px black; */
     background-color: none;
     padding: 10px;
     margin-top: 10px;
@@ -222,19 +216,25 @@ Link:hover {color: black; text-decoration: none;} */
 }
 
 .main-singleProduct{
-    background-color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 32px;
+    /* background-color: rgba(255, 255, 255, 0.4); */
     margin-left: 1em; margin-right: 1em;
     padding-top: 20px; padding-bottom: 20px;
-    border: 1px solid blue;
-    border-radius: 10px;
+    /* border: 1px solid blue; */
+    /* border-radius: 10px; */
     text-align: center;
 }
 
 .main-singleProduct:hover {
     color: white;
-    /* text-shadow: 1px 1px 5px black; */
-    transform: scale(1.02);
-    transition: all .2s ease-out;
+    text-shadow: 1px 1px 5px black;
+    /* transform: scale(1.02); */
+    /* transition: all .2s ease-out; */
     background-color: rgba(255, 255, 255, 0.3);
     border: 1px solid red;
 }
@@ -245,13 +245,6 @@ Link:hover {color: black; text-decoration: none;} */
     mix-blend-mode: multiply;
     /* NOTE: m-b-m removes white background from an image (Chrome, FF, Safari only)*/
 }
-
-    /* a:link {color: white; text-decoration: none;}
-
-    a:visited {color: black; text-decoration: none;}
-
-    a:hover {color: black; text-shadow: 5px 5px 5px black;} */
-
 
 .li-to-purch {
     text-shadow: none;
@@ -318,14 +311,22 @@ Link:hover {color: black; text-decoration: none;} */
 
 .pagination {
     align-items:center;
-    background-color: rgba(211, 211, 211, 0.6);
+    /* background-color: rgba(211, 211, 211, 0.6); */
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     list-style-type: none;
     position: relative;
     width: 400px;
-    border-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    /* border-radius: 5px; */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
 }
 
 .previous {
@@ -377,6 +378,34 @@ Link:hover {color: black; text-decoration: none;} */
 #singlePageImage {
     width: 20vw;
     height: auto;
+}
+
+.reviews-container{
+    display: flex; justify-content: center;
+    flex-wrap: wrap;
+    width: 80vw;
+    margin: 20px; padding: 20px;
+    color: white;
+}
+
+.reviews{
+    display: flex; flex-direction: column;
+    justify-content: space-around;
+    background-color: rgb(0, 0, 0, 0.9);
+    margin: 10px;
+    padding: 10px;
+    border: .5px solid red;
+    border-radius: 10px;
+
+}
+
+.review-sub{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(0, 0, 0, 0.9);
+    padding: 10px;
+    border: .5px solid blue;
+    border-radius: 10px;
 }
 
 /* -------------END SINGLE PAGE PRODUCT------------- */
@@ -465,9 +494,6 @@ Link:hover {color: black; text-decoration: none;} */
     margin: 20px;
 }
 
-
-
-
 .flex-container {
     display: flex; justify-content: center;
     flex-wrap: wrap;
@@ -482,8 +508,12 @@ Link:hover {color: black; text-decoration: none;} */
     flex-basis: 33.33%; /* Set width to 33.33% to create 3 columns */
     padding: 10px;
     box-sizing: border-box;
-    background-color: rgba(112, 128, 144, 0.486);
-    border: 1px solid red;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
   }
 
 /* ------------LOGIN / SIGNUP FORM-------------- */
@@ -759,8 +789,6 @@ Link:hover {color: black; text-decoration: none;} */
     background-color: #4285f4;
 }
 
-/* ------- END SHOPPING CART-------- */
-
 .float-end{
     color: red;
     background-color: none;
@@ -768,3 +796,5 @@ Link:hover {color: black; text-decoration: none;} */
     border-radius: 2px;
     font-weight: bolder;
 }
+
+/* ------- END SHOPPING CART-------- */

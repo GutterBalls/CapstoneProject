@@ -15,13 +15,13 @@ const Header = (props) => {
     
     
 
-    // useEffect(() => {
-    //     getProductData();
-    //     if (isLoggedIn) {
-    //     document.addEventListener('click', getCartData);
-    //     };
+    useEffect(() => {
+        getProductData();
+        if (isLoggedIn) {
+        getCartData();
+        };
         
-    // }, []);
+    }, [cartCounter]);
 
 
     // GET logged in user cart.
@@ -37,14 +37,7 @@ const Header = (props) => {
         };
     };
 
-    useEffect(() => {
-        getProductData();
-        if (isLoggedIn){
-        getCartData
-        };
-        
-    }, []);
-
+    
     return (
         <div className="header-jsx" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
             <div className="header-top">

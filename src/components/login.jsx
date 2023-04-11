@@ -31,25 +31,22 @@ const Login = (props) =>{
                 })
             });
             const transData = await response.json();
-            console.log("Translated response logIn login.jsx 34");
-            console.log(transData);
-            if(!transData){
-                alert("Login was unsuccessful. Please try again. ");
-            } 
-            // else if(transData.isActive == false){
-            //     alert("Account deactivated, please sign up!")
-            // } 
-            else {
+        
+            if(!transData.token){
+
+                alert("Login was unsuccessful. Please try again or contact support. ");
+
+            } else {
                 const tokenKey = transData.token;
-                // console.log(tokenKey);
+                
                 localStorage.setItem("token", tokenKey);
-                // alert("Login was successful");
+                
                 nav("/")
-            }
+            };
         } catch(error){
             console.log("Error w/ logIn login.jsx 50", error)
-        }
-    }
+        };
+    };
 
     return(
         <div className="sign-up-log-in">

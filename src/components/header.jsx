@@ -27,7 +27,12 @@ const Header = (props) => {
     // GET logged in user cart.
     async function getCartData() {
         try {
-            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`)
+            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                  },
+            });
             const translatedData = await response.json();
             
             setCartCounter(translatedData.length)

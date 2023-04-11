@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
+import { AdminEditProduct, AdminDeleteProduct } from "../components/index";
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -48,16 +48,6 @@ const Profile = (props) => {
     const [ addClearance, setAddClearance ] = useState("");
     const [ addCatId, setAddCatId ] = useState("");
 
-//Admin - Edit Product State
-    // const [ editImage, setEditImage ] = useState(productData.image);
-    // const [ editBrand, setEditBrand ] = useState(productData.brand);
-    // const [ editName, setEditName ] = useState(productData.name);
-    // const [ editDescription, setEditDescription ] = useState(productData.description);
-    // const [ editPrice, setEditPrice ] = useState(productData.price);
-    // const [ editSale, setEditSale ] = useState(productData.sale);
-    // const [ editClearance, setEditClearance ] = useState(productData.clearance);
-    // const [ editCatId, setEditCatId ] = useState(productData.category_id);
-
 // User - toggle edit user form (button) 
     function toggleEditUserForm() {
         setEditUserBtn(!editUserBtn)
@@ -80,21 +70,21 @@ const Profile = (props) => {
         setEditUserAdminBtn(!editUserAdminBtn)
     };
 // Admin - toggle Add Product(button)
-function toggleAddProduct() {
-    setAddProductBtn(!addProductBtn)
-};
+    function toggleAddProduct() {
+        setAddProductBtn(!addProductBtn)
+    };
 // Admin - toggle List Product(button)
-function toggleListProducts() {
-    setListProductsBtn(!listProductsBtn)
-};
+    function toggleListProducts() {
+        setListProductsBtn(!listProductsBtn)
+    };
 // Admin - toggle List Product(button)
-function toggleEditProduct() {
-    setEditProductBtn(!editProductBtn)
-};
+    function toggleEditProduct() {
+        setEditProductBtn(!editProductBtn)
+    };
  // Admin - toggle List Product(button)
-function toggleDeleteProduct() {
-    setDeleteProductBtn(!deleteProductBtn)
-};   
+    function toggleDeleteProduct() {
+        setDeleteProductBtn(!deleteProductBtn)
+    };   
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
@@ -111,21 +101,6 @@ function toggleDeleteProduct() {
             console.log("No Token!")
         }
     }, [])
-
-    // useEffect(() => {
-    //     if (localStorage.getItem("token")) {
-    //         setIsLoggedIn(true);
-    //         getUserData();
-    //         getOrderHistory();
-    //     if(userData.isAdmin === true){
-    //         getAllUsersData();
-    //     }    
-            
-    //     } else {
-    //         setIsLoggedIn(false)
-    //         console.log("No Token!")
-    //     }
-    // }, [disableAccountBtn])
 
 // User - Edit/Update
     const editUser = async (event) => {
@@ -414,123 +389,6 @@ const editUserAdmin = async (singleUser, event) => {
         }
     };
 
-// Admin - Edit/Update Product
-async function editProduct(singleProduct, event){
-    event.preventDefault();
-
-    const tokenKey = localStorage.getItem("token");
-
-    console.log("singleProduct:")
-    console.log(singleProduct)
-    try {
-        const response = await fetch(`${DATABASE_URL}/products/${singleProduct}`, {
-            method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${tokenKey}`
-            },
-            body: JSON.stringify({
-                image: addImage,
-                brand: addBrand,
-                name: addName,
-                description: addDescription,
-                price: addPrice,
-                sale: addSale,
-                clearance: addClearance,
-                category_id: addCatId
-            })
-        
-        });
-        const transData = await response.json();
-            console.log("Add Product TransData:")
-            console.log(transData);
-
-        if (!transData){
-            alert("Product was not updated. Please try again. ");
-        } else {
-            function updateProductData(){
-                let updateArr = [];
-                for(let i=0; i<productData.length; i++){
-                    let currentProduct = productData[i];
-                    if(currentProduct.id !== productData.id){
-                        updateArr.push(currentProduct);
-                    }else{
-                        updateArr.push(transData);
-                    }
-                }
-                return updateArr
-            };
-            const newProductData = updateProductData();
-            setProductData(newProductData);
-            alert("Product was successfully Updated.");
-// reset form
-            setEditProductBtn(false);
-            setAddImage("");
-            setAddBrand("");
-            setAddName("");
-            setAddDescription("");
-            setAddPrice("");
-            setAddSale("");
-            setAddClearance("");
-            setAddCatId("");
-            nav("/profile");
-            return getProductData();
-        }
-    } catch (error){
-        console.log(error);
-    }
-};    
-
-// Admin - Delete Product
-    const deleteProduct = async (singleProduct, event) => {
-        event.preventDefault();
-
-        const tokenKey = localStorage.getItem("token");
-
-        console.log("singleProduct:")
-        console.log(singleProduct)
-        try {
-            const response = await fetch(`${DATABASE_URL}/products/1`, {
-                method: "DELETE",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${tokenKey}`
-                }
-            });
-            const transData = await response.json();
-                console.log("Delete Product TransData:")
-                console.log(transData);
-
-            if (!transData){
-                alert("Product was not deleted. Please try again. ");
-            } else {
-                // function updateProductData(){
-                //     let updateArr = [];
-                //     for(let i=0; i<productData.length; i++){
-                //         let currentProduct = productData[i];
-                //         if(currentProduct.id !== productData.id){
-                //             updateArr.push(currentProduct);
-                //         }else{
-                //             updateArr.push(transData);
-                //         }
-                //     }
-                //     return updateArr
-                // };
-                // const newProductData = updateProductData();
-                // setProductData(newProductData);
-                alert("Product was successfully Deleted.");
-                // nav("/profile");
-                return getProductData();
-            }
-        } catch (error){
-            console.log(error);
-        }
-    }; 
-
-
-// Admin - List All Products 
-
-
     return (
         <section className="main-container profile-mc">
             {
@@ -542,8 +400,8 @@ async function editProduct(singleProduct, event){
                             <button onClick={ toggleEditUserForm} className="atc-btn profile-btn">Edit User Details</button>
                             <button onClick={ toggleDisableAccountForm} className="atc-btn profile-btn">Disable Account Form</button>
                             <button onClick={ toggleOrderHistory } className="atc-btn profile-btn">Order History</button>
-
-                {/* EDIT USER FORM */}
+                                                              
+{/* EDIT USER FORM */}
                             {
                                 editUserBtn ? (
                                     <div className="del-acct">
@@ -587,8 +445,8 @@ async function editProduct(singleProduct, event){
                                     </div>    
                                 ): ""
                             }
-                            
-                {/* DISABLE ACCOUNT */}
+                                                              
+{/* DISABLE ACCOUNT */}
                             {
                                 disableAccountBtn ? (
                                     <div className="prof-form">
@@ -604,8 +462,8 @@ async function editProduct(singleProduct, event){
                                     </div>    
                                 ): ""
                             }
-                                  
-                {/* ORDER HISTORY */}
+                                                              
+{/* ORDER HISTORY */}
                             <div className='flex-container'>
                             {
                                 orderHistoryBtn ? orderData.map((singleOrder)=>{
@@ -626,6 +484,8 @@ async function editProduct(singleProduct, event){
                     <h3> Username: {userData.username}</h3>
                     <button onClick={ toggleListUsers }>List All Users</button>
                     <div>
+                                                                                      
+{/* LIST USERS */}
                         {
                             listUsersBtn ? allUsers.map((singleUser)=>{
                                 return(
@@ -694,6 +554,8 @@ async function editProduct(singleProduct, event){
                             }): ""
                         }
                     </div>
+                                                                                                      
+{/* ADMIN ADD NEW PRODUCT */}
                     <button onClick={ toggleAddProduct }>Add New Product</button>
                     <div>
                         {   
@@ -795,149 +657,39 @@ async function editProduct(singleProduct, event){
                             ): ""
                         }   
                     </div>
-                    <button onClick={ toggleListProducts }>List All Products</button>
+                                                                                                      
+{/* ADMIN DELETE PRODUCT */}
+                    <button onClick={ toggleDeleteProduct }>Delete Product</button>
                     <div>
-                        {
-                            listProductsBtn ? productData.map((singleProduct)=>{
-                                return(
-                                    <div key={singleProduct.id} className="main-singleProduct">
-                                        <hr></hr>
-                                        <h3>Product: {singleProduct.id}
-                                        <br></br>
-                                        {singleProduct.brand} {singleProduct.name}</h3>
-                                        <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
-                                        <button onClick={ toggleEditProduct }>Edit/Update</button>
-                                        <div>
-                                        {   
-                                            editProductBtn ? (
-                                                <div className="form">
-                                                    <span className="form__title">Edit/Update Product</span>
-                                                    <form action="" onSubmit={ (event) => editProduct(singleProduct.id, event) }>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-user-line"></i> */}
-                                                            <input 
-                                                                type="text"
-                                                                value={ addImage === "" ? singleProduct.image : addImage }
-                                                                onChange={(event)=>{
-                                                                    setAddImage(event.target.value === "" ? singleProduct.image : event.target.value);
-                                                                }}
-                                                                placeholder={ singleProduct.image }
-                                                            />
-                                                        </div>    
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-lock-line"></i> */}
-                                                            <input 
-                                                                type="text"
-                                                                value={ addBrand }
-                                                                //  === "" ? singleProduct.brand : addBrand } 
-                                                                onChange={(event)=>{
-                                                                    if(event.target.value === "" ){
-                                                                        setAddBrand(singleProduct.brand)
-                                                                    } else{ 
-                                                                        setAddBrand(event.target.value) 
-                                                                    }
-                                                                }}
-                                                                
-                                                                placeholder={ singleProduct.brand } 
-                                                            />
-                                                        </div>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-mail-line"></i> */}
-                                                            <input 
-                                                                type="text"
-                                                                value={ addName } 
-                                                                onChange={(event)=>{
-                                                                    setAddName(event.target.value)
-                                                                    // === "" ? singleProduct.name : event.target.value);
-                                                                }}
-                                                                placeholder={ singleProduct.name }
-                                                            />
-                                                        </div>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-mail-line"></i> */}
-                                                            <textarea 
-                                                                type="text"
-                                                                rows="4"
-                                                                cols="75"
-                                                                value={ addDescription } 
-                                                                onChange={(event)=>{
-                                                                    setAddDescription(event.target.value)
-                                                                    //   === "" ? singleProduct.description : event.target.value );
-                                                                }}
-                                                                placeholder={ singleProduct.description }
-                                                            />
-                                                        </div>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-mail-line"></i> */}
-                                                            <input 
-                                                                type="number"
-                                                                value={ addPrice } 
-                                                                onChange={(event)=>{
-                                                                    setAddPrice(event.target.value)
-                                                                    //  === "" ? singleProduct.price : event.target.value);
-                                                                }}
-                                                                placeholder={ singleProduct.price }
-                                                            />
-                                                        </div>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-mail-line"></i> */}
-                                                            <input 
-                                                                type="text"
-                                                                value={ addSale } 
-                                                                onChange={(event)=>{
-                                                                    setAddSale(event.target.value)
-                                                                    //  === "" ? singleProduct.sale : event.target.value);
-                                                                }}
-                                                                placeholder={ singleProduct.sale ? "true" : "false" }
-                                                            />
-                                                        </div>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-mail-line"></i> */}
-                                                            <input 
-                                                                type="text"
-                                                                value={ addClearance } 
-                                                                onChange={(event)=>{
-                                                                    setAddClearance(event.target.value)
-                                                                    //  === "" ? singleProduct.clearance : event.target.value);
-                                                                }}
-                                                                placeholder={ singleProduct.clearance ? "true" : "false"  }
-                                                            />
-                                                        </div>
-                                                        <div className="form__input">
-                                                            {/* <i className="ri-mail-line"></i> */}
-                                                            <input 
-                                                                type="number"
-                                                                value={ addCatId } 
-                                                                onChange={(event)=>{
-                                                                    setAddCatId(event.target.value)
-                                                                    //  === "" ? singleProduct.category_id : event.target.value );
-                                                                }}
-                                                                placeholder={ singleProduct.category_id }
-                                                            />
-                                                        </div>
-                                                        <button type="submit" className="form__button" >Submit</button>
-                                                    </form>
-                                                </div>    
-                                            ): ""
-                                        } 
-                                        </div>
-                                        <button onClick={ toggleDeleteProduct }>Delete</button>
-                                        {
-                                            deleteProductBtn ? (
-                                                <div className="form">
-                                                    <span className="form__title">Delete Product</span>
-                                                    <form action="" onSubmit={ (event) => deleteProduct(singleProduct.id, event) } >
-                                                        <div className="form__button">Are you sure you want to delete {singleProduct.name}? Click Delete to confirm selection. </div>
-                                                        <button type="submit" className="form__button" >Delete</button>
-                                                    </form>
-                                                </div>    
-                                            ): ""
-                                        }
-                                        <hr></hr>
-                                    </div>
-                                )
-                            }): ""
-                        }
+                        < AdminDeleteProduct 
+                            isLoggedIn={isLoggedIn} 
+                            setIsLoggedIn={setIsLoggedIn} 
+                            userData={userData} 
+                            setUserData={setUserData}
+                            getUserData={getUserData}
+                            productData={productData} 
+                            setProductData={setProductData} 
+                            getProductData={getProductData}
+                            deleteProductBtn={deleteProductBtn}
+                            setDeleteProductBtn={setDeleteProductBtn}
+                        />
+                    </div>
+                                                                                  
+{/* ADMIN EDIT/UPDATE PRODUCT */}
+                    <button onClick={ toggleEditProduct }>Edit/Update Product</button>
+                    <div>
+                        < AdminEditProduct 
+                            isLoggedIn={isLoggedIn} 
+                            setIsLoggedIn={setIsLoggedIn} 
+                            userData={userData} 
+                            setUserData={setUserData}
+                            getUserData={getUserData}
+                            productData={productData} 
+                            setProductData={setProductData} 
+                            getProductData={getProductData}
+                            editProductBtn={editProductBtn}
+                            setEditProductBtn={setEditProductBtn}
+                        />
                     </div>
                 </div>
             }
@@ -946,3 +698,32 @@ async function editProduct(singleProduct, event){
 }
 
 export default Profile;
+
+
+// {
+//     listProductsBtn ? productData.map((singleProduct)=>{
+//         return(
+//             <div key={singleProduct.id} className="main-singleProduct">
+//                 <hr></hr>
+//                 <h3>Product: {singleProduct.id}
+//                 <br></br>
+//                 {singleProduct.brand} {singleProduct.name}</h3>
+//                 <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
+//                 <button onClick={ toggleDeleteProduct }>Delete</button>
+//                 {/* {
+//                     deleteProductBtn ? (
+//                         <div className="form">
+//                             <span className="form__title">Delete Product</span>
+//                             <form action="" onSubmit={ (event) => deleteProduct(singleProduct.id, event) } >
+//                                 <div className="form__button">Are you sure you want to delete {singleProduct.name}? Click Delete to confirm selection. </div>
+//                                 <button type="submit" className="form__button" >Delete</button>
+//                             </form>
+//                         </div>    
+//                     ): ""
+//                 } */}
+//                 <hr></hr>
+                
+//             </div>
+//         )
+//     }): ""
+// }

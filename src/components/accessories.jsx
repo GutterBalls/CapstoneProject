@@ -169,9 +169,9 @@ const Accessories = (props) => {
                             <div key={singleProduct.id} className="main-singleProduct">
                                 <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
                                 <div className="itemInfoFlex">
-                                    <h5> Brand: {singleProduct.brand}</h5>
-                                    <h5> Name: {singleProduct.name}</h5> 
-                                    <h5> Price: ${singleProduct.price}</h5>
+                                    <h5>{singleProduct.brand}</h5>
+                                    <h5>{singleProduct.name}</h5> 
+                                    <h5>${singleProduct.price}</h5>
                                     { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
                                     : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
                                     }

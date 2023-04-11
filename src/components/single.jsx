@@ -8,13 +8,14 @@ const Single = (props) => {
     const [allReviews, setAllReviews] = useState([]);
     const [productRating, setProductRating] = useState(0);
     const [productReview, setProductReview] = useState("");
+    const [refresh, setRefresh] = useState(0);
     const { id } = useParams();
     const nav = useNavigate();
     
     useEffect(() => {
         getProductById();
         getReviews();
-    }, []);
+    }, [refresh]);
     
     async function getProductById () {
         try {
@@ -100,11 +101,13 @@ const Single = (props) => {
             setProductReview("")
             console.log("Post Review trans data", translatedData);
 
+            setRefresh(refresh + 1);
+
         } catch (error) {
             throw error;
         }
     }
-    
+
 
     return (
         <div>
@@ -120,43 +123,60 @@ const Single = (props) => {
                     : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
                     }
                     <br />
-                    <button onClick={()=> nav(-1)}>Go Back</button>
+                    <button onClick={()=> nav(-1)} className='atc-btn'>Go Back</button>
+                    <br />
+                <div className="reviews-container">
                     {
                         allReviews.length > 0 ?  allReviews.filter((single) => {
                              return single.product_id === singleProduct.id
                              }).map((singleReview) => {
                             return(
-                                <span key={singleReview.id}>
+                                <span key={singleReview.id} className='reviews'>
                                     <h3> Review by: {singleReview.username} </h3>
                                     <h4> Rating: {singleReview.rating}</h4>
                                     <h4> Review: {singleReview.review}</h4>
                                 </span> 
-                     )}) : <p> No reviews yet for this product ! </p>
-                    }       
-
-                </div> : <p> ...We're bowling. BRB! </p>   
-            }
-            {
+                     )}) : ''
+                    }
+                </div>
+                    {
                 props.isLoggedIn ?
-                <div>
-                    <form onSubmit={postReview}>
-                        <input
-                        type="text"
-                        placeholder="Rating"
+                <div className="review-sub">
+                    <form onSubmit={postReview}>Your Rating.
+                        <br />
+                        <select 
                         value={productRating}
-                        onChange={(event) => setProductRating(event.target.value)} />
+                        onChange={(event) => setProductRating(event.target.value)}>
+                            <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                            <option value="0">0</option>
+                        </select>
+                        <hr /> Your review of this product
+                        <br />
                         <textarea
                         type="text"
                         placeholder="Product Review"
-                        rows="2"
-                        cols="15"
+                        rows="3"
+                        cols="30"
                         value={productReview}
-                        onChange={(event) => setProductReview(event.target.value)} />
-                        <button type="submit"> Submit Product Review </button>
+                        onChange={(event) => setProductReview(event.target.value)}
+                        style={{width: '400px' }} />
+                        <hr />
+                        <button type="submit" className="atc-btn"> Submit Review </button>
                     </form>
-                </div> : <h1> Please login to review this product. </h1>
+                </div> : <Link to="/login"><h3>Login to make a review.</h3></Link>
             }
-            
+
+                </div> : <p> ...We're bowling. BRB! </p>   
+            }
         </div>
     )
 }

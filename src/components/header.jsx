@@ -57,7 +57,7 @@ const Header = (props) => {
                  {/* SEARCHBOX */}
                  <div>
                     <input className="searchbox"
-                    type="text"
+                    type="search"
                     placeholder="Search..."
                     onChange={(event) => {
                     setSearch(

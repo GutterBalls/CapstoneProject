@@ -15,7 +15,7 @@ const Single = (props) => {
     useEffect(() => {
         getProductById();
         getReviews();
-    }, [refresh]);
+    }, [useParams(), refresh]);
     
     async function getProductById () {
         try {
@@ -37,7 +37,8 @@ const Single = (props) => {
             const response = await fetch(`${DATABASE_URL}/cartItems`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({
                     user_id: props.userData.id,
@@ -49,27 +50,25 @@ const Single = (props) => {
             })
             const translatedData = await response.json()
 
-            console.log("Single.jsx 51 - addItemToCart", translatedData);
 
         } catch (error) {
-            console.log("Error w/ singleItem/addItemToCart", error);
+            alert("Duplicate Product: Visit cart to update quantity.")
         };
     };
 
     async function getReviews () {
+
         try {
-            console.log("Inside try getReviews")
             const response = await fetch(`${DATABASE_URL}/reviews`)
-            console.log("Response getReviews", response)
+            
             const translatedData = await response.json();
             if (translatedData) {
-                console.log("Get reviews TRANS DATA line 64", translatedData)
                 setAllReviews(translatedData);
             } else {
                 console.log("No reviews yet.")
             }
 
-            console.log(allReviews)
+            
 
         } catch (error) {
             throw error;
@@ -77,7 +76,7 @@ const Single = (props) => {
     };
 
     async function postReview (event) {
-        console.log("Post Review USERNAME on USERDATA", props.userData.username)
+        
         event.preventDefault();
         try {
             const response = await fetch(`${DATABASE_URL}/reviews`, {
@@ -99,7 +98,7 @@ const Single = (props) => {
             const translatedData = await response.json()
             setProductRating("")
             setProductReview("")
-            console.log("Post Review trans data", translatedData);
+            
 
             setRefresh(refresh + 1);
 

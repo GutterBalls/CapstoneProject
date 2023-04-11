@@ -1,4 +1,3 @@
-import { Nav } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 // import { BsCart4, BsPencilSquare, BsSearch } from 'react-icons/bs';
@@ -16,14 +15,14 @@ const Header = (props) => {
     
     
 
-    useEffect(() => {
-        getProductData();
-        if (isLoggedIn) {
-        getCartData();
-        // cartCounter
-        };
+    // useEffect(() => {
+    //     getProductData();
+    //     if (isLoggedIn) {
+    //     document.addEventListener('click', getCartData);
+    //     };
         
-    }, []);
+    // }, []);
+
 
     // GET logged in user cart.
     async function getCartData() {
@@ -31,14 +30,20 @@ const Header = (props) => {
             const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`)
             const translatedData = await response.json();
             
-            console.log(translatedData.length)
             setCartCounter(translatedData.length)
-            
-            
+            console.log("Clicked!")
         } catch (error) {
             console.log(error)
         };
     };
+
+    useEffect(() => {
+        getProductData();
+        if (isLoggedIn){
+        getCartData
+        };
+        
+    }, []);
 
     return (
         <div className="header-jsx" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>

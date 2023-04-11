@@ -89,43 +89,49 @@ const AdminDeleteProduct = (props) => {
             <div>
                 {   
                     deleteProductBtn ? (
-                        <div style={{ backgroundColor: 'grey' }} className="form">
+                        <div className="del-prod-form">
 {/* SEARCHBOX */}
-                            <div>
-                                <h3>ID selected: { selectProduct.id } </h3> 
-                                <input className="searchbox"
-                                type="text"
+                            <div className='adm-del'>
+                                <h5>Choose an item to delete:</h5> 
+                                <input className="adm-searchbox"
+                                type="search"
                                 placeholder="Search..."
                                 onChange={(event) => {
                                 setSearchAdmin(
                                     props.productData.filter((singleProduct) => singleProduct.name.toLowerCase().includes(event.target.value.toLowerCase()) 
                                         || singleProduct.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
                                     ));
-                                document.getElementById('search').style.visibility = 'visible'
+                                document.getElementsByClassName('adm-search')[0].style.visibility = 'visible'
                                 }} />
-                                <ul id="search">
+                                <ul className="adm-search">
                                     { searchAdmin.map((singleProduct) => {
                                         return(
-                                            <li className="indSearchItem" key={singleProduct.id}>
-                                                <button onClick={() => selectProductById(singleProduct) }>
-                                                    <h3>{singleProduct.id}</h3>
-                                                    <h3>{singleProduct.brand}</h3>
-                                                    <img src={singleProduct.image} className="indSearchPic" /> 
-                                                    
-                                                    <br></br>
+                                            <li className="adm-indSearchItem" key={singleProduct.id}>
+                                                <button onClick={() => { selectProductById(singleProduct), document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden' }} className='admin-upd-sb-res'>
+                                                    {singleProduct.id}
+                                                    {' '}
+                                                    {singleProduct.brand}
+                                                    {' '}
+                                                    {singleProduct.name}
+                                                    <img src={singleProduct.image} className="adm-indSearchPic" /> 
                                                 </button>
                                                 {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
                                             </li>
                                     )})}
                                 </ul>
                             </div>
-{/* DELETE FORM */}               
+{/* DELETE FORM */}         
                             <div>
-                                <span className="form__title">Delete Product</span>
-                                <form action="" onSubmit={ (event) => deleteProduct(selectProduct.id, event) } >
-                                    <div className="form__button">Are you sure you want to delete {selectProduct.name}? Click Delete to confirm selection. </div>
-                                    <button type="submit" className="form__button" >Delete</button>
-                                </form>                                
+                                {/* <span className="form__title">Delete Product</span> */}
+                                <form action="" onSubmit={ (event) => deleteProduct(selectProduct.id, event)} className='del-form'>
+                                    <div className="">Are you sure you want to delete
+                                        {' '}
+                                        {selectProduct.brand}
+                                        {' '}
+                                        {selectProduct.name}?
+                                    </div>
+                                    <button type="submit" className="atc-btn del-btn" >Delete</button>
+                                </form>          
                             </div> 
                         </div>    
                     ): ""

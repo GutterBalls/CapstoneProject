@@ -504,7 +504,7 @@
     margin: 20px; padding: 20px;
   }
   
-  .flex-item {
+.flex-item {
     flex-basis: 33.33%; /* Set width to 33.33% to create 3 columns */
     padding: 10px;
     box-sizing: border-box;
@@ -514,7 +514,128 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 10px;
-  }
+}
+
+.add-prod-form {
+    box-sizing: border-box;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding-left: 100px; padding-right: 100px;
+}
+
+.prof-admin-head {
+    display: flex; flex-direction: column; align-items: center;
+}
+
+/* .prof-admin {
+    background-color: #4285f4;
+} */
+
+.prof-admin-btns  {
+    display: flex; flex-direction: row;
+}
+
+.pabi {
+    margin: 5px;
+}
+
+.admin-upd-sb-res{
+    border: none; background: none;
+    width: 550px;
+}
+
+.adm-searchbox{
+    height: 20px; width: 200px;
+    border: 1px solid black;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.adm-search {
+    position: absolute;
+    width: 500px;
+    overflow-y: auto;
+    max-height: 50%;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px black;
+    z-index: 9999;
+    /* padding: 1px; Shifts images to the left edge*/
+}
+
+.adm-indSearchPic {
+    width: 40px;
+    height: auto;
+    float: left;
+    background-color: white;
+}
+
+.adm-indSearchItem {
+    display: flex;
+    width: inherit;
+    text-decoration: none;
+    background-color: white;
+}
+
+.adm-indSearchItem:hover {
+    background-color: #ff000020;
+}
+
+.adm-form-field {
+    display: flex; flex-direction: row;
+
+
+    /* position: relative; */
+    /* display: flex; */
+    /* align-items: baseline; */
+    /* margin: 0 auto; */
+}
+
+.adm-del {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    margin-top: 30px;
+
+}
+
+.del-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 300px;
+    margin-bottom: 20px;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.del-prod-form {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.form-label{
+    width: 100px;
+    color: white;
+}
 
 /* ------------LOGIN / SIGNUP FORM-------------- */
 

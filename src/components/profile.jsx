@@ -391,6 +391,7 @@ const editUserAdmin = async (singleUser, event) => {
 
     return (
         <section className="main-container profile-mc">
+{/* ----- NOT ADMIN ------ */}
             {
                 userData.isAdmin === false ? 
                     <div key={userData.id} className="profile-lvl-1">
@@ -479,18 +480,25 @@ const editUserAdmin = async (singleUser, event) => {
                             </div>
                     </div>
                 : 
-                <div>
-                    <h1> Administrator Dashboard</h1>
-                    <h3> Username: {userData.username}</h3>
-                    <button onClick={ toggleListUsers }>List All Users</button>
-                    <div>
+                <div className='prof-admin'>
+                    <div className='prof-admin-head'>
+                        <h1> Administrator Dashboard</h1>
+                        <h3> {userData.username}</h3>
+                        <div className='prof-admin-btns'>
+                            <button onClick={ toggleListUsers } className='pabi atc-btn'>List All Users</button>
+                            <button onClick={ toggleAddProduct } className='pabi atc-btn'>Add New Product</button>
+                            <button onClick={ toggleEditProduct } className='pabi atc-btn'>Edit/Update Product</button>
+                            <button onClick={ toggleDeleteProduct } className='pabi atc-btn'>Delete Product</button>
+                        </div>
+                        
+                    </div>
+                    <div className='reviews-container'>
                                                                                       
 {/* LIST USERS */}
                         {
                             listUsersBtn ? allUsers.map((singleUser)=>{
                                 return(
-                                    <div key={singleUser.id}>
-                                        <hr></hr>
+                                    <div key={singleUser.id} className='reviews'>
                                         <h3>ID: {singleUser.id}</h3>
                                         <h3>Username: {singleUser.username}</h3>
                                         <h3>Status: {singleUser.isActive ? "Active" : "Inactive"}</h3>
@@ -501,10 +509,11 @@ const editUserAdmin = async (singleUser, event) => {
                                             // } else if(singleUser.isActive === true){
                                             //     disableUser(singleUser.id, event)
                                             // }
-                                        }}>
+                                        }} className='atc-btn'>
                                             { singleUser.isActive ? "Disable Account" : "Enable Account"}
                                         </button>
-                                        <button onClick={ toggleEditUserAdmin }>Edit User</button>
+                                        <br />
+                                        <button onClick={ toggleEditUserAdmin } value={singleUser.id} className='atc-btn'>Edit User</button>
                                         {
                                             editUserAdminBtn ? (
                                                 <div className="form">
@@ -548,7 +557,6 @@ const editUserAdmin = async (singleUser, event) => {
                                                 </div>    
                                             ): ""
                                         }
-                                        <hr></hr>
                                     </div>
                                 )
                             }): ""
@@ -556,15 +564,15 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                                                                                                       
 {/* ADMIN ADD NEW PRODUCT */}
-                    <button onClick={ toggleAddProduct }>Add New Product</button>
+                    
                     <div>
                         {   
                             addProductBtn ? (
-                                <div className="form">
-                                    <span className="form__title">Add Product</span>
+                                <div className="add-prod-form">
+                                    <span className="form__title">Add A New Product</span>
+                                    <br />
                                     <form action="" onSubmit={ addProduct } >
                                         <div className="form__input">
-                                            {/* <i className="ri-user-line"></i> */}
                                             <input 
                                                 type="url"
                                                 value={ addImage }
@@ -573,7 +581,7 @@ const editUserAdmin = async (singleUser, event) => {
                                                 }}
                                                 placeholder="Image URL"
                                             />
-                                        </div>    
+                                        </div>
                                         <div className="form__input">
                                             {/* <i className="ri-lock-line"></i> */}
                                             <input 
@@ -659,7 +667,7 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                                                                                                       
 {/* ADMIN DELETE PRODUCT */}
-                    <button onClick={ toggleDeleteProduct }>Delete Product</button>
+                    
                     <div>
                         < AdminDeleteProduct 
                             isLoggedIn={isLoggedIn} 
@@ -676,7 +684,7 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                                                                                   
 {/* ADMIN EDIT/UPDATE PRODUCT */}
-                    <button onClick={ toggleEditProduct }>Edit/Update Product</button>
+                    
                     <div>
                         < AdminEditProduct 
                             isLoggedIn={isLoggedIn} 

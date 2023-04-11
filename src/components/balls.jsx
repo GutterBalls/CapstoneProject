@@ -160,9 +160,9 @@ const Balls = (props) => {
                             <div key={singleProduct.id} className="main-singleProduct">
                                 <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
                                 <div className="itemInfoFlex">
-                                    <h4> <Link to={`/single/${singleProduct.id}`} className="prod-grid-txt"> {singleProduct.brand} </Link> </h4>
-                                    <h5> <Link to={`/single/${singleProduct.id}`} className="prod-grid-txt"> {singleProduct.name} </Link> </h5> 
-                                    <h6> <Link to={`/single/${singleProduct.id}`} className="prod-grid-txt"> ${singleProduct.price} </Link> </h6>
+                                    <h4>{singleProduct.brand}</h4>
+                                    <h5>{singleProduct.name}</h5> 
+                                    <h6>${singleProduct.price}</h6>
                                     { isLoggedIn ? <button className='atc-btn' value={singleProduct.id} onClick={addItemToCart}> Add to Cart </button> 
                                     : <button className='atc-btn'><Link to="/login">Login to purchase</Link></button>
                                     }

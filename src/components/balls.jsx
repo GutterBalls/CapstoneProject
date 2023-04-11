@@ -63,7 +63,8 @@ const Balls = (props) => {
             const response = await fetch(`${DATABASE_URL}/cartItems`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({
                     user_id: props.userData.id,

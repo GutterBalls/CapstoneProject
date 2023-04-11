@@ -42,7 +42,12 @@ const CartCheckout = (props) => {
     // GET logged in user cart.
     async function getCartData() {
         try {
-            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`)
+            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+              },
+            });
             const translatedData = await response.json();
             
             setCartData(translatedData);
@@ -60,7 +65,8 @@ const CartCheckout = (props) => {
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.value}`, {
                 method: "DELETE",
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
             });
             
@@ -90,8 +96,8 @@ const CartCheckout = (props) => {
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.parentNode.getAttribute("value")}`,{
                 method: "PATCH",
                 headers: {
-                'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${localStorage.getItem("token")}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({
                     "order_id": currentItem[0].order_id,
@@ -130,8 +136,8 @@ const CartCheckout = (props) => {
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.parentNode.getAttribute("value")}`,{
                 method: "PATCH",
                 headers: {
-                'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${localStorage.getItem("token")}`
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
                 body: JSON.stringify({
                     "order_id": currentItem[0].order_id,

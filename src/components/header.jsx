@@ -1,23 +1,43 @@
-import { Nav } from "../components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 // import { BsCart4, BsPencilSquare, BsSearch } from 'react-icons/bs';
 // import { CgProfile } from 'react-icons/cg';
 // import { GrLogin, GrLogout } from 'react-icons/gr';
 import { MdAssignmentAdd, MdLogin, MdLogout, MdAccountCircle, MdShoppingCart } from 'react-icons/md';
+const DATABASE_URL = 'http://localhost:1337/api';
 
 
 
 const Header = (props) => {
     const { isLoggedIn, getProductData, userData } = props;
-
     const [search, setSearch] = useState([]);
+    const [cartCounter, setCartCounter] = useState(0);
+    
+    
 
     useEffect(() => {
         getProductData();
+        if (isLoggedIn) {
+        getCartData();
+        };
         
-    }, []);
+    }, [cartCounter]);
 
+
+    // GET logged in user cart.
+    async function getCartData() {
+        try {
+            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`)
+            const translatedData = await response.json();
+            
+            setCartCounter(translatedData.length)
+            console.log("Clicked!")
+        } catch (error) {
+            console.log(error)
+        };
+    };
+
+    
     return (
         <div className="header-jsx" onMouseLeave={() => document.getElementById('search').style.visibility = 'hidden'}>
             <div className="header-top">
@@ -31,13 +51,13 @@ const Header = (props) => {
                     <button type="button" className="icon-button">
                         <Link to="/cart" className="nav-btn-top icon"><MdShoppingCart /></Link>
                         {/* <span className="material-icons"></span> */}
-                        <span className="icon-button__badge">5</span>
+                        <span className="icon-button__badge">{cartCounter}</span>
                     </button>
 
                  {/* SEARCHBOX */}
                  <div>
                     <input className="searchbox"
-                    type="text"
+                    type="search"
                     placeholder="Search..."
                     onChange={(event) => {
                     setSearch(

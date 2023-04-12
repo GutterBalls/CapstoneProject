@@ -13,7 +13,9 @@ const App = () => {
     const [userData, setUserData] = useState([]);
     const [productData, setProductData] = useState([]);
     const [orderData, setOrderData] = useState([]);
+    const [counter, setCounter] = useState(0);
     
+
     async function getProductData() {
         try {
             const response = await fetch(`${DATABASE_URL}/products`)
@@ -88,6 +90,8 @@ const App = () => {
                         orderData={orderData}
                         setOrderData={setOrderData}
                         getOrderData={getOrderData}
+                        counter={counter}
+                        setCounter={setCounter}
                     /></header>
 			        <div className="br-main">
                         <Routes>
@@ -109,6 +113,8 @@ const App = () => {
                                 orderData={orderData}
                                 setOrderData={setOrderData}
                                 getOrderData={getOrderData}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
                             <Route path="/bags" element={<Bags 
                                 isLoggedIn={isLoggedIn} 
@@ -121,6 +127,8 @@ const App = () => {
                                 orderData={orderData}
                                 setOrderData={setOrderData}
                                 getOrderData={getOrderData}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
                             <Route path="/shoes" element={<Shoes 
                                 isLoggedIn={isLoggedIn} 
@@ -133,6 +141,8 @@ const App = () => {
                                 orderData={orderData}
                                 setOrderData={setOrderData}
                                 getOrderData={getOrderData}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
                             <Route path="/accessories" element={<Accessories   
                                 isLoggedIn={isLoggedIn} 
@@ -145,6 +155,8 @@ const App = () => {
                                 orderData={orderData}
                                 setOrderData={setOrderData}
                                 getOrderData={getOrderData}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
                             <Route path="/single/:id" element={<Single 
                                 isLoggedIn={isLoggedIn} 
@@ -157,6 +169,8 @@ const App = () => {
                                 orderData={orderData}
                                 setOrderData={setOrderData}
                                 getOrderData={getOrderData}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
                             <Route path="/profile" element={<Profile 
                                 isLoggedIn={isLoggedIn} 
@@ -178,6 +192,8 @@ const App = () => {
                                 productData={productData} 
                                 setProductData={setProductData} 
                                 getProductData={getProductData}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
 
                             {/* <Route path="/confirm" element={<Confirm 

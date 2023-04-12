@@ -1,4 +1,4 @@
-import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem} from 'mdb-react-ui-kit';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import '/node_modules/swiper/swiper.min.css';
@@ -20,7 +20,6 @@ const Homepage = (props) => {
         getProductData();
         if (localStorage.getItem("token")) {
             setIsLoggedIn(true)
-            // getUserData()
         } else {
             setIsLoggedIn(false)
             console.log("No Token!")
@@ -33,65 +32,84 @@ const Homepage = (props) => {
         }    
     };
 
-// Filter Balls (Sale & Clearance)   
+// Filter Balls (Sale)   
     const filteredBallsSale = productData.filter((singleProduct) => {
         if (specials === "Sale" && singleProduct.sale === false) {
             return false;
         }
-        if (specials === "Clearance" && singleProduct.clearance === false) {
-                    return false;
-                }
         return singleProduct.category_id === 1        
-        // return true
     });
 
-// Filter Bags (Sale & Clearance)   
+// Filter Balls (Clearance)   
+    const filteredBallsClearance = productData.filter((singleProduct) => {
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+            return false;
+        }
+        return singleProduct.category_id === 1        
+    });
+
+// Filter Bags (Sale)   
     const filteredBagsSale = productData.filter((singleProduct) => {
         if (specials === "Sale" && singleProduct.sale === false) {
             return false;
         }
-        if (specials === "Clearance" && singleProduct.clearance === false) {
-                    return false;
-                }
         return singleProduct.category_id === 2        
-        // return true
     });
 
-// Filter Shoes (Sale & Clearance)   
+// Filter Bags (Clearance)   
+    const filteredBagsClearance = productData.filter((singleProduct) => {
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+            return false;
+        }
+        return singleProduct.category_id === 2        
+    });
+
+// Filter Shoes (Sale)   
     const filteredShoesSale = productData.filter((singleProduct) => {
         if (specials === "Sale" && singleProduct.sale === false) {
             return false;
         }
-        if (specials === "Clearance" && singleProduct.clearance === false) {
-                    return false;
-                }
         return singleProduct.category_id === 3        
-        // return true
     });
 
-// Filter Accessories (Sale & Clearance)   
+// Filter Shoes (Clearance)   
+    const filteredShoesClearance = productData.filter((singleProduct) => {
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+            return false;
+        }
+        return singleProduct.category_id === 3        
+    });
+
+// Filter Accessories (Sale)   
     const filteredAccessoriesSale = productData.filter((singleProduct) => {
         if (specials === "Sale" && singleProduct.sale === false) {
             return false;
         }
         if (specials === "Clearance" && singleProduct.clearance === false) {
-                    return false;
-                }
+            return false;
+        }
         return singleProduct.category_id === 4        
-        // return true
+    });
+
+// Filter Accessories (Clearance)   
+    const filteredAccessoriesClearance = productData.filter((singleProduct) => {
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+            return false;
+        }
+        return singleProduct.category_id === 4        
     });
 
     return (
         <section>
             <div className='hp-container'>
+{/* Filter (Specials)*/}                
                 <aside className='hp-left'>
-                    <ul className="filter"> {/* filter line 88 */}
+                    <ul className="filter"> 
                         <li className="filter-item">
                             <MDBDropdown dropright group>
                                 <MDBDropdownToggle 
                                 style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
                                 onClick={() => {
-                                    // setSpecials(0)
                                     setCurrentPage(0)
                                 }}>Specials</MDBDropdownToggle>
                                 <MDBDropdownMenu>
@@ -114,89 +132,204 @@ const Homepage = (props) => {
                         className="mySwiper"
                         ref={swiperRef}
                         >
-        // Map Balls (Sale & Clearance)              
+{/* Map Balls (Sale)   */}            
                         <div className="main-right">
                             {
-                                productData.length ? filteredBallsSale.map((singleProduct) => {
+                                specials === "Sale" ? filteredBallsSale.map((singleProduct) => {
                                     return (
-                                        <div key={singleProduct.id} /* className="main-singleProduct" */>
-                                            
-                                                <SwiperSlide>
-                                                    <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} 
-                                                    style={{ width: '70%', color: 'black' }}/* className="singleProductImage" *//></Link>
-                                                    <div style={{ color: 'white' }} /* className="itemInfoFlex" */>
-                                                        <h4  style={{ color: 'white' }}>{singleProduct.brand}</h4>
-                                                        <h5>{singleProduct.name}</h5> 
-                                                        <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
-                                                    </div>
-                                                    <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
-                                                </SwiperSlide>                                  
+                                        <div key={singleProduct.id}>
+                                            <SwiperSlide>
+                                                <Link to={`/single/${singleProduct.id}`}>
+                                                    <img 
+                                                        src={singleProduct.image} 
+                                                        style={{ width: '70%', color: 'black' }}
+                                                    />
+                                                </Link>
+                                                <div style={{ color: 'white' }}>
+                                                    <h4  style={{ color: 'white' }}>{singleProduct.brand}</h4>
+                                                    <h5>{singleProduct.name}</h5> 
+                                                    <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
+                                                </div>
+                                                <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                            </SwiperSlide>                                  
                                         </div>
                                     )
-                                }) : ""
+                                }) :
+/* Map Balls (Clearance)  */
+                                <div className="main-right">
+                                    {
+                                        specials === "Clearance" ? filteredBallsClearance.map((singleProduct) => {
+                                            return (
+                                                <div key={singleProduct.id}>
+                                                    <SwiperSlide>
+                                                        <Link to={`/single/${singleProduct.id}`}>
+                                                            <img 
+                                                                src={singleProduct.image} 
+                                                                style={{ width: '70%', color: 'black' }}
+                                                            />
+                                                        </Link>
+                                                        <div style={{ color: 'white' }}>
+                                                            <h4  style={{ color: 'white' }}>{singleProduct.brand}</h4>
+                                                            <h5>{singleProduct.name}</h5> 
+                                                            <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                        </div>
+                                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                                    </SwiperSlide>                                  
+                                                </div>
+                                            )
+                                        }) : ""
+                                    }
+                                </div>
                             }
                         </div>
-        // Map Bags (Sale & Clearance)   
+{/* Map Bags (Sale) */}   
                         <div className="main-right">
                             {
-                                productData.length ? filteredBagsSale.map((singleProduct) => {
+                                specials === "Sale" ? filteredBagsSale.map((singleProduct) => {
                                     return (
-                                        <div key={singleProduct.id} /* className="main-singleProduct" */>
-                                            
-                                                <SwiperSlide>
-                                                    <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
-                                                    <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
-                                                        <h4>{singleProduct.brand}</h4>
-                                                        <h5>{singleProduct.name}</h5> 
-                                                        <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
-                                                    </div>
-                                                    <h3 style={{ color: 'red' }}>Sale Price: ${((singleProduct.price - (singleProduct.price * .3))).toFixed(2)}</h3>
-                                                </SwiperSlide>                                  
+                                        <div key={singleProduct.id}>
+                                            <SwiperSlide>
+                                                <Link to={`/single/${singleProduct.id}`}>
+                                                    <img 
+                                                        src={singleProduct.image} 
+                                                        style={{ width: '80%', color: 'black' }}
+                                                    />
+                                                </Link>
+                                                <div style={{ color: 'black' }}>
+                                                    <h4>{singleProduct.brand}</h4>
+                                                    <h5>{singleProduct.name}</h5> 
+                                                    <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
+                                                </div>
+                                                <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                            </SwiperSlide>                                  
                                         </div>
                                     )
-                                }) : ""
+                                }) : 
+/* Map Bags (Clearance) */
+                                <div className="main-right">
+                                    {
+                                        specials === "Clearance" ? filteredBagsClearance.map((singleProduct) => {
+                                            return (
+                                                <div key={singleProduct.id}>
+                                                    <SwiperSlide>
+                                                        <Link to={`/single/${singleProduct.id}`}>
+                                                            <img 
+                                                                src={singleProduct.image} 
+                                                                style={{ width: '80%', color: 'black' }}
+                                                            />
+                                                        </Link>
+                                                        <div style={{ color: 'black' }}>
+                                                            <h4>{singleProduct.brand}</h4>
+                                                            <h5>{singleProduct.name}</h5> 
+                                                            <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                        </div>
+                                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                                    </SwiperSlide>                                  
+                                                </div>
+                                            )
+                                        }) : ""
+                                    }
+                                </div>
                             }
                         </div>
-        // Map Shoes (Sale & Clearance)   
+{/* Map Shoes (Sale) */}   
                         <div className="main-right">
                             {
-                                productData.length ? filteredShoesSale.map((singleProduct) => {
+                                specials === "Sale" ? filteredShoesSale.map((singleProduct) => {
                                     return (
-                                        <div key={singleProduct.id} /* className="main-singleProduct" */>
-                                            
+                                        <div key={singleProduct.id}>
                                                 <SwiperSlide>
-                                                    <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
-                                                    <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
+                                                    <Link to={`/single/${singleProduct.id}`}>
+                                                        <img 
+                                                            src={singleProduct.image} 
+                                                            style={{ width: '80%', color: 'black' }}
+                                                        />
+                                                    </Link>
+                                                    <div style={{ color: 'black' }}>
                                                         <h4>{singleProduct.brand}</h4>
                                                         <h5>{singleProduct.name}</h5> 
-                                                        <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
+                                                        <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
                                                     </div>
-                                                    <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
+                                                    <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                                 </SwiperSlide>                                  
                                         </div>
                                     )
-                                }) : ""
+                                }) :
+/* Map Shoes (Clearance) */   
+                                <div className="main-right">
+                                    {
+                                        specials === "Clearance" ? filteredShoesClearance.map((singleProduct) => {
+                                            return (
+                                                <div key={singleProduct.id}>
+                                                        <SwiperSlide>
+                                                            <Link to={`/single/${singleProduct.id}`}>
+                                                                <img 
+                                                                    src={singleProduct.image} 
+                                                                    style={{ width: '80%', color: 'black' }}
+                                                                />
+                                                            </Link>
+                                                            <div style={{ color: 'black' }}>
+                                                                <h4>{singleProduct.brand}</h4>
+                                                                <h5>{singleProduct.name}</h5> 
+                                                                <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                            </div>
+                                                            <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
+                                                        </SwiperSlide>                                  
+                                                </div>
+                                            )
+                                        }) : ""
+                                    }
+                                </div>
                             }
                         </div>
-            // Map Accessories (Sale & Clearance)
+{/* Map Accessories (Sale) */}
                         <div className="main-right">
                             {
-                                productData.length ? filteredAccessoriesSale.map((singleProduct) => {
+                                specials === "Sale" ? filteredAccessoriesSale.map((singleProduct) => {
                                     return (
-                                        <div key={singleProduct.id} /* className="main-singleProduct" */>
-                                            
-                                                <SwiperSlide>
-                                                    <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
-                                                    <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
-                                                        <h4>{singleProduct.brand}</h4>
-                                                        <h5>{singleProduct.name}</h5> 
-                                                        <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
-                                                    </div>
-                                                    <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
-                                                </SwiperSlide>                                  
+                                        <div key={singleProduct.id}>
+                                            <SwiperSlide>
+                                                <Link to={`/single/${singleProduct.id}`}>
+                                                    <img 
+                                                        src={singleProduct.image} 
+                                                        style={{ width: '80%', color: 'black' }}
+                                                    />
+                                                </Link>
+                                                <div style={{ color: 'black' }}>
+                                                    <h4>{singleProduct.brand}</h4>
+                                                    <h5>{singleProduct.name}</h5> 
+                                                    <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
+                                                </div>
+                                                <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                            </SwiperSlide>                                  
                                         </div>
                                     )
-                                }) : ""
+                                }) : 
+/* Map Accessories (Clearance) */
+                                <div className="main-right">
+                                    {
+                                        specials === "Clearance" ? filteredAccessoriesClearance.map((singleProduct) => {
+                                            return (
+                                                <div key={singleProduct.id}>
+                                                    <SwiperSlide>
+                                                        <Link to={`/single/${singleProduct.id}`}>
+                                                            <img 
+                                                                src={singleProduct.image} 
+                                                                style={{ width: '80%', color: 'black' }}
+                                                            />
+                                                        </Link>
+                                                        <div style={{ color: 'black' }}>
+                                                            <h4>{singleProduct.brand}</h4>
+                                                            <h5>{singleProduct.name}</h5> 
+                                                            <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                        </div>
+                                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                                    </SwiperSlide>                                  
+                                                </div>
+                                            )
+                                        }) : ""
+                                    }
+                                </div>
                             }
                         </div>
                         </Swiper> 
@@ -207,3 +340,12 @@ const Homepage = (props) => {
     )
 }
 export default Homepage;
+
+
+
+
+
+
+
+
+

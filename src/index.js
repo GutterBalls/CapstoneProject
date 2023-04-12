@@ -207,9 +207,14 @@ const App = () => {
                             />}/> */}
 
                             <Route path="/register" element={<Register />}/>
-                            <Route path="/login" element={<Login />}/>
+                            <Route path="/login" element={<Login 
+                                counter={counter}
+                                setCounter={setCounter}
+                            />}/>
                             <Route path="/logout" element={<Logout
                                 setIsLoggedIn={setIsLoggedIn}
+                                counter={counter}
+                                setCounter={setCounter}
                             />}/>
                         </Routes>
                     </div>

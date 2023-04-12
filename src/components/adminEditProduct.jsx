@@ -129,140 +129,164 @@ const AdminEditProduct = (props) => {
 
     return(
         <div >
-            <div>
+            <div className='del-prod-form-cont'>
                 {   
                     editProductBtn ? (
-                        <div style={{ backgroundColor: 'grey' }} className="form">
+                        <div className="del-prod-form" onMouseLeave={() => document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden'}>
 {/* SEARCHBOX */}
-                            <div>
-                                <h3>ID selected: { selectProduct.id } </h3> 
-                                <input className="searchbox"
-                                type="text"
-                                placeholder="Search..."
-                                onChange={(event) => {
-                                setSearchAdmin(
-                                    props.productData.filter((singleProduct) => singleProduct.name.toLowerCase().includes(event.target.value.toLowerCase()) 
-                                        || singleProduct.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
-                                    ));
-                                document.getElementById('search').style.visibility = 'visible'
-                                }} />
-                                <ul id="search">
-                                    { searchAdmin.map((singleProduct) => {
-                                        return(
-                                            <li className="indSearchItem" key={singleProduct.id}>
-                                                <button onClick={() => selectProductById(singleProduct) }>
-                                                    <h3>{singleProduct.id}</h3>
-                                                    <h3>{singleProduct.brand}</h3>
-                                                    <img src={singleProduct.image} className="indSearchPic" /> 
-                                                    
-                                                    <br></br>
-                                                </button>
-                                                {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
-                                            </li>
-                                    )})}
-                                </ul>
+                            <div className='adm-del'>
+                                <h5>Choose an item to edit/update:</h5>
+                                <div> 
+                                    <input className="adm-searchbox"
+                                    type="search"
+                                    placeholder="Search..."
+                                    onChange={(event) => {
+                                    setSearchAdmin(
+                                        props.productData.filter((singleProduct) => singleProduct.name.toLowerCase().includes(event.target.value.toLowerCase()) 
+                                            || singleProduct.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
+                                        ));
+                                    document.getElementsByClassName('adm-search')[0].style.visibility = 'visible'
+                                    }} />
+                                    <ul className="adm-search">
+                                        { searchAdmin.map((singleProduct) => {
+                                            return(
+                                                <li className="adm-indSearchItem" key={singleProduct.id}>
+                                                    <button onClick={() => { selectProductById(singleProduct), document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden' }} className='admin-upd-sb-res'>
+                                                            {singleProduct.id}
+                                                            {' '}
+                                                            {singleProduct.brand}
+                                                            {' '}
+                                                            {singleProduct.name}
+                                                            <img src={singleProduct.image} className="adm-indSearchPic" /> 
+                                                        </button>
+                                                    {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
+                                                </li>
+                                        )})}
+                                    </ul>
                                 {/* <h3>Product ID selected: { selectProduct.id }</h3> */}
+                                </div>
                             </div>
 {/* EDIT/UPDATE FORM */}               
                             <div>           
-                                <div className="form__title">Edit/Update Product</div>
-                                <form action="" onSubmit={ (event) => editProduct(selectProduct.id, event) }>
-                                    <div className="form__input">
-                                        <input 
-                                            type="text"
-                                            value={ editImage }
-                                            onChange={(event)=>{
-                                                setEditImage(event.target.value);
-                                            }}
-                                            placeholder={ selectProduct.image }
-                                        />
-                                    </div>    
-                                    <div className="form__input">
-                                        <input 
-                                            type="text"
-                                            value={ editBrand }
-                                            onChange={(event)=>{
-                                                // setEditBrand(event.target.value);
-                                                if(event.target.value === "" ){
-                                                    setEditBrand(selectProduct.brand)
-                                                } else{ 
-                                                    setEditBrand(event.target.value) 
-                                                }
-                                            }}
-                                            
-                                            placeholder={ selectProduct.brand } 
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        <input 
-                                            type="text"
-                                            value={ editName }
-                                                // === "" ? selectProduct.name : editName} 
-                                            onChange={(event)=>{
-                                                setEditName(event.target.value)
-                                            }}
-                                            placeholder={ selectProduct.name }
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        <textarea 
-                                            type="text"
-                                            rows="4"
-                                            cols="75"
-                                            value={ editDescription }
-                                            // === "" ? selectProduct.name : editDescription} 
-                                            onChange={(event)=>{
-                                                setEditDescription(event.target.value)
-                                            }}
-                                            placeholder={ selectProduct.description }
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        <input 
-                                            type="number"
-                                            value={ editPrice }
-                                            //  === "" ? selectProduct.price : editPrice } 
-                                            onChange={(event)=>{
-                                                setEditPrice(event.target.value)
-                                            }}
-                                            placeholder={ selectProduct.price }
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        <input 
-                                            type="text"
-                                            value={ editSale }
-                                            // === "" ? selectProduct.sale : editSale } 
-                                            onChange={(event)=>{
-                                                setEditSale(event.target.value)
-                                            }}
-                                            placeholder={ selectProduct.sale ? "true" : "false" }
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        <input 
-                                            type="text"
-                                            value={ editClearance }
-                                            // === "" ? selectProduct.clearance : editClearance} 
-                                            onChange={(event)=>{
-                                                setEditClearance(event.target.value)
-                                            }}
-                                            placeholder={ selectProduct.clearance ? "true" : "false"  }
-                                        />
-                                    </div>
-                                    <div className="form__input">
-                                        <input 
-                                            type="number"
-                                            value={ editCatId }
-                                            // === "" ? selectProduct.category_id : editCatId} 
-                                            onChange={(event)=>{
-                                                setEditCatId(event.target.value)
-                                            }}
-                                            placeholder={ selectProduct.category_id }
-                                        />
-                                    </div>
-                                    <button type="submit" className="form__button" >Submit</button>
-                                </form>
+                                <div className="form__title">
+                                    Editing/Updating:  {selectProduct.brand}{' '}{selectProduct.name} 
+                                </div>
+                                <hr />
+                                <div className='e-u-form'>
+                                    <form action="" onSubmit={ (event) => editProduct(selectProduct.id, event) } className=''>
+                                    <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                        Image: (I.e. https://www.stormbowling.com/medias/ABSOLUTE_00000.png)</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="text"
+                                                value={ editImage }
+                                                onChange={(event)=>{
+                                                    setEditImage(event.target.value);
+                                                }}
+                                                placeholder={ selectProduct.image }
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            Brand:</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="text"
+                                                value={ editBrand }
+                                                onChange={(event)=>{
+                                                    if(event.target.value === "" ){
+                                                        setEditBrand(selectProduct.brand)
+                                                    } else{ 
+                                                        setEditBrand(event.target.value) 
+                                                    }
+                                                }}
+                                                placeholder={ selectProduct.brand } 
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            Name:</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="text"
+                                                value={ editName }
+                                                onChange={(event)=>{
+                                                    setEditName(event.target.value)
+                                                }}
+                                                placeholder={ selectProduct.name }
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            Description:</label>
+                                        <div className="e-u-form-input">
+                                            <textarea 
+                                                type="text"
+                                                rows="4"
+                                                cols="75"
+                                                value={ editDescription }
+                                                onChange={(event)=>{
+                                                    setEditDescription(event.target.value)
+                                                }}
+                                                placeholder={ selectProduct.description }
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            Price: (No symbols, dollars.cents)</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="number"
+                                                value={ editPrice }
+                                                //  === "" ? selectProduct.price : editPrice } 
+                                                onChange={(event)=>{
+                                                    setEditPrice(event.target.value)
+                                                }}
+                                                placeholder={ selectProduct.price }
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            On Sale? (True = Yes, False = No)</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="text"
+                                                value={ editSale }
+                                                onChange={(event)=>{
+                                                    setEditSale(event.target.value)
+                                                }}
+                                                placeholder={ selectProduct.sale ? "true" : "false" }
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            Clearance? (True = Yes, False = No)</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="text"
+                                                value={ editClearance }
+                                                onChange={(event)=>{
+                                                    setEditClearance(event.target.value)
+                                                }}
+                                                placeholder={ selectProduct.clearance ? "true" : "false"  }
+                                            />
+                                        </div>
+                                        <hr />
+                                        <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                            Category ID: (1 = Balls, 2 = Bags, 3 = Shoes, 4 = Accessories)</label>
+                                        <div className="e-u-form-input">
+                                            <input 
+                                                type="number"
+                                                value={ editCatId }
+                                                onChange={(event)=>{
+                                                    setEditCatId(event.target.value)
+                                                }}
+                                                placeholder={ selectProduct.category_id }
+                                            />
+                                        </div>
+                                        <button type="submit" className="form__button" >Submit</button>
+                                    </form>
+                                </div>
                             </div> 
                         </div>    
                     ): ""

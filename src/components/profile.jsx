@@ -504,11 +504,6 @@ const editUserAdmin = async (singleUser, event) => {
                                         <h3>Status: {singleUser.isActive ? "Active" : "Inactive"}</h3>
                                         <button onClick={(event) => {
                                             disableUser(singleUser.id, event)
-                                            // if(singleUser.isActive === false){
-                                            //     enableUser(singleUser.id, event)
-                                            // } else if(singleUser.isActive === true){
-                                            //     disableUser(singleUser.id, event)
-                                            // }
                                         }} className='atc-btn'>
                                             { singleUser.isActive ? "Disable Account" : "Enable Account"}
                                         </button>
@@ -519,7 +514,7 @@ const editUserAdmin = async (singleUser, event) => {
                                                 <div className="form">
                                                     <span className="form__title">Edit/Update</span>
                                                     <form action="" onSubmit={ (event) => editUserAdmin(singleUser.id, event) } >
-                                                        <div className="form__input">
+                                                        <div className="e-u-form-input">
                                                             <i className="ri-user-line"></i>
                                                             <input 
                                                                 type="text"
@@ -530,7 +525,7 @@ const editUserAdmin = async (singleUser, event) => {
                                                                 placeholder="New Username"
                                                             />
                                                         </div>    
-                                                        <div className="form__input">
+                                                        <div className="e-u-form-input">
                                                             <i className="ri-lock-line"></i>
                                                             <input 
                                                                 type="password"
@@ -541,10 +536,10 @@ const editUserAdmin = async (singleUser, event) => {
                                                                 placeholder="New Password"
                                                             />
                                                         </div>
-                                                        <div className="form__input">
+                                                        <div className="e-u-form-input">
                                                             <i className="ri-mail-line"></i>
                                                             <input 
-                                                                type="text"
+                                                                type="email"
                                                                 value={ editEmail } 
                                                                 onChange={(event)=>{
                                                                     setEditEmail(event.target.value);
@@ -565,102 +560,123 @@ const editUserAdmin = async (singleUser, event) => {
                                                                                                       
 {/* ADMIN ADD NEW PRODUCT */}
                     
-                    <div>
+                    <div className='del-prod-form-cont'>
                         {   
                             addProductBtn ? (
-                                <div className="add-prod-form">
-                                    <span className="form__title">Add A New Product</span>
-                                    <br />
-                                    <form action="" onSubmit={ addProduct } >
-                                        <div className="form__input">
-                                            <input 
-                                                type="url"
-                                                value={ addImage }
-                                                onChange={(event)=>{
-                                                    setAddImage(event.target.value);
-                                                }}
-                                                placeholder="Image URL"
-                                            />
+                                <div className="del-prod-form">
+                                    <div className='adm-del'>
+                                        <div className="form__title">Add A New Product</div>
+                                        <div className='e-u-form'>
+                                            <form action="" onSubmit={ addProduct }>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    Image: (I.e. https://www.stormbowling.com/medias/ABSOLUTE_00000.png)</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="url"
+                                                        value={ addImage }
+                                                        onChange={(event)=>{
+                                                            setAddImage(event.target.value);
+                                                        }}
+                                                        placeholder="Image URL"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    Brand:</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="text"
+                                                        value={ addBrand } 
+                                                        onChange={(event)=>{
+                                                            setAddBrand(event.target.value);
+                                                        }}
+                                                        placeholder="Brand"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    Name:</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="text"
+                                                        value={ addName } 
+                                                        onChange={(event)=>{
+                                                            setAddName(event.target.value);
+                                                        }}
+                                                        placeholder="Name"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    Description:</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="text"
+                                                        value={ addDescription } 
+                                                        onChange={(event)=>{
+                                                            setAddDescription(event.target.value);
+                                                        }}
+                                                        placeholder="Description"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    Price: (No symbols, dollars.cents)</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="number"
+                                                        value={ addPrice } 
+                                                        onChange={(event)=>{
+                                                            setAddPrice(event.target.value);
+                                                        }}
+                                                        placeholder="Price"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    On Sale? (Boolean: True = Yes, False = No)</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="text"
+                                                        value={ addSale } 
+                                                        onChange={(event)=>{
+                                                            setAddSale(event.target.value);
+                                                        }}
+                                                        placeholder="On Sale"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                    Clearance? (Boolean: True = Yes, False = No)</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="text"
+                                                        value={ addClearance } 
+                                                        onChange={(event)=>{
+                                                            setAddClearance(event.target.value);
+                                                        }}
+                                                        placeholder="Clearance"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <label htmlFor='e-u-form-input' className='e-u-form-label'>
+                                                Category ID: (1 = Balls, 2 = Bags, 3 = Shoes, 4 = Accessories)</label>
+                                                <div className="e-u-form-input">
+                                                    <input 
+                                                        type="number"
+                                                        value={ addCatId } 
+                                                        onChange={(event)=>{
+                                                            setAddCatId(event.target.value);
+                                                        }}
+                                                        placeholder="Category ID"
+                                                    />
+                                                </div>
+                                                <hr />
+                                                <button type="submit" className="form__button" >Submit</button>
+                                            </form>
                                         </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-lock-line"></i> */}
-                                            <input 
-                                                type="text"
-                                                value={ addBrand } 
-                                                onChange={(event)=>{
-                                                    setAddBrand(event.target.value);
-                                                }}
-                                                placeholder="Brand"
-                                            />
-                                        </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-mail-line"></i> */}
-                                            <input 
-                                                type="text"
-                                                value={ addName } 
-                                                onChange={(event)=>{
-                                                    setAddName(event.target.value);
-                                                }}
-                                                placeholder="Name"
-                                            />
-                                        </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-mail-line"></i> */}
-                                            <input 
-                                                type="text"
-                                                value={ addDescription } 
-                                                onChange={(event)=>{
-                                                    setAddDescription(event.target.value);
-                                                }}
-                                                placeholder="Description"
-                                            />
-                                        </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-mail-line"></i> */}
-                                            <input 
-                                                type="number"
-                                                value={ addPrice } 
-                                                onChange={(event)=>{
-                                                    setAddPrice(event.target.value);
-                                                }}
-                                                placeholder="Price"
-                                            />
-                                        </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-mail-line"></i> */}
-                                            <input 
-                                                type="text"
-                                                value={ addSale } 
-                                                onChange={(event)=>{
-                                                    setAddSale(event.target.value);
-                                                }}
-                                                placeholder="Sale: true or false"
-                                            />
-                                        </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-mail-line"></i> */}
-                                            <input 
-                                                type="text"
-                                                value={ addClearance } 
-                                                onChange={(event)=>{
-                                                    setAddClearance(event.target.value);
-                                                }}
-                                                placeholder="Clearance: true or false"
-                                            />
-                                        </div>
-                                        <div className="form__input">
-                                            {/* <i className="ri-mail-line"></i> */}
-                                            <input 
-                                                type="number"
-                                                value={ addCatId } 
-                                                onChange={(event)=>{
-                                                    setAddCatId(event.target.value);
-                                                }}
-                                                placeholder="Category ID"
-                                            />
-                                        </div>
-                                        <button type="submit" className="form__button" >Submit</button>
-                                    </form>
+                                    </div>
                                 </div>    
                             ): ""
                         }   

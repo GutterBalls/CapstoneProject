@@ -1,17 +1,20 @@
-// import React from 'react';
-
+import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem, MDBBtn } from 'mdb-react-ui-kit';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper/core';
 import '/node_modules/swiper/swiper.min.css';
 import '/node_modules/swiper/modules/navigation/navigation.min.css';
 SwiperCore.use([Navigation]);
 
+import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
 const Homepage = (props) => {
     const swiper = useSwiper();
     const swiperRef = useRef(null);
-    const { setIsLoggedIn, getProductData } = props;
+    const { setIsLoggedIn, getProductData, productData } = props;
+
+    const [currentPage, setCurrentPage] = useState(0);
+    const [specials, setSpecials] = useState("Sale");
 
     useEffect(() => {
         getProductData();
@@ -30,19 +33,81 @@ const Homepage = (props) => {
         }    
     };
 
+// Filter Balls (Sale & Clearance)   
+    const filteredBallsSale = productData.filter((singleProduct) => {
+        if (specials === "Sale" && singleProduct.sale === false) {
+            return false;
+        }
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+                    return false;
+                }
+        return singleProduct.category_id === 1        
+        // return true
+    });
+
+// Filter Bags (Sale & Clearance)   
+    const filteredBagsSale = productData.filter((singleProduct) => {
+        if (specials === "Sale" && singleProduct.sale === false) {
+            return false;
+        }
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+                    return false;
+                }
+        return singleProduct.category_id === 2        
+        // return true
+    });
+
+// Filter Shoes (Sale & Clearance)   
+    const filteredShoesSale = productData.filter((singleProduct) => {
+        if (specials === "Sale" && singleProduct.sale === false) {
+            return false;
+        }
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+                    return false;
+                }
+        return singleProduct.category_id === 3        
+        // return true
+    });
+
+// Filter Accessories (Sale & Clearance)   
+    const filteredAccessoriesSale = productData.filter((singleProduct) => {
+        if (specials === "Sale" && singleProduct.sale === false) {
+            return false;
+        }
+        if (specials === "Clearance" && singleProduct.clearance === false) {
+                    return false;
+                }
+        return singleProduct.category_id === 4        
+        // return true
+    });
+
     return (
         <section>
-            <div className="homePageFlex">
+            {/* <div className="homePageFlex">
                 <div className="hp-text-container">
                     <h1 className="hpt"> Welcome to the Gutterball Bowling Superstore! </h1>
                     <h3 className="hpt"> Please login or create an account above to place an order or feel free to browse our selection of products.</h3>
                     <h3 className="hpt"> Thank you for your business. </h3>
                 </div>
-            </div>
-            <div className="button-container">
-                {/* <button onClick={() => handleNextSlide(swiperRef.current)} >Slide to the next slide</button> */}
-                {/* <button onClick={ handleNextSlide } >Slide to the next slide</button> */}
-            </div>
+            </div> */}
+            <aside className="main-left">    
+                <ul className="filter">
+                    <li className="filter-item">
+                        <MDBDropdown dropright group>
+                            <MDBDropdownToggle 
+                            style={{backgroundColor: "rgb(188,0,0)", width: "115px"}} 
+                            onClick={() => {
+                                // setSpecials(0)
+                                setCurrentPage(0)
+                            }}>Specials</MDBDropdownToggle>
+                            <MDBDropdownMenu>
+                                <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
+                                <MDBDropdownItem onClick={() => {setSpecials("Clearance"), setCurrentPage(0)}} link="true">Clearance</MDBDropdownItem>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
+                    </li>
+                </ul>
+            </aside>
             <Swiper
                 spaceBetween={10}
                 slidesPerView={3}
@@ -53,114 +118,92 @@ const Homepage = (props) => {
                 className="mySwiper"
                 ref={swiperRef}
             >
-                <SwiperSlide>
-                    <img
-                        src="/images/balls/Brunswick-HP-Mindset.png"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                    <h3 style={{ textDecoration: 'line-through' }}>Original Price: $184.99</h3>
-                    <h3 style={{ color: 'red' }}>Sale Price: $126</h3>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/balls/Brunswick-MP-Attitude.png"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                    <h3 style={{ textDecoration: 'line-through' }}>Original Price: $184.98</h3>
-                    <h3 style={{ color: 'red' }}>Sale Price: $120</h3>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/balls/Brunswick-HP-Defender.png"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                    <h3 style={{ textDecoration: 'line-through' }}>Original Price: $139.97</h3>
-                    <h3 style={{ color: 'red' }}>Sale Price: $112</h3>
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/bags/brunswick-tzone-1-tote-lime.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/bags/brunswick-edge-1-wht.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/bags/brunswick-quest-2-blkblu.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/shoes/dexter-c9-m.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/shoes/dexter-groovy-w.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/shoes/dexter-harper-w.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/accessories/genesis-excel-bowling-tape.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/accessories/genesis-sync-bowling-tape.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img
-                        src="/images/accessories/kr-strikeforce-pure_energy-ball-cleaner.jpg"
-                        alt=""
-                        style={{ width: '40%' }}
-                    />
-                </SwiperSlide>
-            </Swiper>
-            <style>{`
-                .button-container{
-                    display: flex;
-                    justify-content: center;                   
+// Map Balls (Sale & Clearance)              
+            <div className="main-right">
+                {
+                    productData.length ? filteredBallsSale.map((singleProduct) => {
+                        return (
+                            <div key={singleProduct.id} /* className="main-singleProduct" */>
+                                
+                                    <SwiperSlide>
+                                        <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
+                                        <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
+                                            <h4>{singleProduct.brand}</h4>
+                                            <h5>{singleProduct.name}</h5> 
+                                            <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
+                                        </div>
+                                        <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
+                                    </SwiperSlide>                                  
+                            </div>
+                        )
+                    }) : ""
                 }
-                .button-container button{
-                    font-size: 16;                   
+            </div>
+// Map Bags (Sale & Clearance)   
+            <div className="main-right">
+                {
+                    productData.length ? filteredBagsSale.map((singleProduct) => {
+                        return (
+                            <div key={singleProduct.id} /* className="main-singleProduct" */>
+                                
+                                    <SwiperSlide>
+                                        <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
+                                        <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
+                                            <h4>{singleProduct.brand}</h4>
+                                            <h5>{singleProduct.name}</h5> 
+                                            <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
+                                        </div>
+                                        <h3 style={{ color: 'red' }}>Sale Price: ${((singleProduct.price - (singleProduct.price * .3))).toFixed(2)}</h3>
+                                    </SwiperSlide>                                  
+                            </div>
+                        )
+                    }) : ""
                 }
-            `}</style>
+            </div>
+// Map Shoes (Sale & Clearance)   
+            <div className="main-right">
+                {
+                    productData.length ? filteredShoesSale.map((singleProduct) => {
+                        return (
+                            <div key={singleProduct.id} /* className="main-singleProduct" */>
+                                
+                                    <SwiperSlide>
+                                        <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
+                                        <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
+                                            <h4>{singleProduct.brand}</h4>
+                                            <h5>{singleProduct.name}</h5> 
+                                            <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
+                                        </div>
+                                        <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
+                                    </SwiperSlide>                                  
+                            </div>
+                        )
+                    }) : ""
+                }
+            </div>
+// Map Accessories (Sale & Clearance)
+            <div className="main-right">
+                {
+                    productData.length ? filteredAccessoriesSale.map((singleProduct) => {
+                        return (
+                            <div key={singleProduct.id} /* className="main-singleProduct" */>
+                                
+                                    <SwiperSlide>
+                                        <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} style={{ width: '80%', color: 'black' }}/* className="singleProductImage" *//></Link>
+                                        <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
+                                            <h4>{singleProduct.brand}</h4>
+                                            <h5>{singleProduct.name}</h5> 
+                                            <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
+                                        </div>
+                                        <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
+                                    </SwiperSlide>                                  
+                            </div>
+                        )
+                    }) : ""
+                }
+            </div>
+            </Swiper> 
         </section>
     )
 }
 export default Homepage;
-
-// '/images/balls/Brunswick-HP-Mindset.png' 
-// '/images/balls/Brunswick-MP-Attitude.png' 
-// '/images/balls/Brunswick-HP-Defender.png' 
-
-// <h3>Original Price: $259</h3>
-// <h3>Sale Price: $12</h3>

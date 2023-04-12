@@ -29,8 +29,7 @@ const AdminEditUser = (props) => {
 
     function selectUserById(singleUser){
         setSelectUser(singleUser);
-        // setEditImage(singleProduct.image);
-        // setEditBrand(singleProduct.brand);
+
     }
 
 

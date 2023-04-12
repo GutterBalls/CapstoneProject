@@ -61,6 +61,7 @@ const CartCheckout = (props) => {
     // DELETE a cart item.
     async function deleteCartItem(event) {
         console.log("Delete Cart Item F(X) id parameter", event.target.value)
+        props.setCounter(props.counter - 1)
         try {
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.value}`, {
                 method: "DELETE",

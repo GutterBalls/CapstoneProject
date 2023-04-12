@@ -85,7 +85,7 @@ const Homepage = (props) => {
         <section>
             <div className='hp-container'>
                 <aside className='hp-left'>
-                    <ul className="filter">
+                    <ul className="filter"> {/* filter line 88 */}
                         <li className="filter-item">
                             <MDBDropdown dropright group>
                                 <MDBDropdownToggle 

@@ -52,7 +52,7 @@ const Shoes = (props) => {
     async function addItemToCart (event) {
         // console.log("Shoes LINE 26 orderID", props.orderData[0].id);
         // console.log("Shoes LINE 27 evt", event.target.value[0])
-        props.setCounter(props.counter + 1)
+        
         try {
             const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value));
             const falseOrder = props.orderData.filter((order) => order.order_status === false);
@@ -71,7 +71,7 @@ const Shoes = (props) => {
                 })
             })
             const translatedData = await response.json()
-
+            props.setCounter(props.counter + 1)
             console.log("Shoes.jsx 73 - addItemToCart", translatedData);
 
         } catch (error) {

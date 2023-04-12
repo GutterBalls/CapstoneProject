@@ -17,30 +17,30 @@ const Header = (props) => {
 
     useEffect(() => {
         getProductData();
-        if (isLoggedIn) {
-        getCartData();
-        };
+        // if (isLoggedIn) {
+        // getCartData();
+        // };
         
-    }, [props.counter]);
+    }, []);
 
 
     // GET logged in user cart.
-    async function getCartData() {
-        try {
-            const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
-                  },
-            });
-            const translatedData = await response.json();
+    // async function getCartData() {
+    //     try {
+    //         const response = await fetch(`${DATABASE_URL}/cartItems/${props.userData.id}`, {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${localStorage.getItem("token")}`
+    //               },
+    //         });
+    //         const translatedData = await response.json();
             
-            setCartCounter(translatedData.length)
+    //         props.setCounter(translatedData.length)
             
-        } catch (error) {
-            console.log(error)
-        };
-    };
+    //     } catch (error) {
+    //         console.log(error)
+    //     };
+    // };
 
     
     return (
@@ -56,7 +56,7 @@ const Header = (props) => {
                     <button type="button" className="icon-button">
                         <Link to="/cart" className="nav-btn-top icon"><MdShoppingCart /></Link>
                         {/* <span className="material-icons"></span> */}
-                        <span className="icon-button__badge">{cartCounter}</span>
+                        <span className="icon-button__badge">{props.counter}</span>
                     </button>
 
                  {/* SEARCHBOX */}

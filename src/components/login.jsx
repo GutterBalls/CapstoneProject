@@ -7,12 +7,14 @@ const Login = (props) =>{
     const { getUserData, isLoggedIn } = props;
     const [loginUser, setLoginUser] = useState("");
     const [loginPass, setLoginPass] = useState("");
+    let test = 0;
 
     const nav = useNavigate();
 
     useEffect(() => {
         if (localStorage.getItem("token")){
             getUserData();
+            // getCartData();
             };
     }, [isLoggedIn]);
 
@@ -38,13 +40,34 @@ const Login = (props) =>{
 
             } else {
                 const tokenKey = transData.token;
-                
+                console.log("TRANS DATA BELOW");
+                console.log(transData);
                 localStorage.setItem("token", tokenKey);
-                
+                getCartData(transData.id);
                 nav("/")
             };
         } catch(error){
             console.log("Error w/ logIn login.jsx 50", error)
+        };
+    };
+
+    // GET logged in user cart.
+    async function getCartData(id) {
+        try {
+            const response = await fetch(`${DATABASE_URL}/cartItems/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                    },
+            });
+            const translatedData = await response.json();
+            test = translatedData.length
+            console.log("TEST BELOW");
+            console.log(test);
+            props.setCounter(translatedData.length)
+            
+        } catch (error) {
+            console.log(error)
         };
     };
 

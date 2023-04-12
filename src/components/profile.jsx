@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AdminEditProduct, AdminDeleteProduct } from "../components/index";
+import { AdminEditProduct, AdminDeleteProduct, AdminEditUser } from "../components/index";
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -486,6 +486,7 @@ const editUserAdmin = async (singleUser, event) => {
                         <h3> {userData.username}</h3>
                         <div className='prof-admin-btns'>
                             <button onClick={ toggleListUsers } className='pabi atc-btn'>List All Users</button>
+                            <button onClick={ toggleEditUserAdmin } /* value={singleUser.id} */ className='atc-btn'>Edit User</button>
                             <button onClick={ toggleAddProduct } className='pabi atc-btn'>Add New Product</button>
                             <button onClick={ toggleEditProduct } className='pabi atc-btn'>Edit/Update Product</button>
                             <button onClick={ toggleDeleteProduct } className='pabi atc-btn'>Delete Product</button>
@@ -493,8 +494,8 @@ const editUserAdmin = async (singleUser, event) => {
                         
                     </div>
                     <div className='reviews-container'>
-                                                                                      
-{/* LIST USERS */}
+                                                              
+{/* ADMIN LIST USERS */}
                         {
                             listUsersBtn ? allUsers.map((singleUser)=>{
                                 return(
@@ -508,8 +509,19 @@ const editUserAdmin = async (singleUser, event) => {
                                             { singleUser.isActive ? "Disable Account" : "Enable Account"}
                                         </button>
                                         <br />
-                                        <button onClick={ toggleEditUserAdmin } value={singleUser.id} className='atc-btn'>Edit User</button>
-                                        {
+                                        {/* <button onClick={ toggleEditUserAdmin } value={singleUser.id} className='atc-btn'>Edit User</button> */}
+                                        {/* <div>
+                                            <AdminEditUser
+                                                isLoggedIn={isLoggedIn} 
+                                                setIsLoggedIn={setIsLoggedIn} 
+                                                userData={userData} 
+                                                setUserData={setUserData}
+                                                getUserData={getUserData}
+                                                editUserAdminBtn={editUserAdminBtn}
+                                                getAllUsersData={getAllUsersData}
+                                            />
+                                        </div> */}
+                                        {/* {
                                             editUserAdminBtn ? (
                                                 <div className="form">
                                                     <span className="form__title">Edit/Update</span>
@@ -551,11 +563,28 @@ const editUserAdmin = async (singleUser, event) => {
                                                     </form>
                                                 </div>    
                                             ): ""
-                                        }
+                                        } */}
                                     </div>
                                 )
                             }): ""
                         }
+                    </div>
+                                                                                         
+{/* ADMIN EDIT USERS */}
+                    <div>
+                        <AdminEditUser
+                            isLoggedIn={isLoggedIn} 
+                            setIsLoggedIn={setIsLoggedIn} 
+                            userData={userData} 
+                            setUserData={setUserData}
+                            getUserData={getUserData}
+                            editUserAdminBtn={editUserAdminBtn}
+                            getAllUsersData={getAllUsersData}
+                            allUsers={allUsers}
+                            setAllUsers={setAllUsers}
+                            setEditUserAdminBtn={setEditUserAdminBtn}
+
+                        />
                     </div>
                                                                                                       
 {/* ADMIN ADD NEW PRODUCT */}

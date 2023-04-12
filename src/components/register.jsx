@@ -79,7 +79,7 @@ const Register = () =>{
                     <div className="form__input">
                         <i className="ri-mail-line"></i>
                         <input 
-                            type="text" 
+                            type="email" 
                             placeholder="Email"
                             value={ newEmail }
                             onChange={(event)=> setNewEmail(event.target.value)}

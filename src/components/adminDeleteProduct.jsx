@@ -86,52 +86,56 @@ const AdminDeleteProduct = (props) => {
 
     return(
         <div >
-            <div>
+            <div className='del-prod-form-cont'>
                 {   
                     deleteProductBtn ? (
-                        <div className="del-prod-form">
+                        <div className="del-prod-form" onMouseLeave={() => document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden'}>
 {/* SEARCHBOX */}
                             <div className='adm-del'>
                                 <h5>Choose an item to delete:</h5> 
-                                <input className="adm-searchbox"
-                                type="search"
-                                placeholder="Search..."
-                                onChange={(event) => {
-                                setSearchAdmin(
-                                    props.productData.filter((singleProduct) => singleProduct.name.toLowerCase().includes(event.target.value.toLowerCase()) 
-                                        || singleProduct.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
-                                    ));
-                                document.getElementsByClassName('adm-search')[0].style.visibility = 'visible'
-                                }} />
-                                <ul className="adm-search">
-                                    { searchAdmin.map((singleProduct) => {
-                                        return(
-                                            <li className="adm-indSearchItem" key={singleProduct.id}>
-                                                <button onClick={() => { selectProductById(singleProduct), document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden' }} className='admin-upd-sb-res'>
-                                                    {singleProduct.id}
-                                                    {' '}
-                                                    {singleProduct.brand}
-                                                    {' '}
-                                                    {singleProduct.name}
-                                                    <img src={singleProduct.image} className="adm-indSearchPic" /> 
-                                                </button>
-                                                {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
-                                            </li>
-                                    )})}
-                                </ul>
+                                <div>
+                                    <input className="adm-searchbox"
+                                    type="search"
+                                    placeholder="Search..."
+                                    onChange={(event) => {
+                                    setSearchAdmin(
+                                        props.productData.filter((singleProduct) => singleProduct.name.toLowerCase().includes(event.target.value.toLowerCase()) 
+                                            || singleProduct.brand.toLowerCase().includes(event.target.value.toLowerCase()) 
+                                        ));
+                                    document.getElementsByClassName('adm-search')[0].style.visibility = 'visible'
+                                    }} />
+                                    <ul className="adm-search">
+                                        { searchAdmin.map((singleProduct) => {
+                                            return(
+                                                <li className="adm-indSearchItem" key={singleProduct.id}>
+                                                    <button onClick={() => { selectProductById(singleProduct), document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden' }} className='admin-upd-sb-res'>
+                                                        {singleProduct.id}
+                                                        {' '}
+                                                        {singleProduct.brand}
+                                                        {' '}
+                                                        {singleProduct.name}
+                                                        <img src={singleProduct.image} className="adm-indSearchPic" /> 
+                                                    </button>
+                                                    {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
+                                                </li>
+                                        )})}
+                                    </ul>
+                                </div>
                             </div>
 {/* DELETE FORM */}         
                             <div>
-                                {/* <span className="form__title">Delete Product</span> */}
-                                <form action="" onSubmit={ (event) => deleteProduct(selectProduct.id, event)} className='del-form'>
+                                {selectProduct.brand && 
+                                <form action="" onSubmit={ (event) => deleteProduct(selectProduct.id, event) } className='del-form'>
                                     <div className="">Are you sure you want to delete
                                         {' '}
                                         {selectProduct.brand}
                                         {' '}
                                         {selectProduct.name}?
                                     </div>
-                                    <button type="submit" className="atc-btn del-btn" >Delete</button>
-                                </form>          
+                                    <button
+                                    type="submit" className="atc-btn del-btn" >Delete</button>
+                                </form>
+                                }
                             </div> 
                         </div>    
                     ): ""

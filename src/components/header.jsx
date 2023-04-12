@@ -21,7 +21,7 @@ const Header = (props) => {
         getCartData();
         };
         
-    }, [cartCounter]);
+    }, [props.counter]);
 
 
     // GET logged in user cart.
@@ -36,7 +36,7 @@ const Header = (props) => {
             const translatedData = await response.json();
             
             setCartCounter(translatedData.length)
-            console.log("Clicked!")
+            
         } catch (error) {
             console.log(error)
         };

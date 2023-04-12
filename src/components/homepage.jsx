@@ -130,9 +130,9 @@ const Homepage = (props) => {
                                         <div style={{ color: 'black' }} /* className="itemInfoFlex" */>
                                             <h4>{singleProduct.brand}</h4>
                                             <h5>{singleProduct.name}</h5> 
-                                            <h6 style={{ textDecoration: 'line-through' }}>${singleProduct.price}</h6>
+                                            <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .3)).toFixed(2)}</h6>
                                         </div>
-                                        <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
+                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                     </SwiperSlide>                                  
                             </div>
                         )

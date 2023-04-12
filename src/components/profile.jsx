@@ -238,9 +238,14 @@ const Profile = (props) => {
             };
         };
 
-// Admin - Disable user account
+// Admin - Disable/Enable user account
     async function disableUser(singleUser, event){
         event.preventDefault();
+        if(userData.id === singleUser){
+            console.log("Cannot Disable Admin Account")
+            alert("Cannot Disable Admin Account")
+            return 
+        }
         try{
             const response = await fetch(`${DATABASE_URL}/users/${singleUser}`
             , {
@@ -278,42 +283,40 @@ const Profile = (props) => {
             }
             
         } catch (error) {
-            console.error("Error with deleteUser function", error);
+            console.error("Error with disableUser function", error);
         };
     };
 
-// Admin - Edit/Update User
-const editUserAdmin = async (singleUser, event) => {
+// Admin - Disable/Enable Admin status for User
+async function disableAdminUser(singleUser, event){
     event.preventDefault();
-
-    const tokenKey = localStorage.getItem("token");
-
-    try {
-        const response = await fetch(`${DATABASE_URL}/users/${singleUser}`, {
+    if(userData.id === singleUser){
+        console.log("Cannot Disable Admin Status")
+        alert("Cannot Disable Admin Status")
+        return 
+    }
+    try{
+        const response = await fetch(`${DATABASE_URL}/users/admin/${singleUser}`
+        , {
             method: "PATCH",
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${tokenKey}`
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
             },
-            body: JSON.stringify({
-                username: editUsername,
-                password: editPassword,
-                email: editEmail
-            })
         });
         const transData = await response.json();
-            // console.log(transData);
+        console.log("Translated Data", transData);
+        console.log(singleUser);
 
-        if (!transData){
-            alert("User edit was not successful. Please try again. ");
-        } else {
-            // setUserData([...userData, transData]);
-
+        if(!transData){
+            alert("Admin User was not disabled. Please try again.")
+        } else{
             function updateUserData(){
                 let updateArr = [];
                 for(let i=0; i<userData.length; i++){
                     let currentUser = userData[i];
-                    if(currentUser.id !== userData.id){
+                    // if(currentUser.id !== userData.id){
+                    if(currentUser.id !== singleUser){
                         updateArr.push(currentUser);
                     }else{
                         updateArr.push(transData);
@@ -323,18 +326,13 @@ const editUserAdmin = async (singleUser, event) => {
             };
             const newUserData = updateUserData();
             setUserData(newUserData);
-            // alert("User was successfully updated.");
-// reset form
-            setEditUserAdminBtn(false);
-            setEditUsername("");
-            setEditPassword("");
-            setEditEmail("");
             nav("/profile")
             return getAllUsersData();
         }
-    } catch (error){
-        console.log(error);
-    }
+        
+    } catch (error) {
+        console.error("Error with disableAdminUser function", error);
+    };
 };
 
 // Admin - Add New Product
@@ -479,19 +477,20 @@ const editUserAdmin = async (singleUser, event) => {
                             }
                             </div>
                     </div>
-                : 
+                :
                 <div className='prof-admin'>
+                                                                                                   
+{/* ADMIN DASHBOARD */}
                     <div className='prof-admin-head'>
                         <h1> Administrator Dashboard</h1>
                         <h3> {userData.username}</h3>
                         <div className='prof-admin-btns'>
                             <button onClick={ toggleListUsers } className='pabi atc-btn'>List All Users</button>
-                            <button onClick={ toggleEditUserAdmin } /* value={singleUser.id} */ className='atc-btn'>Edit User</button>
+                            <button onClick={ toggleEditUserAdmin } className='pabi atc-btn'>Edit User</button>
                             <button onClick={ toggleAddProduct } className='pabi atc-btn'>Add New Product</button>
                             <button onClick={ toggleEditProduct } className='pabi atc-btn'>Edit/Update Product</button>
                             <button onClick={ toggleDeleteProduct } className='pabi atc-btn'>Delete Product</button>
                         </div>
-                        
                     </div>
                     <div className='reviews-container'>
                                                               
@@ -503,67 +502,19 @@ const editUserAdmin = async (singleUser, event) => {
                                         <h3>ID: {singleUser.id}</h3>
                                         <h3>Username: {singleUser.username}</h3>
                                         <h3>Status: {singleUser.isActive ? "Active" : "Inactive"}</h3>
+                                        <h3>Admin: {singleUser.isAdmin ? "Yes" : "No"}</h3>
                                         <button onClick={(event) => {
                                             disableUser(singleUser.id, event)
                                         }} className='atc-btn'>
                                             { singleUser.isActive ? "Disable Account" : "Enable Account"}
                                         </button>
                                         <br />
-                                        {/* <button onClick={ toggleEditUserAdmin } value={singleUser.id} className='atc-btn'>Edit User</button> */}
-                                        {/* <div>
-                                            <AdminEditUser
-                                                isLoggedIn={isLoggedIn} 
-                                                setIsLoggedIn={setIsLoggedIn} 
-                                                userData={userData} 
-                                                setUserData={setUserData}
-                                                getUserData={getUserData}
-                                                editUserAdminBtn={editUserAdminBtn}
-                                                getAllUsersData={getAllUsersData}
-                                            />
-                                        </div> */}
-                                        {/* {
-                                            editUserAdminBtn ? (
-                                                <div className="form">
-                                                    <span className="form__title">Edit/Update</span>
-                                                    <form action="" onSubmit={ (event) => editUserAdmin(singleUser.id, event) } >
-                                                        <div className="e-u-form-input">
-                                                            <i className="ri-user-line"></i>
-                                                            <input 
-                                                                type="text"
-                                                                value={ editUsername }
-                                                                onChange={(event)=>{
-                                                                    setEditUsername(event.target.value);
-                                                                }}
-                                                                placeholder="New Username"
-                                                            />
-                                                        </div>    
-                                                        <div className="e-u-form-input">
-                                                            <i className="ri-lock-line"></i>
-                                                            <input 
-                                                                type="password"
-                                                                value={ editPassword } 
-                                                                onChange={(event)=>{
-                                                                    setEditPassword(event.target.value);
-                                                                }}
-                                                                placeholder="New Password"
-                                                            />
-                                                        </div>
-                                                        <div className="e-u-form-input">
-                                                            <i className="ri-mail-line"></i>
-                                                            <input 
-                                                                type="email"
-                                                                value={ editEmail } 
-                                                                onChange={(event)=>{
-                                                                    setEditEmail(event.target.value);
-                                                                }}
-                                                                placeholder="New Email"
-                                                            />
-                                                        </div>
-                                                        <button type="submit" className="form__button" >Submit</button>
-                                                    </form>
-                                                </div>    
-                                            ): ""
-                                        } */}
+                                        <button onClick={(event) => {
+                                            disableAdminUser(singleUser.id, event)
+                                        }} className='atc-btn'>
+                                            { singleUser.isAdmin ? "Disable Admin Status" : "Enable Admin Status"}
+                                        </button>
+                                        <br />
                                     </div>
                                 )
                             }): ""
@@ -583,12 +534,10 @@ const editUserAdmin = async (singleUser, event) => {
                             allUsers={allUsers}
                             setAllUsers={setAllUsers}
                             setEditUserAdminBtn={setEditUserAdminBtn}
-
                         />
                     </div>
                                                                                                       
 {/* ADMIN ADD NEW PRODUCT */}
-                    
                     <div className='del-prod-form-cont'>
                         {   
                             addProductBtn ? (
@@ -712,7 +661,6 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                                                                                                       
 {/* ADMIN DELETE PRODUCT */}
-                    
                     <div>
                         < AdminDeleteProduct 
                             isLoggedIn={isLoggedIn} 
@@ -729,7 +677,6 @@ const editUserAdmin = async (singleUser, event) => {
                     </div>
                                                                                   
 {/* ADMIN EDIT/UPDATE PRODUCT */}
-                    
                     <div>
                         < AdminEditProduct 
                             isLoggedIn={isLoggedIn} 
@@ -751,32 +698,3 @@ const editUserAdmin = async (singleUser, event) => {
 }
 
 export default Profile;
-
-
-// {
-//     listProductsBtn ? productData.map((singleProduct)=>{
-//         return(
-//             <div key={singleProduct.id} className="main-singleProduct">
-//                 <hr></hr>
-//                 <h3>Product: {singleProduct.id}
-//                 <br></br>
-//                 {singleProduct.brand} {singleProduct.name}</h3>
-//                 <Link to={`/single/${singleProduct.id}`}><img src={singleProduct.image} className="singleProductImage"/></Link>
-//                 <button onClick={ toggleDeleteProduct }>Delete</button>
-//                 {/* {
-//                     deleteProductBtn ? (
-//                         <div className="form">
-//                             <span className="form__title">Delete Product</span>
-//                             <form action="" onSubmit={ (event) => deleteProduct(singleProduct.id, event) } >
-//                                 <div className="form__button">Are you sure you want to delete {singleProduct.name}? Click Delete to confirm selection. </div>
-//                                 <button type="submit" className="form__button" >Delete</button>
-//                             </form>
-//                         </div>    
-//                     ): ""
-//                 } */}
-//                 <hr></hr>
-                
-//             </div>
-//         )
-//     }): ""
-// }

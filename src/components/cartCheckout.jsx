@@ -315,7 +315,7 @@ const CartCheckout = (props) => {
 
                       <MDBInput
                         className="mb-3"
-                        label="Name on card"
+                        label="Name"
                         type="text"
                         size="lg"
                         value={nameOnCard}
@@ -359,7 +359,7 @@ const CartCheckout = (props) => {
 
                     <MDBInput
                         className="mb-3"
-                        label="Street Address"
+                        label="Address"
                         type="text"
                         size="lg"
                         placeholder=""

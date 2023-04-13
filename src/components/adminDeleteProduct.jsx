@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const AdminDeleteProduct = (props) => {
-    const { productData, setProductData, getProductData, setIsLoggedIn, getUserData, getOrderHistory, getAllUsersData, userData, deleteProductBtn, setDeleteProductBtn  } = props;
+    const { productData, setProductData, getProductData, setIsLoggedIn, getUserData, userData, deleteProductBtn, } = props;
 
     const [searchAdmin, setSearchAdmin] = useState([]);
     const [selectProduct, setSelectProduct] = useState([]);
@@ -17,9 +17,7 @@ const AdminDeleteProduct = (props) => {
         if (localStorage.getItem("token")) {
             setIsLoggedIn(true);
             getUserData();
-            // getOrderHistory();
         if(userData.isAdmin === true){
-            // getAllUsersData();
         }    
             
         } else {
@@ -67,7 +65,6 @@ const AdminDeleteProduct = (props) => {
                             }
                         }else{
                             console.log(transData);
-                            // updateArr.push(transData);
                         }
                     }
                     setSearchAdmin(updateSearchArr);
@@ -116,9 +113,9 @@ const AdminDeleteProduct = (props) => {
                                                         {singleProduct.name}
                                                         <img src={singleProduct.image} className="adm-indSearchPic" /> 
                                                     </button>
-                                                    {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
                                                 </li>
-                                        )})}
+                                            )
+                                        })}
                                     </ul>
                                 </div>
                             </div>

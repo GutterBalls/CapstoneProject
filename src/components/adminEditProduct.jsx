@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const AdminEditProduct = (props) => {
-    const { productData, setProductData, getProductData, editProductBtn, setEditProductBtn, setIsLoggedIn, getUserData, getOrderHistory, getAllUsersData, userData  } = props;
+    const { productData, setProductData, getProductData, editProductBtn, setEditProductBtn, setIsLoggedIn, getUserData, userData  } = props;
 
     const [searchAdmin, setSearchAdmin] = useState([]);
     const [selectProduct, setSelectProduct] = useState([]);
-
-    const nav = useNavigate();
 
         useEffect(() => {
             getProductData();
@@ -49,11 +46,7 @@ const AdminEditProduct = (props) => {
     const [ editClearance, setEditClearance ] = useState("");
     const [ editCatId, setEditCatId ] = useState("");
 
-    // function selectProductById(singleProduct){
-    //     setSelectProduct(singleProduct);
-    // }
-
-    // Admin - Edit/Update Product
+// Admin - Edit/Update Product
     async function editProduct(singleProduct, event){
         event.preventDefault();
 
@@ -119,7 +112,6 @@ const AdminEditProduct = (props) => {
                 setEditSale("");
                 setEditClearance("");
                 setEditCatId("");
-                // nav("/profile");
                 return getProductData();
             }
         } catch (error){
@@ -159,11 +151,9 @@ const AdminEditProduct = (props) => {
                                                             {singleProduct.name}
                                                             <img src={singleProduct.image} className="adm-indSearchPic" /> 
                                                         </button>
-                                                    {/* <Link to={`/single/${singleProduct.id}`}> {singleProduct.brand} {singleProduct.name}</Link> */}
                                                 </li>
                                         )})}
                                     </ul>
-                                {/* <h3>Product ID selected: { selectProduct.id }</h3> */}
                                 </div>
                             </div>
 {/* EDIT/UPDATE FORM */}               

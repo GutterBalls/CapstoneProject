@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AdminEditProduct, AdminDeleteProduct, AdminEditUser, ItemsInOrder } from "../components/index";
 
 const DATABASE_URL = 'http://localhost:1337/api';
@@ -98,7 +98,6 @@ const Profile = (props) => {
             
         } else {
             setIsLoggedIn(false)
-            console.log("No Token!")
         }
     }, [])
 
@@ -122,13 +121,10 @@ const Profile = (props) => {
                 })
             });
             const transData = await response.json();
-                // console.log(transData);
 
             if (!transData){
                 alert("User edit was not successful. Please try again. ");
             } else {
-                // setUserData([...userData, transData]);
-
                 function updateUserData(){
                     let updateArr = [];
                     for(let i=0; i<userData.length; i++){
@@ -143,7 +139,6 @@ const Profile = (props) => {
                 };
                 const newUserData = updateUserData();
                 setUserData(newUserData);
-                // alert("User was successfully updated.");
 // reset form
                 setEditUserBtn(false);
                 setEditUsername("");
@@ -169,7 +164,6 @@ const Profile = (props) => {
                 },
             });
             const transData = await response.json();
-            // console.log("transData ", translatedData);
             if(!transData){
                 alert("User was not disabled. Please try again.")
             } else{
@@ -187,7 +181,6 @@ const Profile = (props) => {
                 };
                 const newUserData = updateUserData();
                 setUserData(newUserData);
-                // alert("User was disabled.")
                 nav("/logout")
                 return getAllUsersData();
             }
@@ -208,10 +201,7 @@ const Profile = (props) => {
                 },
             });
             const translatedData = await response.json();
-            // console.log("translated Data:",translatedData);
             setOrderData(translatedData);
-            // console.log(orderData);
-
 
         } catch (error) {
             console.error("Error with orderHistory function", error);
@@ -230,7 +220,6 @@ const Profile = (props) => {
                 },
             });
             const translatedData = await response.json();
-            // console.log("Translated Data", translatedData);
             setAllUsers(translatedData);
 
             } catch (error) {
@@ -242,7 +231,6 @@ const Profile = (props) => {
     async function disableUser(singleUser, event){
         event.preventDefault();
         if(userData.id === singleUser){
-            console.log("Cannot Disable Admin Account")
             alert("Cannot Disable Admin Account")
             return 
         }
@@ -256,8 +244,6 @@ const Profile = (props) => {
                 },
             });
             const transData = await response.json();
-            console.log("Translated Data", transData);
-            console.log(singleUser);
 
             if(!transData){
                 alert("User was not disabled. Please try again.")
@@ -266,7 +252,6 @@ const Profile = (props) => {
                     let updateArr = [];
                     for(let i=0; i<userData.length; i++){
                         let currentUser = userData[i];
-                        // if(currentUser.id !== userData.id){
                         if(currentUser.id !== singleUser){
                             updateArr.push(currentUser);
                         }else{
@@ -277,7 +262,6 @@ const Profile = (props) => {
                 };
                 const newUserData = updateUserData();
                 setUserData(newUserData);
-                // alert("User was disabled.")
                 nav("/profile")
                 return getAllUsersData();
             }
@@ -291,7 +275,6 @@ const Profile = (props) => {
 async function disableAdminUser(singleUser, event){
     event.preventDefault();
     if(userData.id === singleUser){
-        console.log("Cannot Disable Admin Status")
         alert("Cannot Disable Admin Status")
         return 
     }
@@ -305,8 +288,6 @@ async function disableAdminUser(singleUser, event){
             },
         });
         const transData = await response.json();
-        console.log("Translated Data", transData);
-        console.log(singleUser);
 
         if(!transData){
             alert("Admin User was not disabled. Please try again.")
@@ -315,7 +296,6 @@ async function disableAdminUser(singleUser, event){
                 let updateArr = [];
                 for(let i=0; i<userData.length; i++){
                     let currentUser = userData[i];
-                    // if(currentUser.id !== userData.id){
                     if(currentUser.id !== singleUser){
                         updateArr.push(currentUser);
                     }else{
@@ -361,8 +341,6 @@ async function disableAdminUser(singleUser, event){
             
             });
             const transData = await response.json();
-                console.log("Add Product TransData:")
-                console.log(transData);
     
             if (!transData){
                 alert("Product was not created. Please try again. ");
@@ -481,7 +459,7 @@ async function disableAdminUser(singleUser, event){
                 :
                 <div className='prof-admin'>
                                                                                                    
-{/* ADMIN DASHBOARD */}
+{/* ----ADMIN DASHBOARD---- */}
                     <div className='prof-admin-head'>
                         <h1> Administrator Dashboard</h1>
                         <h3> {userData.username}</h3>

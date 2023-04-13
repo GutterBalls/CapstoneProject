@@ -20,8 +20,6 @@ export { default as AdminEditProduct } from './adminEditProduct';
 export { default as AdminDeleteProduct } from './adminDeleteProduct';
 export { default as AdminEditUser } from './adminEditUser';
 export { default as ItemsInOrder } from './userItemsInOrder';
-// export { default as Cart } from './cart';
-// export { default as Confirm } from './confirm';
 export { default as CartCheckout } from './cartCheckout';
 
 

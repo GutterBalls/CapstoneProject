@@ -42,26 +42,23 @@ const Register = () =>{
                 })
             })
             const transData = await response.json();
-            console.log(transData);
 
             if(!transData){
                 alert("Account Registration Unsuccessful")
             } else {
                 const tokenKey = transData.token;
-                // console.log(tokenKey);
                 localStorage.setItem("token", tokenKey);
                 alert("New Account was successfully created.")
                 nav("/")
             }
         } catch(error){
-            console.log("Error w/ registerUser in register.jsx 57", error)
+            console.log("Error w/ registerUser in register.jsx", error)
         }
     }
 
     return (
         <div className='sign-up-log-in'>
             <div className="form">
-                {/* <span className="form__title">Sign up</span> */}
                 <form action="" onSubmit={ registerUser }>
                     <span className="form__switch">
                         Sign up for a new account

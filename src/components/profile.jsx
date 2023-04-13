@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AdminEditProduct, AdminDeleteProduct, AdminEditUser } from "../components/index";
+import { AdminEditProduct, AdminDeleteProduct, AdminEditUser, ItemsInOrder } from "../components/index";
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
@@ -471,6 +471,7 @@ async function disableAdminUser(singleUser, event){
                                                 <h4>ID: {singleOrder.id}</h4>
                                                 <h4>Order Date: {singleOrder.order_date}</h4>
                                                 <h4>Order Status: {singleOrder.order_status ? "Completed" : "In Progress"}</h4>
+                                                {<ItemsInOrder singleOrder={singleOrder} isLoggedIn={isLoggedIn}/>}
                                         </div>
                                     )
                                 }) : ""

@@ -93,6 +93,10 @@
     color: rgb(0, 0, 255);
 }
 
+.nav-btn{
+    text-decoration: none;
+}
+
 .nav-btn:link {
     text-decoration: none;
     color: rgb(0, 0, 255);

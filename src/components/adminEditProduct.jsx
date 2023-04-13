@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 
 const AdminEditProduct = (props) => {
     const { productData, setProductData, getProductData, editProductBtn, setEditProductBtn, setIsLoggedIn, getUserData, userData  } = props;

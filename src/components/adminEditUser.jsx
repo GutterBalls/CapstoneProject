@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const DATABASE_URL = 'http://localhost:1337/api';
 
 const AdminEditUser = (props) => {
-    const { productData, setProductData, getProductData, editProductBtn, setEditProductBtn, setIsLoggedIn, getUserData, getOrderHistory, getAllUsersData, userData, editUserAdminBtn, setAllUsers, allUsers, setUserData, setEditUserAdminBtn  } = props;
+    const { setIsLoggedIn, getUserData, getAllUsersData, userData, editUserAdminBtn, allUsers, setUserData, setEditUserAdminBtn  } = props;
 
     const [searchAdmin, setSearchAdmin] = useState([]);
     const [selectUser, setSelectUser] = useState([]);
@@ -58,12 +58,10 @@ const AdminEditUser = (props) => {
                 })
             });
             const transData = await response.json();
-                // console.log(transData);
 
             if (!transData){
                 alert("User edit was not successful. Please try again. ");
             } else {
-                // setUserData([...userData, transData]);
 
                 function updateUserData(){
                     let updateArr = [];
@@ -79,7 +77,6 @@ const AdminEditUser = (props) => {
                 };
                 const newUserData = updateUserData();
                 setUserData(newUserData);
-                // alert("User was successfully updated.");
     // reset form
                 setEditUserAdminBtn(false);
                 setEditUsername("");
@@ -95,12 +92,11 @@ const AdminEditUser = (props) => {
 
     return (
         <div>
-            {
-                editUserAdminBtn ? (
-                    <div>
-                                                                                                                                         
-{/* SEARCHBOX */}
+            <div className='del-prod-form-cont'>
+                {
+                    editUserAdminBtn ? (
                         <div className="del-prod-form" onMouseLeave={() => document.getElementsByClassName('adm-search')[0].style.visibility = 'hidden'}>
+{/* SEARCHBOX */}
                             <div className='adm-del'>
                                 <h5>Choose User to edit/update:</h5>
                                 <div> 
@@ -109,8 +105,7 @@ const AdminEditUser = (props) => {
                                     placeholder="Search..."
                                     onChange={(event) => {
                                     setSearchAdmin(
-                                        allUsers.filter((singleUser) => singleUser.username.toLowerCase().includes(event.target.value.toLowerCase()) 
-                                            /* || singleUser.id.includes(event.target.value)  */
+                                        allUsers.filter((singleUser) => singleUser.username.toLowerCase().includes(event.target.value.toLowerCase())
                                         ));
                                     document.getElementsByClassName('adm-search')[0].style.visibility = 'visible'
                                     }} />
@@ -128,55 +123,60 @@ const AdminEditUser = (props) => {
                                                 </li>
                                         )})}
                                     </ul>
-                                    <h3>User ID selected: { selectUser.id }</h3>
-                                    <h3>Username selected: { selectUser.username }</h3>
+                                    <h6>User ID selected: { selectUser.id }</h6>
+                                    <h6>Username selected: { selectUser.username }</h6>
                                 </div>
                             </div>
-                        </div> 
-                                                                                                                 
 {/* ADMIN EDIT USER FORM */}   
-                        <div className="form">
-                            <span className="form__title">Edit/Update</span>
-                            <form action="" onSubmit={ (event) => editUserAdmin(selectUser.id, event) } >
-                                <div className="e-u-form-input">
-                                    <i className="ri-user-line"></i>
-                                    <input 
-                                        type="text"
-                                        value={ editUsername }
-                                        onChange={(event)=>{
-                                            setEditUsername(event.target.value);
-                                        }}
-                                        placeholder="New Username"
-                                    />
-                                </div>    
-                                <div className="e-u-form-input">
-                                    <i className="ri-lock-line"></i>
-                                    <input 
-                                        type="password"
-                                        value={ editPassword } 
-                                        onChange={(event)=>{
-                                            setEditPassword(event.target.value);
-                                        }}
-                                        placeholder="New Password"
-                                    />
+                            <div>
+                                <div className="form__title">
+                                    Update user to:
                                 </div>
-                                <div className="e-u-form-input">
-                                    <i className="ri-mail-line"></i>
-                                    <input 
-                                        type="email"
-                                        value={ editEmail } 
-                                        onChange={(event)=>{
-                                            setEditEmail(event.target.value);
-                                        }}
-                                        placeholder="New Email"
-                                    />
+                                <hr />
+                                <div>
+                                    <form action="" onSubmit={ (event) => editUserAdmin(selectUser.id, event) } >
+                                        <div className="e-u-form-input">
+                                            <i className="ri-user-line"></i>
+                                            <input 
+                                                type="text"
+                                                value={ editUsername }
+                                                onChange={(event)=>{
+                                                    setEditUsername(event.target.value);
+                                                }}
+                                                placeholder="New Username"
+                                            />
+                                        </div>    
+                                        <div className="e-u-form-input">
+                                            <i className="ri-lock-line"></i>
+                                            <input 
+                                                type="password"
+                                                value={ editPassword } 
+                                                onChange={(event)=>{
+                                                    setEditPassword(event.target.value);
+                                                }}
+                                                placeholder="New Password"
+                                            />
+                                        </div>
+                                        <div className="e-u-form-input">
+                                            <i className="ri-mail-line"></i>
+                                            <input 
+                                                type="email"
+                                                value={ editEmail } 
+                                                onChange={(event)=>{
+                                                    setEditEmail(event.target.value);
+                                                }}
+                                                placeholder="New Email"
+                                            />
+                                        </div>
+                                        <hr />
+                                        <button type="submit" className="form__button" >Submit</button>
+                                    </form>
                                 </div>
-                                <button type="submit" className="form__button" >Submit</button>
-                            </form>
-                        </div>
-                    </div>    
-                ): ""
-            }
+                            </div>  
+                        </div>  
+                    ): ""
+                }
+            </div>
         </div>
     )
 }

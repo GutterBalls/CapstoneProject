@@ -59,9 +59,9 @@
     color: red;
     background: none;
     border: none;
-  }
+}
 
-  .icon-button__badge{
+.icon-button__badge{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,9 +74,9 @@
     width: 20px;
     height: 20px;
     font-size: 15px;
-  }
+}
   
-  .cart-value {
+.cart-value {
     position: absolute;
     top: -10px;
     right: -10px;
@@ -85,7 +85,7 @@
     font-size: 12px;
     padding: 2px 5px;
     border-radius: 50%;
-  }
+}
   
 
 .nav-btn-top{
@@ -130,7 +130,6 @@
     border-radius: 3px;
     box-shadow: 1px 1px 10px black;
     z-index: 9999;
-    /* padding: 1px; Shifts images to the left edge*/
 }
 
 .indSearchPic {
@@ -222,19 +221,14 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 32px;
-    /* background-color: rgba(255, 255, 255, 0.4); */
     margin-left: 1em; margin-right: 1em;
     padding-top: 20px; padding-bottom: 20px;
-    /* border: 1px solid blue; */
-    /* border-radius: 10px; */
     text-align: center;
 }
 
 .main-singleProduct:hover {
     color: white;
     text-shadow: 1px 1px 5px black;
-    /* transform: scale(1.02); */
-    /* transition: all .2s ease-out; */
     background-color: rgba(255, 255, 255, 0.3);
     border: 1px solid red;
 }
@@ -243,7 +237,6 @@
     width: 20%;
     height: auto;
     mix-blend-mode: multiply;
-    /* NOTE: m-b-m removes white background from an image (Chrome, FF, Safari only)*/
 }
 
 .li-to-purch {
@@ -311,7 +304,6 @@
 
 .pagination {
     align-items:center;
-    /* background-color: rgba(211, 211, 211, 0.6); */
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -320,7 +312,6 @@
     width: 400px;
     padding-top: 2px;
     padding-bottom: 2px;
-    /* border-radius: 5px; */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
@@ -415,8 +406,6 @@
     display: flex;
     flex-direction: row;
     align-items: center; justify-content: center;
-    /* justify-content: center; */
-    /* padding-bottom: 15%; */
     background-image: url(/images/old_school_lanes.png);
     background-color: rgba(0, 0, 0, 0.9);
     background-size:cover; background-repeat: no-repeat;
@@ -446,52 +435,46 @@
 
 .hp-left{
     font-size: 1em;
+    background-color: none;
     padding: 10px;
-    margin-top: 50px;
-    margin-left: 15px;
+    margin-top: 135px;
+    margin-left: 30px;
     min-width: fit-content;
     width: 10%;
     min-height: fit-content ;
     height: 10%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
-    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 10px;
+    background-color: rgb(255, 255, 255);
     color: black;
     text-decoration: none;
 }
 
 .hp-right{
-    display: flex; flex-direction: row;
-    justify-content: center;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
     width: 100%;
-    /* grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 10px; */
     font-size: 1em;
     background-color: none;
-    padding: 10px;
-    padding: 10px;
-    margin-left: 15px;
-    margin-right: 15px;
     min-width: fit-content;
     color: white;
 }
 
-/* .swiper-container{
-    display: flex; justify-content: center; align-items: center;
-    width: 80%;
-    height: 50%;
+.hp-title-text{
+    display: flex;
+    justify-content: center; align-content: center;
+    font-size: xx-large;
+    color: white;
+    text-shadow: 2px 2px 5px black;
+    width:fit-content;
+    padding-left: 20px;
+    padding-right: 20px;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 10px;
-    margin-top: 50px;
-} */
+}
 
 .mySwiper{
     display: flex; justify-content: center; align-items: center;
@@ -503,24 +486,22 @@
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 1);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 10px;
-    margin-top: 50px;
-
-    /* border: 2px solid red; */
-    /* margin-top: 50px; */
-    /* border: 2px solid red; */
-    /* width: 700px; height: 400px; */
-
-    /* height: 10em;  */
-    /* padding: 50px; */
+    margin-top: 10px;
 }
 
 .swiper-slide{
-    display: flex; flex-wrap:wrap;
+    display: flex;
     justify-content: center; align-items: center;
-    margin-left: 2.2vw; margin-right: 2.2vw;
+}
+
+.swiper-slide-text{
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
 }
 
 .swiper-pic{
+    display: flex; flex-direction: row;
+    justify-content: center; align-items: center;
     width: 15vw;
 }
 
@@ -537,7 +518,6 @@
 .foot-p-l{
     display: flex; flex-direction: column; align-items: flex-start;
     margin-left: 30px; padding-right: 30px;
-    /* justify-content: center; */
 }
 
 .foot-p-c{
@@ -549,7 +529,6 @@
 .foot-p-r{
     display: flex; flex-direction: column; align-items: flex-end;
     margin-left: 30px; padding-right: 30px;
-    /* justify-content: center; */
 }
 
 /* --------------END FOOTER SECTION-------------- */
@@ -595,7 +574,7 @@
   }
   
 .flex-item {
-    flex-basis: 33.33%; /* Set width to 33.33% to create 3 columns */
+    flex-basis: 33.33%;
     padding: 10px;
     box-sizing: border-box;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
@@ -622,10 +601,6 @@
     display: flex; flex-direction: column; align-items: center;
 }
 
-/* .prof-admin {
-    background-color: #4285f4;
-} */
-
 .prof-admin-btns  {
     display: flex; flex-direction: row;
 }
@@ -646,19 +621,6 @@
     background-color: white;
 }
 
-/* .adm-search {
-    position: absolute;
-    width: 500px;
-    overflow-y: auto;
-    max-height: 50%;
-    font-size: 16px;
-    background-color: white;
-    border-radius: 3px;
-    box-shadow: 1px 1px 10px black;
-    z-index: 9999;
-} */
-
-
 .adm-search {
     position: absolute;
     width:fit-content;
@@ -669,7 +631,6 @@
     border-radius: 3px;
     box-shadow: 1px 1px 10px black;
     z-index: 9999;
-    /* padding: 1px; Shifts images to the left edge*/
 }
 
 .adm-indSearchPic {
@@ -692,12 +653,6 @@
 
 .adm-form-field {
     display: flex; flex-direction: row;
-
-
-    /* position: relative; */
-    /* display: flex; */
-    /* align-items: baseline; */
-    /* margin: 0 auto; */
 }
 
 .adm-del {
@@ -737,14 +692,13 @@
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 10px;
     margin-bottom: 20px;
-    min-height: 500px;
+    min-height: 350px;
 }
 
 .e-u-form{
     display: flex; flex-direction: column; 
     align-items: center; justify-content: flex-end;
     justify-content: space-between;
-    /* background-color: #4285f4; */
 }
 
 .e-u-form-label {
@@ -779,20 +733,12 @@
 
 .form {
     display: flex; flex-direction: row; justify-content: center;
-    /* min-height: 35vw; */
     margin-top: 40px;
     margin-bottom: 40px;
-    /* max-width: 100px; */
-    
-    /* position: relative; */
-    /* max-width: 30rem; */
-    /* padding: 10rem 0; */
     color: #fff;
     background-color: #fff;
     border: 2px solid rgb(188, 0, 0);
     box-shadow: 1px 1px 20px 5px black;
-    /* box-shadow: 0 1px 1rem rgba(0, 0, 0, .1); */
-    /* isolation: isolate; */
 }
 
 .form_title{
@@ -886,28 +832,11 @@
     text-decoration: underline;
 }
 
-
-/* @media screen and (min-width: 43.75em) {
-    .form::before {
-        height: 30rem;
-    }
-
-    .form__title {
-        left: 10rem;
-        transform: none;
-    }
-
-    .form>form {
-        transform: translateX(10rem);
-        border-radius: inherit;
-        box-shadow: inherit;
-    }
-} */
 /*-------------END LOGIN / SIGNUP FORM------------ */
 /* ---------------END PROFILE PAGE---------------- */
 
 
-/* ----------MDN SHOPPING CART START----------- */
+/* ---------- SHOPPING CART START----------- */
 
 .cart-back{
     display: flex; flex-direction: row; justify-content: center;

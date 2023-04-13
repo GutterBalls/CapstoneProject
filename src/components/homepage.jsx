@@ -121,6 +121,9 @@ const Homepage = (props) => {
                     </ul>
                 </aside>
                 <div className='hp-right'>
+                    <div className='hp-title-text'>
+                        Check out this month's deals!
+                    </div>
                     <div className="swiper-container">
                         <Swiper
                         spaceBetween={10}
@@ -132,24 +135,22 @@ const Homepage = (props) => {
                         className="mySwiper"
                         ref={swiperRef}
                         >
-{/* Map Balls (Sale)   */}            
+{/* Map Balls (Sale)   */}
                         <div className="main-right">
                             {
                                 specials === "Sale" ? filteredBallsSale.map((singleProduct) => {
                                     return (
                                         <div key={singleProduct.id}>
                                             <SwiperSlide className='swiper-slide'>
-                                                <Link to={`/single/${singleProduct.id}`}>
-                                                    <img className='swiper-pic' 
-                                                        src={singleProduct.image}
-                                                    />
-                                                </Link>
-                                                <div className='swiper-slide'>
+                                                <div className='swiper-slide-text'>
+                                                    <Link to={`/single/${singleProduct.id}`}>
+                                                        <img className='swiper-pic' src={singleProduct.image}/>
+                                                    </Link>
                                                     <h4>{singleProduct.brand}</h4>
                                                     <h5>{singleProduct.name}</h5> 
                                                     <h5 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h5>
+                                                    <h4 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h4>
                                                 </div>
-                                                <h4 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h4>
                                             </SwiperSlide>                                  
                                         </div>
                                     )
@@ -161,17 +162,15 @@ const Homepage = (props) => {
                                             return (
                                                 <div key={singleProduct.id}>
                                                     <SwiperSlide className='swiper-slide'>
-                                                        <Link to={`/single/${singleProduct.id}`}>
-                                                            <img className='swiper-pic' 
-                                                                src={singleProduct.image}
-                                                            />
-                                                        </Link>
-                                                        <div className='swiper-slide'>
+                                                        <div className='swiper-slide-text'>
+                                                            <Link to={`/single/${singleProduct.id}`}>
+                                                                <img className='swiper-pic' src={singleProduct.image}/>
+                                                            </Link>
                                                             <h4  style={{ color: 'white' }}>{singleProduct.brand}</h4>
                                                             <h5>{singleProduct.name}</h5> 
                                                             <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                            <h4 style={{ color: 'red' }}>Clearance Price: ${singleProduct.price}</h4>
                                                         </div>
-                                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                                     </SwiperSlide>                                  
                                                 </div>
                                             )
@@ -186,19 +185,16 @@ const Homepage = (props) => {
                                 specials === "Sale" ? filteredBagsSale.map((singleProduct) => {
                                     return (
                                         <div key={singleProduct.id}>
-                                            <SwiperSlide>
-                                                <Link to={`/single/${singleProduct.id}`}>
-                                                    <img 
-                                                        src={singleProduct.image} 
-                                                        style={{ width: '80%', color: 'black' }}
-                                                    />
-                                                </Link>
-                                                <div style={{ color: 'black' }}>
+                                            <SwiperSlide className='swiper-slide'>
+                                                <div className='swiper-slide-text'>
+                                                    <Link to={`/single/${singleProduct.id}`}>
+                                                        <img className='swiper-pic' src={singleProduct.image}/>
+                                                    </Link>
                                                     <h4>{singleProduct.brand}</h4>
                                                     <h5>{singleProduct.name}</h5> 
                                                     <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
+                                                    <h4 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h4>
                                                 </div>
-                                                <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                             </SwiperSlide>                                  
                                         </div>
                                     )
@@ -209,19 +205,16 @@ const Homepage = (props) => {
                                         specials === "Clearance" ? filteredBagsClearance.map((singleProduct) => {
                                             return (
                                                 <div key={singleProduct.id}>
-                                                    <SwiperSlide>
+                                                    <SwiperSlide className='swiper-slide'>
+                                                        <div className='swiper-slide-text'>
                                                         <Link to={`/single/${singleProduct.id}`}>
-                                                            <img 
-                                                                src={singleProduct.image} 
-                                                                style={{ width: '80%', color: 'black' }}
-                                                            />
+                                                            <img className='swiper-pic' src={singleProduct.image}/>
                                                         </Link>
-                                                        <div style={{ color: 'black' }}>
                                                             <h4>{singleProduct.brand}</h4>
                                                             <h5>{singleProduct.name}</h5> 
                                                             <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                            <h4 style={{ color: 'red' }}>Clearance Price: ${singleProduct.price}</h4>
                                                         </div>
-                                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                                     </SwiperSlide>                                  
                                                 </div>
                                             )
@@ -236,19 +229,16 @@ const Homepage = (props) => {
                                 specials === "Sale" ? filteredShoesSale.map((singleProduct) => {
                                     return (
                                         <div key={singleProduct.id}>
-                                                <SwiperSlide>
-                                                    <Link to={`/single/${singleProduct.id}`}>
-                                                        <img 
-                                                            src={singleProduct.image} 
-                                                            style={{ width: '80%', color: 'black' }}
-                                                        />
-                                                    </Link>
-                                                    <div style={{ color: 'black' }}>
+                                                <SwiperSlide className='swiper-slide'>
+                                                    <div className='swiper-slide-text'>
+                                                        <Link to={`/single/${singleProduct.id}`}>
+                                                            <img className='swiper-pic' src={singleProduct.image}/>
+                                                        </Link>
                                                         <h4>{singleProduct.brand}</h4>
                                                         <h5>{singleProduct.name}</h5> 
                                                         <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
-                                                    </div>
-                                                    <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
+                                                        <h4 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h4>
+                                                    </div> 
                                                 </SwiperSlide>                                  
                                         </div>
                                     )
@@ -259,19 +249,16 @@ const Homepage = (props) => {
                                         specials === "Clearance" ? filteredShoesClearance.map((singleProduct) => {
                                             return (
                                                 <div key={singleProduct.id}>
-                                                        <SwiperSlide>
-                                                            <Link to={`/single/${singleProduct.id}`}>
-                                                                <img 
-                                                                    src={singleProduct.image} 
-                                                                    style={{ width: '80%', color: 'black' }}
-                                                                />
-                                                            </Link>
-                                                            <div style={{ color: 'black' }}>
+                                                        <SwiperSlide className='swiper-slide'>
+                                                            <div className='swiper-slide-text'>
+                                                                <Link to={`/single/${singleProduct.id}`}>
+                                                                    <img className='swiper-pic' src={singleProduct.image}/>
+                                                                </Link>
                                                                 <h4>{singleProduct.brand}</h4>
                                                                 <h5>{singleProduct.name}</h5> 
                                                                 <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                                <h4 style={{ color: 'red' }}>Clearance Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h4>
                                                             </div>
-                                                            <h3 style={{ color: 'red' }}>Sale Price: ${(singleProduct.price - (singleProduct.price * .3)).toFixed(2)}</h3>
                                                         </SwiperSlide>                                  
                                                 </div>
                                             )
@@ -286,19 +273,16 @@ const Homepage = (props) => {
                                 specials === "Sale" ? filteredAccessoriesSale.map((singleProduct) => {
                                     return (
                                         <div key={singleProduct.id}>
-                                            <SwiperSlide>
-                                                <Link to={`/single/${singleProduct.id}`}>
-                                                    <img 
-                                                        src={singleProduct.image} 
-                                                        style={{ width: '80%', color: 'black' }}
-                                                    />
-                                                </Link>
-                                                <div style={{ color: 'black' }}>
+                                            <SwiperSlide className='swiper-slide'>
+                                                <div className='swiper-slide-text'>
+                                                    <Link to={`/single/${singleProduct.id}`}>
+                                                        <img className='swiper-pic' src={singleProduct.image}/>
+                                                    </Link>
                                                     <h4>{singleProduct.brand}</h4>
                                                     <h5>{singleProduct.name}</h5> 
                                                     <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .15)).toFixed(2)}</h6>
+                                                    <h4 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h4>
                                                 </div>
-                                                <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                             </SwiperSlide>                                  
                                         </div>
                                     )
@@ -309,19 +293,16 @@ const Homepage = (props) => {
                                         specials === "Clearance" ? filteredAccessoriesClearance.map((singleProduct) => {
                                             return (
                                                 <div key={singleProduct.id}>
-                                                    <SwiperSlide>
+                                                    <SwiperSlide className='swiper-slide'>
+                                                        <div className='swiper-slide-text'>
                                                         <Link to={`/single/${singleProduct.id}`}>
-                                                            <img 
-                                                                src={singleProduct.image} 
-                                                                style={{ width: '80%', color: 'black' }}
-                                                            />
+                                                            <img className='swiper-pic' src={singleProduct.image}/>
                                                         </Link>
-                                                        <div style={{ color: 'black' }}>
                                                             <h4>{singleProduct.brand}</h4>
                                                             <h5>{singleProduct.name}</h5> 
                                                             <h6 style={{ textDecoration: 'line-through' }}>${(singleProduct.price + (singleProduct.price * .30)).toFixed(2)}</h6>
+                                                            <h4 style={{ color: 'red' }}>Clearance Price: ${singleProduct.price}</h4>
                                                         </div>
-                                                        <h3 style={{ color: 'red' }}>Sale Price: ${singleProduct.price}</h3>
                                                     </SwiperSlide>                                  
                                                 </div>
                                             )

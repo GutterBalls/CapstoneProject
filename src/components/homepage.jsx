@@ -129,8 +129,6 @@ const Homepage = (props) => {
                         spaceBetween={10}
                         slidesPerView={3}
                         slidesPerGroup={3}
-                        onSlideChange={() => console.log('slide change')}
-                        onSwiper={(swiper) => console.log(swiper)}
                         navigation
                         className="mySwiper"
                         ref={swiperRef}

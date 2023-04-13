@@ -20,12 +20,10 @@ const App = () => {
         try {
             const response = await fetch(`${DATABASE_URL}/products`)
             const translatedData = await response.json();
-            // console.log(translatedData);
             setProductData(translatedData);
-            // console.log("Product data", productData)
             return translatedData
         } catch (error) {
-            console.log("Error w/ getProductData index.js 26", error)
+            console.log("Error w/ getProductData func", error)
         };
     };
 
@@ -40,11 +38,10 @@ const App = () => {
                 },
             });
             const translatedData = await response.json();
-            // console.log("Translated Data", translatedData);
             setUserData(translatedData);
 
             } catch (error) {
-                console.error("Error with getUserData function", error);
+                console.error("Error with getUserData func", error);
             };
         };
     
@@ -58,11 +55,10 @@ const App = () => {
                 },
             });
             const translatedData = await response.json();
-            console.log("Index 59, getOrderData", translatedData);
             setOrderData(translatedData);
 
         } catch (error) {
-            console.error("Error w. getOrderData index.js 63", error);
+            console.error("Error w. getOrderData func", error);
         }
     }
 
@@ -195,16 +191,6 @@ const App = () => {
                                 counter={counter}
                                 setCounter={setCounter}
                             />}/>
-
-                            {/* <Route path="/confirm" element={<Confirm 
-                                isLoggedIn={isLoggedIn} 
-                                setIsLoggedIn={setIsLoggedIn} 
-                                userData={userData} 
-                                setUserData={setUserData}
-                                productData={productData} 
-                                setProductData={setProductData} 
-                                getProductData={getProductData}
-                            />}/> */}
 
                             <Route path="/register" element={<Register />}/>
                             <Route path="/login" element={<Login 

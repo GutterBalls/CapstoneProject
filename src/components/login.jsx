@@ -14,14 +14,12 @@ const Login = (props) =>{
     useEffect(() => {
         if (localStorage.getItem("token")){
             getUserData();
-            // getCartData();
             };
     }, [isLoggedIn]);
 
     async function logIn(event){
         event.preventDefault();
         try{
-            // console.log("Login info...",loginUser, loginPass);
             const response = await fetch(`${DATABASE_URL}/users/login`,{
                 method: "POST",
                 headers: {
@@ -40,14 +38,12 @@ const Login = (props) =>{
 
             } else {
                 const tokenKey = transData.token;
-                console.log("TRANS DATA BELOW");
-                console.log(transData);
                 localStorage.setItem("token", tokenKey);
                 getCartData(transData.id);
                 nav("/")
             };
         } catch(error){
-            console.log("Error w/ logIn login.jsx 50", error)
+            console.log("Error w/ logIn login.jsx", error)
         };
     };
 
@@ -62,12 +58,10 @@ const Login = (props) =>{
             });
             const translatedData = await response.json();
             test = translatedData.length
-            console.log("TEST BELOW");
-            console.log(test);
             props.setCounter(translatedData.length)
             
         } catch (error) {
-            console.log(error)
+            console.log("Error w/ logIn login.jsx", error)
         };
     };
 
@@ -75,7 +69,6 @@ const Login = (props) =>{
         <div className="sign-up-log-in">
 
         <div className="form">
-            {/* <span className="form__title">Login</span> */}
             <form action="" onSubmit={ logIn }>
                 <span className="form__switch">
                     Log in to your account

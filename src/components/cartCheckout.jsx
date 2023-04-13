@@ -61,7 +61,7 @@ const CartCheckout = (props) => {
     // DELETE a cart item.
     async function deleteCartItem(event) {
         console.log("Delete Cart Item F(X) id parameter", event.target.value)
-        props.setCounter(props.counter - 1)
+        
         try {
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.value}`, {
                 method: "DELETE",
@@ -72,8 +72,9 @@ const CartCheckout = (props) => {
             });
             
         
-
+        props.setCounter(props.counter - 1)
         setDeletedItem(deletedItem +1);
+
 
 
             
@@ -195,6 +196,7 @@ const CartCheckout = (props) => {
                 setState("");
                 setCity("");   
                 setZipcode("");
+                props.setCounter(0);
                 alert("Thank you for submitting your order.");
                 nav('/');
             };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactPaginate from "react-paginate";
 import { MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBDropdownItem, MDBBtn } from 'mdb-react-ui-kit';
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 const perPage = 6;
 
 const Balls = (props) => {

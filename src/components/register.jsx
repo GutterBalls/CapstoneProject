@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 
 const Register = () =>{
     const [ newUser, setNewUser] = useState("");

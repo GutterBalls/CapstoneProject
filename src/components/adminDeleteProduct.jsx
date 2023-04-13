@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 
 const AdminDeleteProduct = (props) => {
     const { productData, setProductData, getProductData, setIsLoggedIn, getUserData, userData, deleteProductBtn, } = props;

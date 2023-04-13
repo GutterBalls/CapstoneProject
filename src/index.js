@@ -4,7 +4,7 @@ import {createRoot} from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Accessories, Bags, Balls, Shoes, Single, Header ,Homepage, Profile, Footer, Login, Logout, Register, CartCheckout } from "./components/index";
 import { useState, useEffect } from "react";
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 
 
 const App = () => {

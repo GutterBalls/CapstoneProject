@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 
 const Single = (props) => {
     const [singleProduct, setSingleProduct] = useState([]);

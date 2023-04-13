@@ -13,7 +13,7 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
-const DATABASE_URL = 'http://localhost:1337/api';
+const DATABASE_URL = 'https://gutterballs-back.onrender.com/api';
 
 
 const CartCheckout = (props) => {

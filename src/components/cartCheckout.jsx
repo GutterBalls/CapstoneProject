@@ -31,6 +31,7 @@ const CartCheckout = (props) => {
     const nav = useNavigate();
     let cartTotal = 0;
 
+
     useEffect(() => {
     
         if (localStorage.getItem("token")) {
@@ -54,13 +55,12 @@ const CartCheckout = (props) => {
 
             return translatedData
         } catch (error) {
-            console.log("Error w/ getCartData in cartCechout.jsx 52", error)
+            console.log(error)
         };
     };
 
     // DELETE a cart item.
     async function deleteCartItem(event) {
-        console.log("Delete Cart Item F(X) id parameter", event.target.value)
         
         try {
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.value}`, {
@@ -70,29 +70,20 @@ const CartCheckout = (props) => {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
                 },
             });
-            
-        
+
         props.setCounter(props.counter - 1)
         setDeletedItem(deletedItem +1);
 
-
-
-            
         } catch (error) {
-            console.log("Error w/ deleteCartItem in cartCheckout.jsx 74", error);
+            console.log(error);
         }
     };
     
     // Adding 1 on + click to increase quantity state. 
     async function addQuantity(event) {
-        try {
-            // console.log("Minus button clicked")
-            // console.log(event.target.value)
-            // console.log("ETV type of", typeof event.target.value)
-            // console.log(typeof event.target.parentNode.getAttribute("value"))
 
+        try {
             
-            // console.log("Inside if")
             const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
             
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.parentNode.getAttribute("value")}`,{
@@ -109,7 +100,7 @@ const CartCheckout = (props) => {
                 })
             })
             const translatedData = await response.json();
-            // console.log("Line 100 cart", translatedData)
+            
             if (translatedData.qty) {
                 const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
                 currentItem[0].qty = parseInt(event.target.value) + 1 
@@ -119,20 +110,16 @@ const CartCheckout = (props) => {
 
         
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     };
 
     // Subtracting 1 on - click to decrease quantity state. 
     async function minusQuantity(event) {
         try {
-            // console.log("Minus button clicked")
-            // console.log(event.target.value)
-            // console.log("ETV type of", typeof event.target.value)
-            // console.log(typeof event.target.parentNode.getAttribute("value"))
 
             if (parseInt(event.target.value) > 1){
-            // console.log("Inside if")
+            
             const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
             
             const response = await fetch(`${DATABASE_URL}/cartItems/${event.target.parentNode.getAttribute("value")}`,{
@@ -149,7 +136,7 @@ const CartCheckout = (props) => {
                 })
             })
             const translatedData = await response.json();
-            // console.log("Line 100 cart", translatedData)
+            
             if (translatedData.qty) {
                 const currentItem = cartData.filter((item) => item.id === parseInt(event.target.parentNode.getAttribute("value")))
                 currentItem[0].qty = parseInt(event.target.value) -1 
@@ -158,7 +145,7 @@ const CartCheckout = (props) => {
             }
         }
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     };
     
@@ -202,11 +189,9 @@ const CartCheckout = (props) => {
             };
 
         } catch (error) {
-            throw error;
+            console.log(error);
         };
     };
-    // const checkOrderStatus = await getOrderByUserId(user.id);
-    //         if (checkOrderStatus.order_status === true)
 
   return (
     <section className="h-100 w-100 h-custom" style={{ backgroundImage: "url(/images/old_school_lanes.png)" }}>
@@ -240,7 +225,7 @@ const CartCheckout = (props) => {
 
                       <div className="flex-grow-1 ms-3">
                         <button onClick={deleteCartItem} value={singleItem.id} className="float-end">X
-                          {/* <MDBIcon fas icon="times" style={{ color: "red" }} /> {singleItem.id} */}
+        
                         </button>
                         <MDBTypography tag="h5" className="text-primary">
                           {singleItem.brand} {singleItem.name}
@@ -255,7 +240,6 @@ const CartCheckout = (props) => {
                                 className="quantity fw-bold text-black"
                                 value={singleItem.qty}
                                 type="number"
-                            //   onChange={quantityAddOrMinus}
                             />
                             <button className="plus" value={singleItem.qty} onClick={addQuantity}></button>
                           </div>
@@ -433,6 +417,6 @@ const CartCheckout = (props) => {
       </MDBContainer>
     </section>
   );
-}
+};
 
 export default CartCheckout;

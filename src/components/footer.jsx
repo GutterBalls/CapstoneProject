@@ -18,7 +18,7 @@ const Footer = () => {
                 <p className="foot-p-r">No Exchanges</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Footer;

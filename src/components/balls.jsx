@@ -12,51 +12,48 @@ const Balls = (props) => {
     const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
     const { isLoggedIn } = props;
-    // let ballProducts = props.productData.filter((singleBall) => singleBall.category_id === 1);
-    // const pageCount = Math.ceil(ballProducts.length / perPage);
-
+    
+    // Filtering through all products to return what sidebar filter is selected.
     const filteredProducts = props.productData.filter((singleBall) => {
         if (brand && singleBall.brand != brand) {
             return false;
-        }
+        };
 
         if (price && singleBall.price > price) {
             return false;
-        }
+        };
 
         if (specials === "Sale" && singleBall.sale === false) {
             return false;
-        }
+        };
 
         if (specials === "Clearance" && singleBall.clearance === false) {
             return false;
-        }
+        };
         
         return singleBall.category_id === 1
     });
 
+    // Setting the page count for pagination based off of the amount of products returned in the filter above.
     const pageCount = Math.ceil(filteredProducts.length / perPage);
    
+    // Upon component mounting, get products and, if there is a token (logged in user), get their current order data.
     useEffect(() => {
         props.getProductData();
         if (localStorage.getItem("token")){
             props.getOrderData();
-            // console.log("Balls component inside useEffect line 17", props.orderData)
         };
     }, []);
 
+    // Setting / rendering the current page for pagination.
     function pageClick({ selected: selectedPage}) {
-        
             setCurrentPage(selectedPage)
-            // console.log("Selected page", selectedPage)
-        };
+    };
 
 
     
-
+    // POST request to add a selected item to cart.
     async function addItemToCart (event) {
-        // console.log("Balls LINE 26 orderID", props.orderData[0].id);
-        // console.log("Balls LINE 27 evt", event.target.value[0])
         
         try {
             const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value));
@@ -74,18 +71,15 @@ const Balls = (props) => {
                     qty: 1,
                     price: specificItem[0].price
                 })
-            })
-            const translatedData = await response.json()
-            props.setCounter(props.counter + 1)
-            console.log("Balls.jsx 78 - addItemToCart", translatedData);
+            });
+            const translatedData = await response.json();
+            props.setCounter(props.counter + 1);
 
         } catch (error) {
-            console.log("Error w/ balls.jsx/addItemToCart", error);
+            console.log(error);
             alert("Duplicate Product: Visit cart to update quantity.")
         };
     };
-    
-    
 
     return (
         <section className="main-container">
@@ -107,7 +101,6 @@ const Balls = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                // setCurrentPage(0)
                             }}>Brand</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link="true">Brunswick</MDBDropdownItem>
@@ -126,7 +119,6 @@ const Balls = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                // setCurrentPage(0)
                             }}>Price</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link="true">$</MDBDropdownItem>
@@ -143,7 +135,6 @@ const Balls = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                // setCurrentPage(0)
                             }}>Specials</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
@@ -196,7 +187,7 @@ const Balls = (props) => {
                 }
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default Balls;

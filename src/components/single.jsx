@@ -12,25 +12,26 @@ const Single = (props) => {
     const { id } = useParams();
     const nav = useNavigate();
     
+    // Upon component mounting, invoke getProductById and getReviews. When single item changes, remount (useParams). When a review is posted, remount (refresh).
     useEffect(() => {
         getProductById();
         getReviews();
     }, [useParams(), refresh]);
     
+    // GET request for product by product id.
     async function getProductById () {
         try {
             const response = await fetch(`${DATABASE_URL}/products/${id}`)
             const translatedData = await response.json();
-            setSingleProduct(translatedData)
-            return singleProduct
+            setSingleProduct(translatedData);
+            return singleProduct;
         } catch (error) {
             throw error;
         };
     };
 
+    // POST request to add a selected item to cart.
     async function addItemToCart (event) {
-        // console.log("SingleItem LINE 27 orderID", props.orderData[0].id);
-        // console.log("SingleItem LINE 28 evt", event.target.value[0])
         
         try {
             const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value));
@@ -48,15 +49,17 @@ const Single = (props) => {
                     qty: 1,
                     price: specificItem[0].price
                 })
-            })
+            });
             const translatedData = await response.json()
             props.setCounter(props.counter + 1)
 
         } catch (error) {
+            console.log(error);
             alert("Duplicate Product: Visit cart to update quantity.")
         };
     };
 
+    // GET request to retrieve reviews.
     async function getReviews () {
 
         try {
@@ -67,18 +70,17 @@ const Single = (props) => {
                 setAllReviews(translatedData);
             } else {
                 console.log("No reviews yet.")
-            }
-
-            
+            };
 
         } catch (error) {
-            throw error;
+            console.log(error);
         };
     };
 
+    // POST request to post a new review.
     async function postReview (event) {
-        
         event.preventDefault();
+
         try {
             const response = await fetch(`${DATABASE_URL}/reviews`, {
                 method: "POST",
@@ -99,14 +101,12 @@ const Single = (props) => {
             const translatedData = await response.json()
             setProductRating("")
             setProductReview("")
-            
-
             setRefresh(refresh + 1);
 
         } catch (error) {
-            throw error;
-        }
-    }
+            console.log(error);
+        };
+    };
 
 
     return (
@@ -142,7 +142,7 @@ const Single = (props) => {
                     {
                 props.isLoggedIn ?
                 <div className="review-sub">
-                    <form onSubmit={postReview}>Your Rating.
+                    <form onSubmit={postReview}>Rating:
                         <br />
                         <select 
                         value={productRating}
@@ -159,7 +159,7 @@ const Single = (props) => {
                             <option value="1">1</option>
                             <option value="0">0</option>
                         </select>
-                        <hr /> Your review of this product
+                        <hr /> Your review of this product:
                         <br />
                         <textarea
                         type="text"
@@ -173,12 +173,12 @@ const Single = (props) => {
                         <button type="submit" className="atc-btn"> Submit Review </button>
                     </form>
                 </div> : <Link to="/login"><h3>Login to make a review.</h3></Link>
-            }
+                    }
 
                 </div> : <p> ...We're bowling. BRB! </p>   
             }
         </div>
-    )
-}
+    );
+};
 
 export default Single;

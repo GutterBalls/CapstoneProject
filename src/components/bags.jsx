@@ -12,46 +12,46 @@ const Bags = (props) => {
     const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
     const { isLoggedIn } = props;
-    // const bagProducts = props.productData.filter((singleBag) => singleBag.category_id === 2);
-    // const pageCount = Math.ceil(bagProducts.length / perPage);
-
+    
+    // Filtering through all products to return what sidebar filter is selected.
     const filteredProducts = props.productData.filter((singleBag) => {
         if (brand && singleBag.brand != brand) {
             return false;
-        }
+        };
 
         if (price && singleBag.price > price) {
             return false;
-        }
+        };
 
         if (specials === "Sale" && singleBag.sale === false) {
             return false;
-        }
+        };
 
         if (specials === "Clearance" && singleBag.clearance === false) {
             return false;
-        }
+        };
         
         return singleBag.category_id === 2
     });
 
+    // Setting the page count for pagination based off of the amount of products returned in the filter above.
     const pageCount = Math.ceil(filteredProducts.length / perPage);
 
+    // Upon component mounting, get products and, if there is a token (logged in user), get their current order data.
     useEffect(() => {
         props.getProductData();
         if (localStorage.getItem("token")){
             props.getOrderData();
-            // console.log("Bags component inside useEffect line 17", props.orderData)
         };
     }, []);
 
+    // Setting / rendering the current page for pagination.
     function pageClick({ selected: selectedPage}) {
         setCurrentPage(selectedPage)
     };
 
+    // POST request to add a selected item to cart. 
     async function addItemToCart (event) {
-        // console.log("Bags LINE 26 orderID", props.orderData[0].id);
-        // console.log("Bags LINE 27 evt", event.target.value[0])
         
         try {
             const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value));
@@ -70,15 +70,14 @@ const Bags = (props) => {
                     price: specificItem[0].price
                 })
             })
-            const translatedData = await response.json()
-            props.setCounter(props.counter + 1)
-            console.log("Bags.jsx 73 - addItemToCart", translatedData);
+            const translatedData = await response.json();
+            props.setCounter(props.counter + 1);
 
         } catch (error) {
-            console.log("Error w/ bags.jsx/addItemToCart", error);
-            alert("Duplicate Product: Visit cart to update quantity.")
-        }
-    }
+            console.log(error);
+            alert("Duplicate Product: Visit cart to update quantity.");
+        };
+    };
 
 
 
@@ -102,7 +101,6 @@ const Bags = (props) => {
                                     setBrand(null)
                                     setPrice(0)
                                     setSpecials("")
-                                    // setCurrentPage(0)
                                 }}>Brand</MDBDropdownToggle>
                                 <MDBDropdownMenu>
                                     <MDBDropdownItem onClick={() => {setBrand("Brunswick") , setCurrentPage(0)}} link="true">Brunswick</MDBDropdownItem>
@@ -119,7 +117,6 @@ const Bags = (props) => {
                                     setBrand(null)
                                     setPrice(0)
                                     setSpecials("")
-                                    // setCurrentPage(0)
                                 }}>Price</MDBDropdownToggle>
                                 <MDBDropdownMenu>
                                     <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link="true">$</MDBDropdownItem>
@@ -136,7 +133,6 @@ const Bags = (props) => {
                                     setBrand(null)
                                     setPrice(0)
                                     setSpecials("")
-                                    // setCurrentPage(0)
                                 }}>Specials</MDBDropdownToggle>
                                 <MDBDropdownMenu>
                                     <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
@@ -147,7 +143,6 @@ const Bags = (props) => {
                     </ul>
             </aside>
             <div>
-                {/* <div className="mainProductFlex"> */}
                 <div className="main-right">
                 {
                     props.productData.length ? filteredProducts.slice(offset, offset + perPage).map((singleProduct) => {
@@ -190,7 +185,7 @@ const Bags = (props) => {
                 }
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default Bags;

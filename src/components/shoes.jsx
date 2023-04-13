@@ -12,31 +12,32 @@ const Shoes = (props) => {
     const [specials, setSpecials] = useState("");
     const offset = currentPage * perPage;
     const { isLoggedIn } = props;
-    // const shoeProducts = props.productData.filter((singleShoe) => singleShoe.category_id === 3);
-    // const pageCount = Math.ceil(shoeProducts.length / perPage);
-
+    
+    // Filtering through all products to return what sidebar filter is selected.
     const filteredProducts = props.productData.filter((singleShoe) => {
         if (brand && singleShoe.brand != brand) {
             return false;
-        }
+        };
 
         if (price && singleShoe.price > price) {
             return false;
-        }
+        };
 
         if (specials === "Sale" && singleShoe.sale === false) {
             return false;
-        }
+        };
 
         if (specials === "Clearance" && singleShoe.clearance === false) {
             return false;
-        }
+        };
         
         return singleShoe.category_id === 3
     });
 
+    // Setting the page count for pagination based off of the amount of products returned in the filter above.
     const pageCount = Math.ceil(filteredProducts.length / perPage);
 
+    // Upon component mounting, get products and, if there is a token (logged in user), get their current order data.
     useEffect(() => {
         props.getProductData();
         if (localStorage.getItem("token")){
@@ -45,13 +46,12 @@ const Shoes = (props) => {
         };
     }, []);
 
+    // Setting / rendering the current page for pagination.
     function pageClick({ selected: selectedPage}) {
         setCurrentPage(selectedPage)
     };
-
+    // POST request to add a selected item to cart.
     async function addItemToCart (event) {
-        // console.log("Shoes LINE 26 orderID", props.orderData[0].id);
-        // console.log("Shoes LINE 27 evt", event.target.value[0])
         
         try {
             const specificItem = props.productData.filter((item) => item.id === parseInt(event.target.value));
@@ -69,18 +69,16 @@ const Shoes = (props) => {
                     qty: 1,
                     price: specificItem[0].price
                 })
-            })
-            const translatedData = await response.json()
-            props.setCounter(props.counter + 1)
-            console.log("Shoes.jsx 73 - addItemToCart", translatedData);
+            });
+            const translatedData = await response.json();
+            props.setCounter(props.counter + 1);
+            
 
         } catch (error) {
-            console.log("Error w/ shoes/addItemToCart", error);
-            alert("Duplicate Product: Visit cart to update quantity.")
-        }
-    }
-
-
+            console.log(error);
+            alert("Duplicate Product: Visit cart to update quantity.");
+        };
+    };
 
     return (
         <section className="main-container">
@@ -102,7 +100,6 @@ const Shoes = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                // setCurrentPage(0)
                             }}>Brand</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => {setBrand("Dexter") , setCurrentPage(0)}} link="true">Dexter</MDBDropdownItem>
@@ -120,7 +117,6 @@ const Shoes = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                // setCurrentPage(0)
                             }}>Price</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => {setPrice(100) , setCurrentPage(0)}} link="true">$</MDBDropdownItem>
@@ -137,7 +133,6 @@ const Shoes = (props) => {
                                 setBrand(null)
                                 setPrice(0)
                                 setSpecials("")
-                                // setCurrentPage(0)
                             }}>Specials</MDBDropdownToggle>
                             <MDBDropdownMenu>
                                 <MDBDropdownItem onClick={() => {setSpecials("Sale") , setCurrentPage(0)}} link="true">Sale</MDBDropdownItem>
@@ -146,28 +141,8 @@ const Shoes = (props) => {
                         </MDBDropdown>
                     </li>
                 </ul>
-                {/* <ul><strong>Brand:</strong>
-                    <li>Dexter</li>
-                    <li>Elite</li>
-                    <li>KR Strikeforce</li>
-                    <li>Motiv</li>
-                </ul>
-                <ul><strong>Gender:</strong>
-                    <li>Mens</li>
-                    <li>Womens</li>
-                </ul>
-                <ul><strong>Price:</strong>
-                    <li>$$$</li>
-                    <li>$$</li>
-                    <li>$</li>
-                </ul>
-                <ul><strong>Specials:</strong>
-                    <li>ON SALE!</li>
-                    <li>CLEARANCE</li>
-                </ul> */}
             </aside>
             <div>
-                {/* <div className="mainProductFlex"> */}
                 <div className="main-right">
                 {
                     props.productData.length ? filteredProducts.slice(offset, offset + perPage).map((singleProduct) => {
@@ -210,7 +185,7 @@ const Shoes = (props) => {
                 }
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default Shoes;
